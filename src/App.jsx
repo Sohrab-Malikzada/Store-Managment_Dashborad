@@ -2,7 +2,7 @@
 import React from 'react'
 import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
-import Home from "@/Pages/Home"
+import Home from "./Pages/Home"
 import Layout from './Pages/Layout'
 import Login from './Pages/Login'
 import Dashboard from './Pages/Dashboard'
