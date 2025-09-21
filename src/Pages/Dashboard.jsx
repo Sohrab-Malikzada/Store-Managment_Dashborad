@@ -52,7 +52,7 @@ function Dashboard() {
     .slice(0, 3);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 m-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -64,7 +64,7 @@ function Dashboard() {
           </p>
         </div>
         <Button
-          className="gradient-primary text-white shadow-glow"
+          className="gradient-primary bg-blue-500 hover:bg-blue-600 text-white shadow-glow"
           onClick={() => {
             const reportData = {
               totalProducts: stats.totalProducts,
@@ -143,7 +143,7 @@ function Dashboard() {
           title="Pending Salaries"
           value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
           icon={Users}
-          variant="warning"
+          variant="reductive"
         />
       </div>
 
@@ -166,28 +166,34 @@ function Dashboard() {
                 <YAxis />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
+                    backgroundColor: "white",
+                    border: "1px solid gray",
                     borderRadius: "8px",
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="sales"
-                  stroke="hsl(var(--primary))"
+                  stroke="#6366f1" 
                   strokeWidth={2}
+                  dot={{ r: 4, fill: '#6366f1' }}
+                  activeDot={{ r: 6, fill: '#6366f1' }}
                 />
                 <Line
                   type="monotone"
                   dataKey="purchases"
-                  stroke="hsl(var(--warning))"
+                  stroke="#f59e42" 
                   strokeWidth={2}
+                  dot={{ r: 4, fill: '#f59e42' }}
+                  activeDot={{ r: 6, fill: '#f59e42' }}
                 />
                 <Line
                   type="monotone"
                   dataKey="profit"
-                  stroke="hsl(var(--success))"
+                  stroke="#10b981"
                   strokeWidth={2}
+                  dot={{ r: 4, fill: '#10b981' }}
+                  activeDot={{ r: 6, fill: '#10b981' }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -209,13 +215,13 @@ function Dashboard() {
                 <YAxis />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
+                    backgroundColor: "white",
+                    border: "1px solid gray",
                     borderRadius: "8px",
                   }}
                 />
-                <Bar dataKey="sales" fill="hsl(var(--primary))" />
-                <Bar dataKey="purchases" fill="hsl(var(--warning))" />
+                <Bar dataKey="sales" fill="#6366f1" radius={[4,4,0,0]} />
+                <Bar dataKey="purchases" fill="#f59e42" radius={[4,4,0,0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -279,7 +285,7 @@ function Dashboard() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium text-sm text-success">
+                  <p className="font-medium text-sm text-green-500">
                     ؋{sale.amountPaid.toLocaleString()}
                   </p>
                   {sale.pendingAmount > 0 && (

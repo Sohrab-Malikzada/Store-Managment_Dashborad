@@ -92,7 +92,7 @@ function Login() {
             </div>
             <Button 
               type="submit" 
-              className="w-full gradient-primary text-white shadow-elegant"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white shadow-elegant"
               disabled={isLoading}
             >
               {isLoading ? "Signing In..." : "Sign In"}
@@ -111,7 +111,7 @@ function Login() {
           
           <div className="mt-4 text-center">
             <p className="text-sm text-muted-foreground mb-2">Customer? Access your account:</p>
-            <Button variant="outline" className="w-full" onClick={() => window.location.href = '/customer'}>
+            <Button variant="outline" className="w-full hover:bg-blue-500 hover:text-white" onClick={() => window.location.href = '/customer'}>
               Customer Login
             </Button>
           </div>

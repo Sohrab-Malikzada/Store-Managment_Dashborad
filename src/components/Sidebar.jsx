@@ -13,7 +13,7 @@ import {
   LogOut,
   DollarSign,
   UserCog,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,7 @@ const sidebarGroups = [
         icon: ShoppingCart,
       },
       {
-        title: "Purchases", 
+        title: "Purchases",
         href: "/purchases",
         icon: CreditCard,
       },
@@ -85,7 +85,7 @@ const sidebarGroups = [
       },
       {
         title: "User Management",
-        href: "/user-management",
+        href: "/userManagement",
         icon: UserCog,
       },
     ],
@@ -99,14 +99,14 @@ function Sidebar() {
 
   const getRoleDisplayInfo = (role) => {
     switch (role) {
-      case 'admin':
-        return { name: 'Admin User', color: 'bg-red-500' };
-      case 'sales_point':
-        return { name: 'Sales Manager', color: 'bg-blue-500' };
-      case 'inventory':
-        return { name: 'Inventory Clerk', color: 'bg-green-500' };
+      case "admin":
+        return { name: "Admin User", color: "bg-red-500" };
+      case "sales_point":
+        return { name: "Sales Manager", color: "bg-blue-500" };
+      case "inventory":
+        return { name: "Inventory Clerk", color: "bg-green-500" };
       default:
-        return { name: 'User', color: 'bg-gray-500' };
+        return { name: "User", color: "bg-gray-500" };
     }
   };
 
@@ -121,18 +121,18 @@ function Sidebar() {
   return (
     <aside
       className={cn(
-        "flex flex-col bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
-        collapsed ? "w-16" : "w-64"
+        "flex flex-col bg-[#1d2939] text-white border-r border-sidebar-border transition-all duration-300 ease-in-out",
+        collapsed ? "w-20" : "w-64"
       )}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
         {!collapsed && (
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-400 rounded-lg flex items-center justify-center">
               <Package className="h-5 w-5 text-white" />
             </div>
-            <span className="text-lg font-semibold text-sidebar-foreground">
+            <span className="text-lg font-semibold text-white">
               TradeLedger
             </span>
           </div>
@@ -141,18 +141,25 @@ function Sidebar() {
           variant="ghost"
           size="sm"
           onClick={() => setCollapsed(!collapsed)}
-          className="text-sidebar-foreground hover:bg-sidebar-accent p-2"
+          className="text-white hover:bg-sidebar-accent p-2"
         >
-          {collapsed ? <Menu className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          {collapsed ? (
+            <Menu className="h-4 w-4" />
+          ) : (
+            <ChevronLeft className="h-4 w-4" />
+          )}
         </Button>
       </div>
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {sidebarGroups.map((group, groupIndex) => (
-          <div key={group.title} className={cn("space-y-2", groupIndex > 0 && "mt-6")}>
+          <div
+            key={group.title}
+            className={cn("space-y-2", groupIndex > 0 && "mt-6")}
+          >
             {!collapsed && (
-              <h3 className="px-3 text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
+              <h3 className="px-3 text-xs font-semibold text-white/60 uppercase tracking-wider">
                 {group.title}
               </h3>
             )}
@@ -160,19 +167,24 @@ function Sidebar() {
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
-                
+
                 return (
                   <NavLink
                     key={item.href}
                     to={item.href}
                     className={cn(
-                      "flex items-center space-x-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-smooth hover:bg-sidebar-accent group",
+                      "flex items-center space-x-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-smooth hover:bg-blue-600",
                       active
-                        ? "bg-sidebar-accent text-sidebar-primary shadow-soft"
-                        : "text-sidebar-foreground hover:text-sidebar-primary"
+                        ? "bg-blue-600 text-white shadow-soft"
+                        : "text-white"
                     )}
                   >
-                    <Icon className={cn("h-4 w-4 flex-shrink-0", active && "text-sidebar-primary")} />
+                    <Icon
+                      className={cn(
+                        "h-4 w-4 flex-shrink-0",
+                        active && "text-white h-5 w-5"
+                      )}
+                    />
                     {!collapsed && (
                       <span className="truncate">{item.title}</span>
                     )}
@@ -186,17 +198,29 @@ function Sidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-border space-y-2">
-        <div className={cn("flex items-center", collapsed ? "justify-center" : "space-x-3")}>
-          <div className={cn("h-8 w-8 rounded-full flex items-center justify-center", roleInfo.color)}>
-            <span className="text-xs font-medium text-white">{user?.name?.[0] || 'U'}</span>
+        <div
+          className={cn(
+            "flex items-center",
+            collapsed ? "justify-center" : "space-x-3"
+          )}
+        >
+          <div
+            className={cn(
+              "h-8 w-8 rounded-full flex items-center justify-center",
+              roleInfo.color
+            )}
+          >
+            <span className="text-xs font-medium text-white">
+              {user?.name?.[0] || "U"}
+            </span>
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-sidebar-foreground truncate">
+              <p className="text-sm font-medium text-white truncate">
                 {user?.name || roleInfo.name}
               </p>
-              <p className="text-xs text-sidebar-foreground/70 truncate">
-                {user?.email || 'user@company.com'}
+              <p className="text-xs text-white/70 truncate">
+                {user?.email || "user@company.com"}
               </p>
             </div>
           )}
@@ -206,7 +230,7 @@ function Sidebar() {
             variant="ghost"
             size="sm"
             onClick={logout}
-            className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent"
+            className="w-full justify-start text-white hover:bg-red-600"
           >
             <LogOut className="mr-2 h-4 w-4" />
             Sign Out
