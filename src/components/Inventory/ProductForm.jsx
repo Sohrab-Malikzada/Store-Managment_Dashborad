@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -5,12 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+
 
 const Categories = ["Electronics", "Accessories", "Office", "Clothing", "Books", "Home & Garden"];
 
 export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
-    const { toast } = useToast();
+
     const [formData, setFormData] = useState({
         name: product?.name || "",
         sku: product?.sku || "",
