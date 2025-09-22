@@ -52,7 +52,7 @@ function Dashboard() {
     .slice(0, 3);
 
   return (
-    <div className="space-y-6 m-10">
+    <div className="space-y-6 m-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
