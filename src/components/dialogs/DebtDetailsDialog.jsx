@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { toast } from "@/components/ui/use-toast";
-import { CustomerDebt, SupplierDebt } from "@/data/mockData";
+import { toast } from "react-hot-toast";
+import { mockCustomerDebts} from "@/data/mockData";
 
 export function DebtDetailsDialog({ debt, isOpen, onClose, onPaymentUpdate, type }) {
   const [paymentAmount, setPaymentAmount] = useState(0);
