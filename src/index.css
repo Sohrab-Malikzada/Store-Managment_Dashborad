@@ -2,134 +2,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@layer base {
-  :root {
-    --radius: 0.75rem;
-    --background: hsl(248, 100%, 99%);
-    --foreground: hsl(216, 32%, 17%);
 
-    --card: hsl(0, 0%, 100%);
-    --card-foreground: hsl(216, 32%, 17%);
 
-    --popover: hsl(0, 0%, 100%);
-    --popover-foreground: hsl(216, 32%, 17%);
-
-    --primary: hsl(214, 84%, 56%);
-    --primary-foreground: hsl(0, 0%, 98%);
-    --primary-glow: hsl(214, 100%, 70%);
-
-    --secondary: hsl(214, 20%, 96%);
-    --secondary-foreground: hsl(216, 32%, 17%);
-
-    --muted: hsl(214, 20%, 96%);
-    --muted-foreground: hsl(216, 20%, 45%);
-
-    --accent: hsl(214, 20%, 94%);
-    --accent-foreground: hsl(216, 32%, 17%);
-
-    --destructive: hsl(0, 84%, 60%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-
-    --success: hsl(142, 76%, 36%);
-    --success-foreground: hsl(0, 0%, 98%);
-
-    --warning: hsl(38, 92%, 50%);
-    --warning-foreground: hsl(0, 0%, 98%);
-
-    --border: hsl(214, 20%, 88%);
-    --input: hsl(214, 20%, 88%);
-    --ring: hsl(214, 84%, 56%);
-
-    /* Chart colors for enhanced Analytics */
-    --chart-1: hsl(214, 84%, 56%);
-    --chart-2: hsl(142, 76%, 36%);
-    --chart-3: hsl(38, 92%, 50%);
-    --chart-4: hsl(262, 83%, 58%);
-    --chart-5: hsl(346, 77%, 49%);
-
-    /* Business-specific design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-success: linear-gradient(135deg, hsl(var(--success)), hsl(142, 70%, 45%));
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(214, 20%, 98%));
-    --shadow-soft: 0 4px 6px -1px hsl(214, 20%, 20%, 0.1), 0 2px 4px -1px hsl(214, 20%, 20%, 0.06);
-    --shadow-medium: 0 10px 15px -3px hsl(214, 20%, 20%, 0.1), 0 4px 6px -2px hsl(214, 20%, 20%, 0.05);
-    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.3);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: hsl(216, 32%, 17%);
-    --sidebar-foreground: hsl(214, 20%, 90%);
-    --sidebar-primary: hsl(214, 84%, 56%);
-    --sidebar-primary-foreground: hsl(0, 0%, 98%);
-    --sidebar-accent: hsl(216, 28%, 22%);
-    --sidebar-accent-foreground: hsl(214, 20%, 90%);
-    --sidebar-border: hsl(216, 28%, 25%);
-    --sidebar-ring: hsl(214, 84%, 56%);
-  }
-
-  .dark {
-    --background: hsl(216, 32%, 17%);
-    --foreground: hsl(214, 20%, 90%);
-
-    --card: hsl(216, 28%, 20%);
-    --card-foreground: hsl(214, 20%, 90%);
-
-    --popover: hsl(216, 28%, 20%);
-    --popover-foreground: hsl(214, 20%, 90%);
-
-    --primary: hsl(214, 84%, 56%);
-    --primary-foreground: hsl(0, 0%, 98%);
-
-    --secondary: hsl(216, 28%, 25%);
-    --secondary-foreground: hsl(214, 20%, 90%);
-
-    --muted: hsl(216, 28%, 25%);
-    --muted-foreground: hsl(216, 20%, 65%);
-
-    --accent: hsl(216, 28%, 30%);
-    --accent-foreground: hsl(214, 20%, 90%);
-
-    --destructive: hsl(0, 84%, 60%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-
-    --success: hsl(142, 76%, 45%);
-    --success-foreground: hsl(0, 0%, 98%);
-
-    --warning: hsl(38, 92%, 55%);
-    --warning-foreground: hsl(0, 0%, 98%);
-
-    --border: hsl(216, 28%, 25%);
-    --input: hsl(216, 28%, 25%);
-    --ring: hsl(214, 84%, 56%);
-
-    /* Chart colors for dark mode */
-    --chart-1: hsl(214, 84%, 56%);
-    --chart-2: hsl(142, 76%, 45%);
-    --chart-3: hsl(38, 92%, 55%);
-    --chart-4: hsl(262, 83%, 65%);
-    --chart-5: hsl(346, 77%, 55%);
-
-    --gradient-card: linear-gradient(145deg, hsl(216, 28%, 20%), hsl(216, 28%, 22%));
-    --shadow-soft: 0 4px 6px -1px hsl(216, 32%, 10%, 0.3), 0 2px 4px -1px hsl(216, 32%, 10%, 0.2);
-    --shadow-medium: 0 10px 15px -3px hsl(216, 32%, 10%, 0.4), 0 4px 6px -2px hsl(216, 32%, 10%, 0.1);
-
-    --sidebar-background: hsl(216, 32%, 15%);
-    --sidebar-foreground: hsl(214, 20%, 85%);
-    --sidebar-primary: hsl(214, 84%, 56%);
-    --sidebar-primary-foreground: hsl(0, 0%, 98%);
-    --sidebar-accent: hsl(216, 28%, 20%);
-    --sidebar-accent-foreground: hsl(214, 20%, 85%);
-    --sidebar-border: hsl(216, 28%, 22%);
-    --sidebar-ring: hsl(214, 84%, 56%);
-  }
-
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
 
 
 /* Business Dashboard Design System - Professional & Modern */
@@ -259,13 +133,7 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+  /* body background and text color should be set via CSS variables or custom classes, not @apply for non-existent utilities */
 }
 
 @layer components {

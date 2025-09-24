@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 import { Plus, Search, DollarSign, CreditCard, Clock, Trash2, ShoppingCart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,11 +63,7 @@ function Sales() {
 
   const addToCart = () => {
     if (!currentProductId) {
-      Toaster ({
-        title: "Error",
-        description: "Please select a product",
-        variant: "destructive",
-      });
+      toast.error("Please select a product");
       return;
     }
 
@@ -98,10 +95,7 @@ function Sales() {
 
     setCurrentProductId("");
     setCurrentQuantity(1);
-    Toaster ({
-      title: "Product Added",
-      description: `${selectedProduct.name} added to cart`,
-    });
+    toast.success(`${selectedProduct.name} added to cart`);
   };
 
   const removeFromCart = (productId) => {
@@ -126,11 +120,7 @@ function Sales() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.customer || cartItems.length === 0 || !formData.paymentType) {
-      Toaster ({
-        title: "Error",
-        description: "Please fill customer name, add products to cart, and select payment method",
-        variant: "destructive",
-      });
+      toast.error("Please fill customer name, add products to cart, and select payment method");
       return;
     }
 
@@ -152,10 +142,7 @@ function Sales() {
       };
       setCustomers([...customers, newCustomer]);
       customerId = newCustomer.id;
-      Toaster ({
-        title: "Customer Account Created",
-        description: `Account created for ${formData.customer}. They can now login at /customer with their credentials.`,
-      });
+      toast.success(`Account created for ${formData.customer}. They can now login at /customer with their credentials.`);
     }
 
     const newSale = {
@@ -196,10 +183,7 @@ function Sales() {
       customerAddress: ""
     });
 
-    Toaster ({
-      title: "Success",
-      description: `Sale recorded successfully with ${cartItems.length} product(s)`,
-    });
+    toast.success(`Sale recorded successfully with ${cartItems.length} product(s)`);
   };
 
   const handleViewSale = (sale) => {
