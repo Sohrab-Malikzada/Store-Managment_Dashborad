@@ -155,7 +155,7 @@ export default function UserManagement() {
 
     setUsers(prev => [...prev, newUser]);
     setAddUserDialog(false);
-    toast.success(`Successfully added ${newUser.name} as ${roleConfigs[newUser.role].name}.`);
+    Toaster.success(`Successfully added ${newUser.name} as ${roleConfigs[newUser.role].name}.`);
   };
 
   const getDefaultPermissions = (role) => {
