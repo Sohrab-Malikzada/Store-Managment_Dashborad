@@ -84,17 +84,17 @@ export function PayrollTable({ payrollRecords, onViewDetails, onEditRecord }) {
                     variant="ghost" 
                     size="sm" 
                     onClick={() => onViewDetails?.(record)}
-                    className="hover:bg-primary/20 hover:text-primary transition-smooth rounded-full"
+                    className="hover:bg-blue-200 hover:text-blue-400 cursor-pointer transition-smooth rounded"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-4 w-4 cursor-pointer" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="sm" 
                     onClick={() => onEditRecord?.(record)}
-                    className="hover:bg-warning/20 hover:text-warning transition-smooth rounded-full"
+                    className="hover:bg-orange-200 hover:text-orange-400 cursor-pointer transition-smooth rounded"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-4 w-4 cursor-pointer" />
                   </Button>
                 </div>
               </TableCell>
