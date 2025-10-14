@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Search, AlertTriangle, Package, QrCode, Edit, Settings, Download } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,18 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { mockProducts } from "@/data/mockData";
+
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { BarcodeGenerator } from "@/components/BarcodeGenerator";
 import { CSVImport } from "@/components/CSVImport";
 import { ProductForm } from "@/components/inventory/ProductForm";
 import { StockAdjustmentDialog } from "@/components/Inventory/StockAdjustmentDialog";
 import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 export default function Inventory() {
-  // toast is imported from react-hot-toast
-  const [products, setProducts] = useState(mockProducts);
+
+  const [products, setProducts] = useState([]); 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [stockFilter, setStockFilter] = useState("all");
@@ -28,11 +29,47 @@ export default function Inventory() {
   const [barcodeDialog, setBarcodeDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      try {
+        const res = await axios.get("http://localhost:3000/products");
+       
+        const mapped = res.data.map((p) => ({
+         
+          id: p.id || (p._id ? String(p._id) : undefined),
+          _id: p._id,
+          name: p.name || p.title || "",
+          sku: p.sku || "",
+          supplier: p.supplier || "",
+          category: p.category || "Uncategorized",
+          stockLevel: Number(p.stockLevel ?? p.stock ?? 0),
+          minStock: Number(p.minStock ?? p.min ?? 0),
+          purchasePrice: Number(p.purchasePrice ?? p.cost ?? 0),
+          salePrice: Number(p.salePrice ?? p.price ?? 0),
+          status: p.status || "In Stock",
+          lastRestocked: p.lastRestocked || null,
+          createdAt: p.createdAt || null,
+     
+          ...p
+        }));
+        if (mounted) setProducts(mapped);
+      } catch (err) {
+        console.error("Failed to load products", err);
+       
+        if (mounted) setProducts([]);
+      }
+    }
+    load();
+    return () => { mounted = false; };
+  }, []);
+
   const filteredProducts = products.filter(product => {
+    const supplier = (product.supplier || "").toLowerCase();
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.supplier.toLowerCase().includes(searchTerm.toLowerCase());
+      (product.sku || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      supplier.includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === "all" || product.category === filterCategory;
 
     let matchesStock = true;
@@ -49,7 +86,7 @@ export default function Inventory() {
 
   const categories = ["all", ...Array.from(new Set(products.map(p => p.category)))];
   const lowStockCount = products.filter(p => p.stockLevel <= p.minStock).length;
-  const totalValue = products.reduce((sum, p) => sum + (p.stockLevel * p.salePrice), 0);
+  const totalValue = products.reduce((sum, p) => sum + (Number(p.stockLevel || 0) * Number(p.salePrice || 0)), 0);
   const totalProducts = products.length;
 
   const getStockStatus = (product) => {
@@ -63,7 +100,7 @@ export default function Inventory() {
       id: `PRD-${Date.now()}`,
       ...productData
     };
-    setProducts([...products, newProduct]);
+    setProducts(prev => [...prev, newProduct]);
   };
 
   const handleEditProduct = (productData) => {
@@ -79,7 +116,7 @@ export default function Inventory() {
 
   const handleStockAdjustment = (productId, newStock, type, reason) => {
     setProducts(products.map(p =>
-      p.id === productId
+      (p.id === productId || String(p._id) === String(productId))
         ? {
           ...p,
           stockLevel: newStock,
@@ -90,7 +127,7 @@ export default function Inventory() {
   };
 
   const handleDeleteProduct = (productId) => {
-    setProducts(products.filter(p => p.id !== productId));
+    setProducts(products.filter(p => !(p.id === productId || String(p._id) === String(productId))));
     toast({
       title: "Success",
       description: "Product deleted successfully",
@@ -130,7 +167,7 @@ export default function Inventory() {
             onClick={() => setAddProductDialog(true)}
             className="bg-blue-500 text-white shadow-soft hover:shadow-medium transition-smooth"
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 cursor-pointer h-4 w-4" />
             Add Product
           </Button>
         </div>
@@ -191,7 +228,7 @@ export default function Inventory() {
                 <SelectTrigger className="w-full sm:w-48 shadow-soft focus:shadow-glow transition-smooth">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={"bg-white"}>
                   {categories.map(category => (
                     <SelectItem key={category} value={category}>
                       {category === "all" ? "All Categories" : category}
@@ -204,7 +241,7 @@ export default function Inventory() {
                 <SelectTrigger className="w-full sm:w-48 shadow-soft focus:shadow-glow transition-smooth">
                   <SelectValue placeholder="Stock Status" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={"bg-white"}>
                   <SelectItem value="all">All Stock Levels</SelectItem>
                   <SelectItem value="in">In Stock</SelectItem>
                   <SelectItem value="low">Low Stock</SelectItem>
@@ -233,7 +270,7 @@ export default function Inventory() {
                 {filteredProducts.map((product) => {
                   const status = getStockStatus(product);
                   return (
-                    <TableRow key={product.id}>
+                    <TableRow key={product.id || product._id}>
                       <TableCell>
                         <div>
                           <div className="font-medium text-foreground">{product.name}</div>
@@ -245,8 +282,8 @@ export default function Inventory() {
                       </TableCell>
                       <TableCell className="font-medium">{product.stockLevel}</TableCell>
                       <TableCell className="text-muted-foreground">{product.minStock}</TableCell>
-                      <TableCell className="text-muted-foreground">؋{product.purchasePrice.toLocaleString()}</TableCell>
-                      <TableCell className="font-medium text-success">؋{product.salePrice.toLocaleString()}</TableCell>
+                      <TableCell className="text-muted-foreground">؋{Number(product.purchasePrice).toLocaleString()}</TableCell>
+                      <TableCell className="font-medium text-success">؋{Number(product.salePrice).toLocaleString()}</TableCell>
                       <TableCell>
                         <Badge variant={status.variant}>{status.label}</Badge>
                       </TableCell>

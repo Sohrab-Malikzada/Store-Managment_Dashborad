@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Package, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -18,7 +24,7 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    
+
     try {
       const success = await login(email, password);
       if (!success) {
@@ -29,6 +35,7 @@ function Login() {
     } finally {
       setIsLoading(false);
     }
+    
   };
 
   return (
@@ -39,7 +46,9 @@ function Login() {
             <Package className="h-8 w-8 text-white" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold text-foreground">Employee Portal</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground">
+              Employee Portal
+            </CardTitle>
             <CardDescription className="text-muted-foreground">
               Sign in with your employee credentials
             </CardDescription>
@@ -79,7 +88,7 @@ function Login() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  className="absolute right-0 top-0 h-full cursor-pointer px-3 py-2 hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -90,31 +99,44 @@ function Login() {
                 </Button>
               </div>
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white shadow-elegant"
               disabled={isLoading}
             >
               {isLoading ? "Signing In..." : "Sign In"}
             </Button>
           </form>
-          <div className="mt-6 text-center">
+          {/* <div className="mt-6 text-center">
             <div className="text-sm text-muted-foreground space-y-2">
               <p className="font-medium">Demo Credentials:</p>
               <div className="space-y-1 text-xs">
-                <p><strong>Admin:</strong> admin@company.com / admin123</p>
-                <p><strong>Sales:</strong> sales@company.com / sales123</p>
-                <p><strong>Inventory:</strong> inventory@company.com / inventory123</p>
+                <p>
+                  <strong>Admin:</strong> admin@company.com / admin123
+                </p>
+                <p>
+                  <strong>Sales:</strong> sales@company.com / sales123
+                </p>
+                <p>
+                  <strong>Inventory:</strong> inventory@company.com /
+                  inventory123
+                </p>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-4 text-center">
-            <p className="text-sm text-muted-foreground mb-2">Customer? Access your account:</p>
-            <Button variant="outline" className="w-full hover:bg-blue-500 hover:text-white" onClick={() => window.location.href = '/customer'}>
+          </div> */}
+
+          {/* <div className="mt-4 text-center">
+            <p className="text-sm text-muted-foreground mb-2">
+              Customer? Access your account:
+            </p>
+            <Button
+              variant="outline"
+              className="w-full hover:bg-blue-500 hover:text-white"
+              onClick={() => (window.location.href = "/customer")}
+            >
               Customer Login
             </Button>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>

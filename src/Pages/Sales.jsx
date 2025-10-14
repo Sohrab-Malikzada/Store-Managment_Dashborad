@@ -12,13 +12,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { mockSales, mockProducts, mockCustomers } from "@/data/mockData";
+import { mockSales, mockProducts } from "@/data/mockData";
 import { StatsCard } from "@/components/StatsCard";
 import { SaleDetailsDialog } from "@/components/dialogs/SaleDetailsDialog";
 
 function Sales() {
   const [sales, setSales] = useState(mockSales);
-  const [customers, setCustomers] = useState(mockCustomers);
+  // const [customers, setCustomers] = useState(mockCustomers);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterPaymentType, setFilterPaymentType] = useState("all");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -128,22 +128,23 @@ function Sales() {
     const amountPaid = formData.paymentType === 'full' ? totalAmount : formData.amountPaid;
     const pendingAmount = totalAmount - amountPaid;
 
-    // Create customer account if requested
+  
     let customerId = undefined;
-    if (createCustomerAccount && formData.customerEmail && formData.customerPassword) {
-      const newCustomer = {
-        id: `C${String(customers.length + 1).padStart(3, '0')}`,
-        name: formData.customer,
-        email: formData.customerEmail,
-        password: formData.customerPassword,
-        phone: formData.customerPhone,
-        address: formData.customerAddress,
-        createdDate: new Date().toISOString().split('T')[0]
-      };
-      setCustomers([...customers, newCustomer]);
-      customerId = newCustomer.id;
-      toast.success(`Account created for ${formData.customer}. They can now login at /customer with their credentials.`);
-    }
+    // if (createCustomerAccount && formData.customerEmail && formData.customerPassword) {
+    //   const newCustomer = {
+    //     id: `C${String(customers.length + 1).padStart(3, '0')}`,
+    //     name: formData.customer,
+    //     email: formData.customerEmail,
+    //     password: formData.customerPassword,
+    //     phone: formData.customerPhone,
+    //     address: formData.customerAddress,
+    //     createdDate: new Date().toISOString().split('T')[0]
+    //   };
+     
+    //   setCustomers([...customers, newCustomer]);
+    //   customerId = newCustomer.id;
+    //   toast.success(`Account created for ${formData.customer}. They can now login at /customer with their credentials.`);
+    // }
 
     const newSale = {
       id: `S${String(sales.length + 1).padStart(3, '0')}`,
@@ -220,7 +221,7 @@ function Sales() {
               New Sale
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-2xl max-h-[90vh] bg-white overflow-y-auto">
             <DialogHeader className="space-y-3 pb-6 border-b border-border">
               <DialogTitle className="text-2xl font-bold text-foreground">Record New Sale</DialogTitle>
               <DialogDescription className="text-base text-muted-foreground">
@@ -341,7 +342,7 @@ function Sales() {
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder="Choose product to add" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className={"bg-white"}>
                           {mockProducts.map(product => (
                             <SelectItem key={product.id} value={product.id} className="py-3">
                               <div className="flex flex-col">
@@ -518,7 +519,7 @@ function Sales() {
                 </div>
               </div>
 
-              {/* Guarantor Section (only for installments) */}
+
               {formData.paymentType === 'installment' && (
                 <div className="space-y-6">
                   <div className="flex items-center space-x-3">

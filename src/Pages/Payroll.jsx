@@ -210,7 +210,7 @@ export default function Payroll() {
                   <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
                     <SelectValue placeholder="Choose employee" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={"bg-white"}>
                     {mockEmployees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
                     ))}
@@ -233,7 +233,7 @@ export default function Payroll() {
                   <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
                     <SelectValue placeholder="Select deduction type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={"bg-white"}>
                     <SelectItem value="tax">Tax Deduction</SelectItem>
                     <SelectItem value="advance">Advance Recovery</SelectItem>
                     <SelectItem value="insurance">Insurance Premium</SelectItem>
@@ -256,7 +256,7 @@ export default function Payroll() {
               <Button 
                 type="submit" 
                 variant="outline" 
-                className="text-warning border-warning hover:bg-warning/10 shadow-soft hover:shadow-medium transition-smooth"
+                className="text-orange-500 border-warning hover:bg-warning/10 shadow-soft hover:shadow-medium transition-smooth"
               >
                 Add Deduction
               </Button>
@@ -288,7 +288,7 @@ export default function Payroll() {
                   <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
                     <SelectValue placeholder="Choose employees" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={"bg-white"}>
                     <SelectItem value="all">All Employees</SelectItem>
                     {mockEmployees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
@@ -302,7 +302,7 @@ export default function Payroll() {
                   <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
                     <SelectValue placeholder="Select occasion" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={"bg-white"}>
                     <SelectItem value="performance">Performance Bonus</SelectItem>
                     <SelectItem value="holiday">Holiday Bonus</SelectItem>
                     <SelectItem value="festival">Festival Bonus</SelectItem>

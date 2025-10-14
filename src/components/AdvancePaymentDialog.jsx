@@ -56,7 +56,7 @@ export function AdvancePaymentDialog({
                 <SelectTrigger>
                   <SelectValue placeholder="Choose employee" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={"bg-white"}>
                   {employees.map((emp) => (
                     <SelectItem key={emp.id} value={emp.id}>
                       <div className="flex items-center gap-2">
@@ -119,7 +119,7 @@ export function AdvancePaymentDialog({
                   <SelectTrigger>
                     <SelectValue placeholder="Select reason" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={"bg-white"}>
                     <SelectItem value="emergency">Medical Emergency</SelectItem>
                     <SelectItem value="personal">Personal Emergency</SelectItem>
                     <SelectItem value="family">Family Event</SelectItem>

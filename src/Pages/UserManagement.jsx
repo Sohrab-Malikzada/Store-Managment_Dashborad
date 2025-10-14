@@ -1,148 +1,101 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { StatsCard } from "@/components/dashboard/StatsCard";
-import { Toaster } from "@/components/ui/sonner"
-import { Users, Shield, Plus, Edit, UserCheck, UserX, Settings, Crown } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
+import {
+  Users,
+  Shield,
+  Plus,
+  Edit,
+  UserCheck,
+  UserX,
+  Settings,
+  Crown,
+} from "lucide-react";
+import axios from "axios";
 
-// mock users array
-const mockUsers = [
-  {
-    id: "USR001",
-    name: "John Admin",
-    email: "john.admin@company.com",
-    password: "admin123",
-    role: "admin",
-    permissions: {
-      dashboard: true,
-      sales: true,
-      inventory: true,
-      employees: true,
-      analytics: true,
-      payroll: true,
-      debts: true,
-      purchases: true,
-      userManagement: true
-    },
-    status: "active",
-    lastLogin: "2024-01-15 09:30",
-    createdAt: "2023-01-01"
-  },
-  {
-    id: "USR002", 
-    name: "Sarah Cashier",
-    email: "sarah.cashier@company.com",
-    password: "cashier123",
-    role: "cashier",
-    permissions: {
-      dashboard: true,
-      sales: true,
-      inventory: false,
-      employees: false,
-      analytics: false,
-      payroll: false,
-      debts: true,
-      purchases: false,
-      userManagement: false
-    },
-    status: "active",
-    lastLogin: "2024-01-15 08:45",
-    createdAt: "2023-03-15"
-  },
-  {
-    id: "USR003",
-    name: "Mike POS",
-    email: "mike.pos@company.com",
-    password: "pos123", 
-    role: "pos",
-    permissions: {
-      dashboard: true,
-      sales: true,
-      inventory: true,
-      employees: false,
-      analytics: false,
-      payroll: false,
-      debts: true,
-      purchases: false,
-      userManagement: false
-    },
-    status: "active",
-    lastLogin: "2024-01-14 17:20",
-    createdAt: "2023-06-20"
-  },
-  {
-    id: "USR004",
-    name: "Emily Data Entry",
-    email: "emily.data@company.com",
-    password: "data123",
-    role: "data_entry",
-    permissions: {
-      dashboard: true,
-      sales: false,
-      inventory: true,
-      employees: false,
-      analytics: false,
-      payroll: false,
-      debts: false,
-      purchases: true,
-      userManagement: false
-    },
-    status: "active",
-    lastLogin: "2024-01-13 16:30",
-    createdAt: "2023-08-10"
-  }
-];
-
-// Role config
 const roleConfigs = {
   admin: {
     name: "Administrator",
     color: "bg-destructive",
     icon: Crown,
-    description: "Full system access"
+    description: "Full system access",
   },
   cashier: {
-    name: "Cashier", 
+    name: "Cashier",
     color: "bg-primary",
     icon: UserCheck,
-    description: "Sales and customer management"
+    description: "Sales and customer management",
   },
   pos: {
     name: "Point of Sale",
     color: "bg-success",
     icon: Shield,
-    description: "Sales and inventory access"
+    description: "Sales and inventory access",
   },
   data_entry: {
     name: "Data Entry",
     color: "bg-warning",
     icon: UserX,
-    description: "Inventory and purchase data entry"
-  }
+    description: "Inventory and purchase data entry",
+  },
 };
 
 export default function UserManagement() {
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState([]);
   const [addUserDialog, setAddUserDialog] = useState(false);
   const [editUserDialog, setEditUserDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/users/list")
+      .then((res) => setUsers(res.data))
+      .catch(() => setUsers([]));
+  }, []);
 
-  const activeUsers = users.filter(u => u.status === "active").length;
-  const adminUsers = users.filter(u => u.role === "admin").length;
+  const activeUsers = users.filter((u) => u.status === "active").length;
+  const adminUsers = users.filter((u) => u.role === "admin").length;
   const totalUsers = users.length;
 
-  const handleAddUser = (formData) => {
+  const handleAddUser = async (formData) => {
     const role = formData.get("role");
     const newUser = {
-      id: `USR${String(users.length + 1).padStart(3, '0')}`,
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
@@ -150,15 +103,26 @@ export default function UserManagement() {
       permissions: getDefaultPermissions(role),
       status: "active",
       lastLogin: "Never",
-      createdAt: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString().split("T")[0],
     };
 
-    setUsers(prev => [...prev, newUser]);
-    setAddUserDialog(false);
-    Toaster.success(`Successfully added ${newUser.name} as ${roleConfigs[newUser.role].name}.`);
+    try {
+      await axios.post("http://localhost:3000/users/add", newUser);
+
+      const res = await axios.get("http://localhost:3000/users/list");
+      setUsers(res.data);
+      setAddUserDialog(false);
+      Toaster.success(
+        `Successfully added ${newUser.name} as ${
+          roleConfigs[newUser.role].name
+        }.`
+      );
+    } catch (err) {
+      Toaster.error("Failed to add user. " + (err.response?.data?.error || ""));
+    }
   };
 
-  const getDefaultPermissions = (role) => {
+  function getDefaultPermissions(role) {
     switch (role) {
       case "admin":
         return {
@@ -170,7 +134,7 @@ export default function UserManagement() {
           payroll: true,
           debts: true,
           purchases: true,
-          userManagement: true
+          userManagement: true,
         };
       case "cashier":
         return {
@@ -182,7 +146,7 @@ export default function UserManagement() {
           payroll: false,
           debts: true,
           purchases: false,
-          userManagement: false
+          userManagement: false,
         };
       case "pos":
         return {
@@ -194,7 +158,7 @@ export default function UserManagement() {
           payroll: false,
           debts: true,
           purchases: false,
-          userManagement: false
+          userManagement: false,
         };
       case "data_entry":
         return {
@@ -206,27 +170,36 @@ export default function UserManagement() {
           payroll: false,
           debts: false,
           purchases: true,
-          userManagement: false
+          userManagement: false,
         };
       default:
         return {};
     }
-  };
+  }
 
   const toggleUserStatus = (userId) => {
-    setUsers(prev => prev.map(user => 
-      user.id === userId 
-        ? { ...user, status: user.status === "active" ? "inactive" : "active" }
-        : user
-    ));
+    setUsers((prev) =>
+      prev.map((user) =>
+        user.id === userId
+          ? {
+              ...user,
+              status: user.status === "active" ? "inactive" : "active",
+            }
+          : user
+      )
+    );
   };
 
   return (
     <div className="space-y-6 m-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">User Management</h1>
-          <p className="text-muted-foreground">Manage system users, roles, and access permissions</p>
+          <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
+            User Management
+          </h1>
+          <p className="text-muted-foreground">
+            Manage system users, roles, and access permissions
+          </p>
         </div>
         <Dialog open={addUserDialog} onOpenChange={setAddUserDialog}>
           <DialogTrigger asChild>
@@ -245,37 +218,39 @@ export default function UserManagement() {
                 Create a new user account with specific role and permissions
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              handleAddUser(formData);
-            }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                handleAddUser(formData);
+              }}
+            >
               <div className="grid gap-4 py-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input 
-                    name="name" 
-                    placeholder="Enter full name" 
+                  <Input
+                    name="name"
+                    placeholder="Enter full name"
                     required
                     className="shadow-soft focus:shadow-glow transition-smooth"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
-                  <Input 
-                    name="email" 
-                    type="email" 
-                    placeholder="Enter email address" 
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Enter email address"
                     required
                     className="shadow-soft focus:shadow-glow transition-smooth"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input 
-                    name="password" 
-                    type="password" 
-                    placeholder="Enter password" 
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
                     required
                     className="shadow-soft focus:shadow-glow transition-smooth"
                   />
@@ -300,7 +275,10 @@ export default function UserManagement() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" className="gradient-primary shadow-soft hover:shadow-medium">
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-blue-500 to-blue-400 shadow-soft hover:shadow-medium"
+                >
                   Create User
                 </Button>
               </DialogFooter>
@@ -342,7 +320,9 @@ export default function UserManagement() {
             <Users className="h-5 w-5 text-primary" />
             System Users
           </CardTitle>
-          <CardDescription>Manage user accounts, roles, and access permissions</CardDescription>
+          <CardDescription>
+            Manage user accounts, roles, and access permissions
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -360,27 +340,45 @@ export default function UserManagement() {
             <TableBody>
               {users.map((user) => {
                 const roleConfig = roleConfigs[user.role];
-                const activePermissions = Object.values(user.permissions).filter(Boolean).length;
-                const totalPermissions = Object.keys(user.permissions).length;
-                
+                const permissionsObj = user.permissions || {};
+                const activePermissions =
+                  Object.values(permissionsObj).filter(Boolean).length;
+                const totalPermissions = Object.keys(permissionsObj).length;
+
                 return (
-                  <TableRow key={user.id} className="hover:bg-muted/50 transition-smooth">
+                  <TableRow
+                    key={user.id}
+                    className="hover:bg-muted/50 transition-smooth"
+                  >
                     <TableCell>
                       <div>
                         <div className="font-medium">{user.name}</div>
-                        <div className="text-sm text-muted-foreground">{user.email}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {user.email}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={`${roleConfig.color} text-white`}>
-                        <roleConfig.icon className="h-3 w-3 mr-1" />
-                        {roleConfig.name}
-                      </Badge>
+                      <div className="flex flex-col gap-1">
+                        <Badge
+                          className={`${roleConfig.color} text-white flex items-center gap-1`}
+                        >
+                          <roleConfig.icon className="h-3 w-3 mr-1" />
+                          {roleConfig.name}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground font-mono px-2 py-0.5 rounded bg-muted/40 w-fit mt-1 border p-4 border-border">
+                          {user.role}
+                        </span>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <span className="font-medium">{activePermissions}/{totalPermissions}</span>
-                        <span className="text-muted-foreground ml-1">modules</span>
+                        <span className="font-medium">
+                          {activePermissions}/{totalPermissions}
+                        </span>
+                        <span className="text-muted-foreground ml-1">
+                          modules
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -389,9 +387,15 @@ export default function UserManagement() {
                           checked={user.status === "active"}
                           onCheckedChange={() => toggleUserStatus(user.id)}
                         />
-                        <Badge 
-                          variant={user.status === "active" ? "default" : "secondary"}
-                          className={user.status === "active" ? "bg-success hover:bg-success/80" : ""}
+                        <Badge
+                          variant={
+                            user.status === "active" ? "default" : "secondary"
+                          }
+                          className={
+                            user.status === "active"
+                              ? "bg-success hover:bg-success/80"
+                              : ""
+                          }
                         >
                           {user.status}
                         </Badge>
@@ -405,8 +409,8 @@ export default function UserManagement() {
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-1">
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="sm"
                           onClick={() => {
                             setSelectedUser(user);
@@ -416,7 +420,11 @@ export default function UserManagement() {
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="hover:bg-primary/10">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="hover:bg-primary/10"
+                        >
                           <Settings className="h-4 w-4" />
                         </Button>
                       </div>
@@ -448,28 +456,34 @@ export default function UserManagement() {
                   <Label>User Information</Label>
                   <div className="p-3 border border-border rounded-lg bg-muted/30">
                     <div className="font-medium">{selectedUser.name}</div>
-                    <div className="text-sm text-muted-foreground">{selectedUser.email}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {selectedUser.email}
+                    </div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <Label>Module Permissions</Label>
                   <div className="grid grid-cols-2 gap-3">
-                    {Object.entries(selectedUser.permissions).map(([module, hasAccess]) => (
-                      <div key={module} className="flex items-center justify-between p-2 border border-border rounded">
-                        <span className="capitalize text-sm">{module.replace(/([A-Z])/g, ' $1').trim()}</span>
-                        <Switch checked={hasAccess} />
-                      </div>
-                    ))}
+                    {Object.entries(selectedUser.permissions).map(
+                      ([module, hasAccess]) => (
+                        <div
+                          key={module}
+                          className="flex items-center justify-between p-2 border border-border rounded"
+                        >
+                          <span className="capitalize text-sm">
+                            {module.replace(/([A-Z])/g, " $1").trim()}
+                          </span>
+                          <Switch checked={hasAccess} />
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button 
-              variant="outline" 
-              onClick={() => setEditUserDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setEditUserDialog(false)}>
               Cancel
             </Button>
             <Button className="gradient-primary shadow-soft hover:shadow-medium">
