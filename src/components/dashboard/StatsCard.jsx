@@ -4,7 +4,7 @@
 import { Card } from "@/components/ui/card";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
-export function StatsCard({ title, value, icon: Icon, trend, iconColor }) {
+export function  StatsCard({ title, value, icon: Icon, trend, iconColor }) {
  
   let colorClass = iconColor;
   if (!colorClass) {
@@ -18,16 +18,20 @@ export function StatsCard({ title, value, icon: Icon, trend, iconColor }) {
   }
 
   return (
-    <Card className="flex flex-col gap-2 p-4 bg-white border border-border rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-      <div className="flex items-center gap-3">
+    <Card className="gradient-card  shadow-[0,4px,30px]	 hover:shadow-[hsl(45,8%,69%)] transition-all duration-300 p-10 border-[hsl(214,20%,88%)] hover:shadow-medium ">
+      <div className="flex -mb-3 items-right gap-10">
         {Icon && (
-          <span className={`rounded-lg p-2 ${colorClass} flex items-center justify-center`}>
-            <Icon className="h-6 w-6" />
+          <span className={`rounded-lg p-2 ${colorClass} flex items-right  justify-end`}>
+            <Icon className="items-center  -m-64 -mt-4 h-4 w-4 flex justify-end " />
           </span>
         )}
         <div className="flex-1">
-          <div className="text-xs text-muted-foreground font-semibold mb-1 tracking-wide uppercase">{title}</div>
-          <div className="text-xl font-bold text-foreground leading-tight">{value}</div>
+          <div className="flex justify-start -ml-18 -mt-2  tracking-tight items-center text-sm font-medium text-[hsl(216,20%,45%)]  leading-none">
+            {title}
+          </div>
+          <div className="mt-4 -ml-18 space-x-7 flex justify-start text-2xl font-bold text-foreground leading-tight">
+            <span className="self-end">{value}</span>
+          </div>
         </div>
       </div>
       {trend && (

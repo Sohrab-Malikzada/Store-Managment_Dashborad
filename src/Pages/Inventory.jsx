@@ -135,29 +135,28 @@ export default function Inventory() {
   };
 
   return (
-    <div className="space-y-6 m-8">
+    <div className="space-y-6 m-6">
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-blue-500 bg-clip-text ">
+          <h1 className="text-3xl font-bold text-[hsl(214,84%,64%)] bg-clip-text ">
             Inventory Management
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[hsl(216,20%,45%)] mt-1">
             Track and manage your product inventory with advanced controls
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <CSVImport onImport={(importedProducts) => {
+          <CSVImport  onImport={(importedProducts) => {
             const newProducts = importedProducts.map((product, index) => ({
               id: `PRD-${Date.now()}-${index}`,
               ...product
             }));
             setProducts(prev => [...prev, ...newProducts]);
           }} />
-
           <Button
             variant="outline"
-            className="shadow-soft hover:shadow-medium transition-smooth"
+            className="gap-2 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
           >
             <Download className="mr-2 h-4 w-4" />
             Export
@@ -165,7 +164,7 @@ export default function Inventory() {
 
           <Button
             onClick={() => setAddProductDialog(true)}
-            className="bg-blue-500 text-white shadow-soft hover:shadow-medium transition-smooth"
+            className="bg-blue-500 text-white shadow-soft hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
           >
             <Plus className="mr-2 cursor-pointer h-4 w-4" />
             Add Product
@@ -176,6 +175,7 @@ export default function Inventory() {
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <StatsCard
+          className=" m-5 text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
           title="Total Products"
           value={totalProducts}
           icon={Package}

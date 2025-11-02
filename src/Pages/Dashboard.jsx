@@ -64,7 +64,7 @@ function Dashboard() {
           </p>
         </div>
         <Button
-          className="gradient-primary text-white shadow-glow"
+          className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer"
           onClick={() => {
             const reportData = {
               totalProducts: stats.totalProducts,
