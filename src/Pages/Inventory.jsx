@@ -179,8 +179,7 @@ export default function Inventory() {
           title="Total Products"
           value={totalProducts}
           icon={Package}
-          variant="default"
-        />
+          iconColor="bg-red-300 text-red-700 rounded-[10px]  h-4 w-4 "        />
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
@@ -196,30 +195,30 @@ export default function Inventory() {
       </div>
 
       {/* Filters and Search */}
-      <Card className="gradient-card shadow-medium">
+      <Card className="gradient-card shadow-medium border-[hsl(214,20%,88%)]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <Package className="h-5 w-5 text-primary" />
+              <CardTitle className="flex text-[hsl(216,32%,17%)]  items-center gap-2">
+                <Package className="h-5 w-5 text-[hsl(214,84%,50%)]" />
                 Product Inventory
               </CardTitle>
-              <CardDescription>Manage your product stock levels and details</CardDescription>
+              <CardDescription className=" text-[hsl(216,20%,45%)]">Manage your product stock levels and details</CardDescription>
             </div>
-            <Badge variant="outline" className="text-sm">
+            <Badge variant="outline" className="mb-1 tracking-tight text-sm rounded-2xl text-[hsl(216,32%,17%)] border-[hsl(214,20%,88%)]">
               {filteredProducts.length} of {products.length} products
             </Badge>
           </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col xl:flex-row gap-4 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <div className=" relative flex-1 rounded-md bg-gray-50">
+              <Search className=" text-[hsl(216,20%,45%)] shadow-[0_1px_2px_-1px_hsl(216,20%,45%,0.5)] absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search products, SKU, or supplier..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 shadow-soft focus:shadow-glow transition-smooth"
+                className=" pl-10 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-glow transition-smooth"
               />
             </div>
 
