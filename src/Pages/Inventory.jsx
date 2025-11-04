@@ -218,16 +218,16 @@ export default function Inventory() {
                 placeholder="Search products, SKU, or supplier..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className=" pl-10 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-glow transition-smooth"
+                className="rounded-[10px] pl-10 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line focus:ring-2 focus:ring-offset-2 focus:visible:ring-0 focus:ring-blue-500 transition-smooth"
               />
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Select value={filterCategory} onValueChange={setFilterCategory}>
-                <SelectTrigger className="w-full sm:w-48 shadow-soft focus:shadow-glow transition-smooth">
-                  <SelectValue placeholder="All Categories" />
+                <SelectTrigger className="text-[hsl(216,32%,17%)] rounded-[10px] pl-10 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line focus:ring-2 focus:ring-offset-2 focus:visible:ring-0 transition-all duration-300 focus:ring-blue-500 transition-smooth w-full sm:w-48 focus:shadow-line transition-smooth">
+                  <SelectValue className="text-[hsl(216,32%,17%)]" placeholder="All Categories" />
                 </SelectTrigger>
-                <SelectContent className={"bg-white"}>
+                <SelectContent className={"bg-white text-[hsl(216,32%,17%)]  rounded-[10px] border-[hsl(214,20%,88%)]"}>
                   {categories.map(category => (
                     <SelectItem key={category} value={category}>
                       {category === "all" ? "All Categories" : category}
@@ -236,11 +236,11 @@ export default function Inventory() {
                 </SelectContent>
               </Select>
 
-              <Select value={stockFilter} onValueChange={setStockFilter}>
-                <SelectTrigger className="w-full sm:w-48 shadow-soft focus:shadow-glow transition-smooth">
+              <Select className="" value={stockFilter} onValueChange={setStockFilter}>
+                <SelectTrigger className="text-[hsl(216,32%,17%)] transition-all duration-300 w-full sm:w-48 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line rounded-[10px]  transition-smooth">
                   <SelectValue placeholder="Stock Status" />
                 </SelectTrigger>
-                <SelectContent className={"bg-white"}>
+                <SelectContent className={"bg-white rounded-[10px] border-[hsl(214,20%,88%)] text-[hsl(216,32%,17%)]"}>
                   <SelectItem value="all">All Stock Levels</SelectItem>
                   <SelectItem value="in">In Stock</SelectItem>
                   <SelectItem value="low">Low Stock</SelectItem>
@@ -251,7 +251,7 @@ export default function Inventory() {
           </div>
 
           {/* Products Table */}
-          <div className="border rounded-lg">
+          <div className="hover:bg-[hsl(0,0%,96%)] hover:transition-all duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
             <Table>
               <TableHeader>
                 <TableRow>
