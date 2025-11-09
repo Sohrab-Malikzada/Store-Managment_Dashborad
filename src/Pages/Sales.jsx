@@ -209,22 +209,22 @@ function Sales() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Sales Management</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Sales Management</h1>
+          <p className="text-[hsl(216,20%,45%)] mt-1">
             Track your sales and payment records
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-blue-500 text-white shadow-glow">
+            <Button className="rounded-[10px] bg-blue-500 text-white  shadow-[hsl(214,100%,70%)]">
               <Plus className="mr-2 h-4 w-4" />
               New Sale
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] bg-white overflow-y-auto">
+          <DialogContent className=" max-w-2xl max-h-[90vh] border-[hsl(214,20%,88%)] bg-gray-50 overflow-y-auto">
             <DialogHeader className="space-y-3 pb-6 border-b border-border">
-              <DialogTitle className="text-2xl font-bold text-foreground">Record New Sale</DialogTitle>
-              <DialogDescription className="text-base text-muted-foreground">
+              <DialogTitle className="text-2xl font-bold text-[hsl(216,32%,17%)]">Record New Sale</DialogTitle>
+              <DialogDescription className="-mt-2 text-base text-[hsl(216,20%,45%)]">
                 Enter the details for the new sale transaction and optionally create a customer account.
               </DialogDescription>
             </DialogHeader>
@@ -234,14 +234,14 @@ function Sales() {
               <div className="space-y-6">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-primary">1</span>
+                    <span className="text-sm font-semibold text-[hsl(214,84%,56%)]  rounded-full w-8 h-8 pt-1.5 pl-3 bg-[rgb(228,234,253)]">1</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">Customer Information</h3>
+                  <h3 className="text-lg font-semibold  text-[hsl(216,32%,17%)]">Customer Information</h3>
                 </div>
                 
                 <div className="bg-muted/30 rounded-lg p-6 space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="customer" className="text-sm font-medium text-foreground">Customer Name *</Label>
+                    <Label htmlFor="customer" className="text-sm font-medium text-[hsl(216,32%,17%)]">Customer Name *</Label>
                     <Input 
                       id="customer" 
                       value={formData.customer}
@@ -252,15 +252,15 @@ function Sales() {
                     />
                   </div>
                   
-                  <div className="flex items-center space-x-3 p-4 bg-card rounded-lg border border-border">
+                  <div className="flex items-center space-x-3 p-4 bg-[hsl(0,0%,100%)] rounded-[10px] border border-[hsl(214,20%,88%)]">
                     <Checkbox 
                       id="createAccount" 
                       checked={createCustomerAccount}
                       onCheckedChange={(checked) => setCreateCustomerAccount(!!checked)}
-                      className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                      className="data-[state=checked]:bg-[hsl(214,84%,56%)] data-[state=checked]:border-[hsl(214,84%,56%)]"
                     />
                     <div className="space-y-1">
-                      <Label htmlFor="createAccount" className="text-sm font-medium text-foreground cursor-pointer">
+                      <Label htmlFor="createAccount" className="text-sm font-medium  text-[hsl(216,32%,17%)] cursor-pointer">
                         Create customer account for online access
                       </Label>
                       <p className="text-xs text-muted-foreground">

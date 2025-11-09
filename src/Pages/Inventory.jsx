@@ -272,7 +272,7 @@ export default function Inventory() {
                     <TableRow key={product.id || product._id}>
                       <TableCell>
                         <div>
-                          <div className="font-medium text-foreground">{product.name}</div>
+                          <div className="font-medium text-foreground">{product.name}kljkljlj</div>
                           <div className="text-sm text-muted-foreground">SKU: {product.sku}</div>
                         </div>
                       </TableCell>

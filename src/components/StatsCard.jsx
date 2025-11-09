@@ -22,7 +22,7 @@ export function StatsCard({
   return (
     <Card 
       className={cn(
-        " gradient-card  shadow-[0,4px,30px]	 hover:shadow-[hsl(45,8%,69%)] transition-all duration-300",
+        "gradient-card  shadow-[0,4px,30px]	 hover:shadow-[hsl(45,8%,69%)] transition-all duration-300 border-[hsl(214,20%,88%)] hover:shadow-medium ",
         className
       )}
     >
