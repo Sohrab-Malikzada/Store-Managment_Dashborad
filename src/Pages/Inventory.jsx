@@ -205,7 +205,7 @@ export default function Inventory() {
               </CardTitle>
               <CardDescription className=" text-[hsl(216,20%,45%)]">Manage your product stock levels and details</CardDescription>
             </div>
-            <Badge variant="outline" className="mb-1 tracking-tight text-sm rounded-2xl text-[hsl(216,32%,17%)] border-[hsl(214,20%,88%)]">
+            <Badge variant="outline" className="mb-1 tracking-tight text-sm rounded-2xl text-[hsl(216,32%,17%)] git">
               {filteredProducts.length} of {products.length} products
             </Badge>
           </div>

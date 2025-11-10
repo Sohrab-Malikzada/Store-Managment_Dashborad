@@ -252,7 +252,7 @@ function Sales() {
                     />
                   </div>
                   
-                  <div className="flex items-center space-x-3 p-4 bg-[hsl(0,0%,100%)] rounded-[10px] border border-[hsl(214,20%,88%)]">
+                  <div className="flex  items-center space-x-3 p-4 bg-[hsl(0,0%,100%)] rounded-[10px] border border-[hsl(214,20%,88%)]">
                     <Checkbox 
                       id="createAccount" 
                       checked={createCustomerAccount}
@@ -263,7 +263,7 @@ function Sales() {
                       <Label htmlFor="createAccount" className="text-sm font-medium  text-[hsl(216,32%,17%)] cursor-pointer">
                         Create customer account for online access
                       </Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-[hsl(216,20%,45%)]">
                         Allow customer to track their purchases and payments online
                       </p>
                     </div>
@@ -271,51 +271,51 @@ function Sales() {
 
                   {createCustomerAccount && (
                     <div className="space-y-4 pt-4 border-t border-border">
-                      <h4 className="text-sm font-semibold text-foreground">Account Credentials</h4>
+                      <h4 className="text-sm font-semibold text-[hsl(216,32%,17%)]">Account Credentials</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label htmlFor="customerEmail" className="text-sm font-medium text-foreground">Email Address *</Label>
+                          <Label htmlFor="customerEmail" className="text-sm font-medium text-[hsl(216,32%,17%)]">Email Address *</Label>
                           <Input 
                             id="customerEmail" 
                             type="email"
                             value={formData.customerEmail}
                             onChange={(e) => setFormData({...formData, customerEmail: e.target.value})}
                             placeholder="customer@email.com"
-                            className="h-11"
+                            className="h-11 shadow-none"
                             required={createCustomerAccount}
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="customerPassword" className="text-sm font-medium text-foreground">Password *</Label>
+                          <Label htmlFor="customerPassword" className="text-sm font-medium text-[hsl(216,32%,17%)]">Password *</Label>
                           <Input 
                             id="customerPassword" 
                             type="password"
                             value={formData.customerPassword}
                             onChange={(e) => setFormData({...formData, customerPassword: e.target.value})}
                             placeholder="Enter secure password"
-                            className="h-11"
+                            className="h-11 shadow-none"
                             required={createCustomerAccount}
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="customerPhone" className="text-sm font-medium text-foreground">Phone Number</Label>
+                          <Label htmlFor="customerPhone" className="text-sm font-medium text-[hsl(216,32%,17%)]">Phone Number</Label>
                           <Input 
                             id="customerPhone" 
                             value={formData.customerPhone}
                             onChange={(e) => setFormData({...formData, customerPhone: e.target.value})}
                             placeholder="+93-XXX-XXX-XXX"
-                            className="h-11"
+                            className="h-11 shadow-none"
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="customerAddress" className="text-sm font-medium text-foreground">Address</Label>
+                          <Label htmlFor="customerAddress" className="text-sm font-medium text-[hsl(216,32%,17%)]">Address</Label>
                           <Textarea 
                             id="customerAddress" 
                             value={formData.customerAddress}
                             onChange={(e) => setFormData({...formData, customerAddress: e.target.value})}
                             placeholder="Enter customer address"
                             rows={3}
-                            className="resize-none"
+                            className="resize-none shadow-none "
                           />
                         </div>
                       </div>
@@ -328,26 +328,26 @@ function Sales() {
               <div className="space-y-6">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-primary">2</span>
+                    <span className="text-sm font-semibold text-[hsl(214,84%,56%)]  rounded-full w-8 h-8 pt-1.5 pl-3 bg-[rgb(228,234,253)]">2</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">Product & Sale Details</h3>
+                  <h3 className="text-lg font-semibold text-[hsl(216,32%,17%)]">Product & Sale Details</h3>
                 </div>
                 
                 <div className="bg-muted/30 rounded-lg p-6 space-y-6">
                   {/* Add Product to Cart */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="product" className="text-sm font-medium text-foreground">Select Product *</Label>
+                      <Label htmlFor="product" className="text-sm font-medium text-[hsl(216,32%,17%)]">Select Product *</Label>
                       <Select value={currentProductId} onValueChange={setCurrentProductId}>
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder="Choose product to add" />
                         </SelectTrigger>
-                        <SelectContent className={"bg-white"}>
+                        <SelectContent className={"bg-white rounded-[10px] border-[hsl(214,20%,88%)]"}>
                           {mockProducts.map(product => (
                             <SelectItem key={product.id} value={product.id} className="py-3">
                               <div className="flex flex-col">
-                                <span className="font-medium">{product.name}</span>
-                                <span className="text-sm text-muted-foreground">؋{product.salePrice.toLocaleString()}</span>
+                                <span className="font-medium text-[hsl(216, 20%, 45%)]">{product.name}</span>
+                                <span className="text-sm text-[hsl(216,20%,45%)]">؋{product.salePrice.toLocaleString()}</span>
                               </div>
                             </SelectItem>
                           ))}
@@ -355,7 +355,7 @@ function Sales() {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="quantity" className="text-sm font-medium text-foreground">Quantity *</Label>
+                      <Label htmlFor="quantity" className="text-sm font-medium text-[hsl(216,32%,17%)]">Quantity *</Label>
                       <Input 
                         id="quantity" 
                         type="number" 
@@ -363,14 +363,14 @@ function Sales() {
                         onChange={(e) => setCurrentQuantity(parseInt(e.target.value) || 1)}
                         min="1"
                         placeholder="1"
-                        className="h-11"
+                        className="h-11 py-5.5 shadow-none"
                       />
                     </div>
                     <div className="flex items-end">
                       <Button 
                         type="button" 
                         onClick={addToCart}
-                        className="h-11 w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                        className="h-11 mb-2 py-5.5 w-full bg-[hsl(214,84%,56%)] rounded-[10px]  hover:bg-[hsl(214,84%,60%)] text-white"
                       >
                         <Plus className="mr-2 h-4 w-4" />
                         Add to Cart
