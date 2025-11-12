@@ -22,7 +22,7 @@ export function  StatsCard({ title, value, icon: Icon, trend, iconColor }) {
       <div className="position-relative flex -mb-3 items-right gap-10">
         {Icon && (
           <span className={`rounded-lg p-2  flex items-right  justify-end`}>
-            <Icon className={`items-center  ${colorClass} position-absolute -m-64 -mt-4 h-4 w-4 flex justify-end `} />
+            <Icon className={`items-center  ${colorClass} position-absolute -m-66 -mt-6  h-4 w-4 flex justify-end `} />
           </span>
         )}
         <div className="flex-1">
@@ -35,7 +35,7 @@ export function  StatsCard({ title, value, icon: Icon, trend, iconColor }) {
         </div>
       </div>
       {trend && (
-        <div className={`flex items-center gap-1 text-xs font-semibold mt-2 ${trend.value > 0 ? 'text-emerald-600' : trend.value < 0 ? 'text-red-500' : 'text-muted-foreground'}`}>
+        <div className={`flex items-center gap-1 text-xs font-semibold mt-2 ${trend.value > 0 ? 'text-emerald-600' : trend.value < 0 ? 'text-foreground' : 'text-muted-foreground'}`}>
           {trend.value > 0 ? <ArrowUpRight className="w-4 h-4" /> : trend.value < 0 ? <ArrowDownRight className="w-4 h-4" /> : null}
           {trend.value > 0 ? '+' : ''}{trend.value}% {trend.label}
         </div>

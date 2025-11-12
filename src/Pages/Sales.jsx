@@ -205,7 +205,7 @@ function Sales() {
   };
 
   return (
-    <div className="space-y-6 m-6">
+    <div className="space-y-6 m-6 ">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -222,7 +222,7 @@ function Sales() {
             </Button>
           </DialogTrigger>
           <DialogContent className=" max-w-2xl max-h-[90vh] border-[hsl(214,20%,88%)] bg-gray-50 overflow-y-auto">
-            <DialogHeader className="space-y-3 pb-6 border-b border-border">
+            <DialogHeader className="space-y-3 pb-6 border-b border-[hsl(214,20%,88%)]">
               <DialogTitle className="text-2xl font-bold text-[hsl(216,32%,17%)]">Record New Sale</DialogTitle>
               <DialogDescription className="-mt-2 text-base text-[hsl(216,20%,45%)]">
                 Enter the details for the new sale transaction and optionally create a customer account.
@@ -232,7 +232,7 @@ function Sales() {
             <form onSubmit={handleSubmit} className="space-y-8 py-6">
               {/* Customer Information Section */}
               <div className="space-y-6">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 ">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                     <span className="text-sm font-semibold text-[hsl(214,84%,56%)]  rounded-full w-8 h-8 pt-1.5 pl-3 bg-[rgb(228,234,253)]">1</span>
                   </div>
@@ -270,7 +270,7 @@ function Sales() {
                   </div>
 
                   {createCustomerAccount && (
-                    <div className="space-y-4 pt-4 border-t border-border">
+                    <div className="space-y-4 pt-4 border-t border-[hsl(214,20%,88%)]">
                       <h4 className="text-sm font-semibold text-[hsl(216,32%,17%)]">Account Credentials</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
@@ -339,14 +339,14 @@ function Sales() {
                     <div className="space-y-2">
                       <Label htmlFor="product" className="text-sm font-medium text-[hsl(216,32%,17%)]">Select Product *</Label>
                       <Select value={currentProductId} onValueChange={setCurrentProductId}>
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Choose product to add" />
+                        <SelectTrigger className="line-clamp-1  white-space-nowrap h-11 pl-6  gap-1 text-[hsl(216,32%,17%)]">
+                          <SelectValue  placeholder="Choose product to add" />
                         </SelectTrigger>
                         <SelectContent className={"bg-white rounded-[10px] border-[hsl(214,20%,88%)]"}>
                           {mockProducts.map(product => (
                             <SelectItem key={product.id} value={product.id} className="py-3">
                               <div className="flex flex-col">
-                                <span className="font-medium text-[hsl(216, 20%, 45%)]">{product.name}</span>
+                                <span className="font-medium text-[hsl(216,32%,17%)]">{product.name}</span>
                                 <span className="text-sm text-[hsl(216,20%,45%)]">؋{product.salePrice.toLocaleString()}</span>
                               </div>
                             </SelectItem>
@@ -363,7 +363,7 @@ function Sales() {
                         onChange={(e) => setCurrentQuantity(parseInt(e.target.value) || 1)}
                         min="1"
                         placeholder="1"
-                        className="h-11 py-5.5 shadow-none"
+                        className="h-11 py-5.5 shadow-none text-[hsl(216,32%,17%)]"
                       />
                     </div>
                     <div className="flex items-end">
@@ -439,29 +439,29 @@ function Sales() {
               <div className="space-y-6">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-primary">3</span>
+                    <span className="text-sm font-semibold text-[hsl(214,84%,56%)]  rounded-full w-8 h-8 pt-1.5 pl-3 bg-[rgb(228,234,253)]">3</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">Payment Details</h3>
+                  <h3 className="text-lg font-semibold text-[hsl(216,32%,17%)]">Payment Details</h3>
                 </div>
                 
                 <div className="bg-muted/30 rounded-lg p-6 space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="paymentType" className="text-sm font-medium text-foreground">Payment Method *</Label>
+                    <Label htmlFor="paymentType" className="text-sm font-medium text-[hsl(216,32%,17%)]">Payment Method *</Label>
                     <Select value={formData.paymentType} onValueChange={(value) => setFormData({...formData, paymentType: value})}>
-                      <SelectTrigger className="h-11">
+                      <SelectTrigger className="h-11  text-[hsl(216,32%,17%)]">
                         <SelectValue placeholder="Select payment method" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="full" className="py-3">
                           <div className="flex flex-col">
                             <span className="font-medium">Full Payment</span>
-                            <span className="text-sm text-muted-foreground">Complete payment now</span>
+                            <span className="text-sm text-[hsl(216,20%,45%)]">Complete payment now</span>
                           </div>
                         </SelectItem>
                         <SelectItem value="installment" className="py-3">
                           <div className="flex flex-col">
                             <span className="font-medium">Installment/Credit</span>
-                            <span className="text-sm text-muted-foreground">Partial payment with credit terms</span>
+                            <span className="text-sm text-[hsl(216,20%,45%)]">Partial payment with credit terms</span>
                           </div>
                         </SelectItem>
                       </SelectContent>
@@ -469,28 +469,28 @@ function Sales() {
                   </div>
 
                   {formData.paymentType === 'installment' && (
-                    <div className="space-y-4 pt-4 border-t border-border">
+                    <div className="space-y-4 pt-4 border-t  border-[hsl(214,20%,88%)]">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="amountPaid" className="text-sm font-medium text-foreground">Amount Paid Now *</Label>
+                        <div className="space-y-2"> 
+                          <Label htmlFor="amountPaid" className="text-sm font-medium text-[hsl(216,32%,17%)]">Amount Paid Now *</Label>
                           <Input 
                             id="amountPaid" 
                             type="number" 
                             value={formData.amountPaid}
                             onChange={(e) => setFormData({...formData, amountPaid: parseFloat(e.target.value) || 0})}
                             placeholder="0"
-                            className="h-11"
+                            className="h-11 text-[hsl(216,32%,17%)] shadow-none"
                             required
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="dueDate" className="text-sm font-medium text-foreground">Payment Due Date *</Label>
+                          <Label htmlFor="dueDate" className="text-sm font-medium text-[hsl(216,32%,17%)]">Payment Due Date *</Label>
                           <Input 
                             id="dueDate" 
                             type="date" 
                             value={formData.dueDate}
                             onChange={(e) => setFormData({...formData, dueDate: e.target.value})}
-                            className="h-11"
+                            className="h-11 shadow-none text-[hsl(216,32%,17%)]"
                             required
                           />
                         </div>
@@ -524,64 +524,64 @@ function Sales() {
                 <div className="space-y-6">
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 rounded-full bg-accent/50 flex items-center justify-center">
-                      <span className="text-sm font-semibold text-accent-foreground">4</span>
+                      <span className="text-sm font-semibold text-[hsl(214,84%,56%)]  rounded-full w-8 h-8 pt-1.5 pl-3 bg-[rgb(228,234,253)]">4</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-foreground">Guarantor Information</h3>
-                      <p className="text-sm text-muted-foreground">Optional - for additional security</p>
+                      <h3 className="text-lg font-semibold text-[hsl(216,32%,17%)]">Guarantor Information</h3>
+                      <p className="text-sm text-[hsl(216,20%,45%)]">Optional - for additional security</p>
                     </div>
                   </div>
                   
                   <div className="bg-muted/30 rounded-lg p-6 space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="guarantorName" className="text-sm font-medium text-foreground">Guarantor Full Name</Label>
+                        <Label htmlFor="guarantorName" className="text-sm font-medium text-[hsl(216,32%,17%)]">Guarantor Full Name</Label>
                         <Input 
                           id="guarantorName" 
                           value={formData.guarantorName}
                           onChange={(e) => setFormData({...formData, guarantorName: e.target.value})}
                           placeholder="Enter guarantor's full name"
-                          className="h-11"
+                          className="h-11 shadow-none"
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="guarantorIdCard" className="text-sm font-medium text-foreground">ID Card Number</Label>
+                        <Label htmlFor="guarantorIdCard" className="text-sm font-medium text-[hsl(216,32%,17%)]">ID Card Number</Label>
                         <Input 
                           id="guarantorIdCard" 
                           value={formData.guarantorIdCard}
                           onChange={(e) => setFormData({...formData, guarantorIdCard: e.target.value})}
                           placeholder="Enter ID card number"
-                          className="h-11"
+                          className="h-11 shadow-none"
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="guarantorAddress" className="text-sm font-medium text-foreground">Guarantor Address</Label>
+                      <Label htmlFor="guarantorAddress" className="text-sm font-medium text-[hsl(216,32%,17%)]">Guarantor Address</Label>
                       <Textarea 
                         id="guarantorAddress" 
                         value={formData.guarantorAddress}
                         onChange={(e) => setFormData({...formData, guarantorAddress: e.target.value})}
                         placeholder="Enter guarantor's complete address"
                         rows={3}
-                        className="resize-none"
+                        className=" resize-none shadow-none"
                       />
                     </div>
                   </div>
                 </div>
               )}
 
-              <DialogFooter className="flex-col sm:flex-row gap-3 pt-6 border-t border-border">
+              <DialogFooter className="flex-col sm:flex-row gap-5 pt-6 border-t border-[hsl(214,20%,88%)]">
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setIsDialogOpen(false)}
-                  className="order-2 sm:order-1"
+                  className="cursor-pointer border-[hsl(214,20%,88%)] hover:bg-[hsl(214,20%,95%)] shadow-none text-[hsl(216,32%,17%)] rounded-[10px] order-2 sm:order-1"
                 >
                   Cancel
                 </Button>
                 <Button 
                   type="submit" 
-                  className="gradient-primary text-white shadow-glow order-1 sm:order-2"
+                  className="cursor-pointer gradient-primary rounded-[10px] text-white  shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] order-1 sm:order-2"
                 >
                   Record Sale
                 </Button>

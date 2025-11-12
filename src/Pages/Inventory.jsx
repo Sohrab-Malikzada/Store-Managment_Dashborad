@@ -175,21 +175,23 @@ export default function Inventory() {
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <StatsCard
-          className=" m-5 text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
+          className=" m-5  text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
           title="Total Products"
           value={totalProducts}
           icon={Package}
-          iconColor="bg-red-300 text-red-700 rounded-[10px]  h-4 w-4 "        />
+          iconColor="bg-[hsl(211,100%,50%))]/10 text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
           icon={AlertTriangle}
+          iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
         />
         <StatsCard
           title="Inventory Value"
           value={`؋${totalValue.toLocaleString()}`}
           icon={Package}
+          iconColor="bg-[hsl(142,76%,36%)]/10 text-[hsl(144,100%,29%)] rounded-[12px] p-2 h-8 w-8"
           variant="success"
         />
       </div>
@@ -205,7 +207,7 @@ export default function Inventory() {
               </CardTitle>
               <CardDescription className=" text-[hsl(216,20%,45%)]">Manage your product stock levels and details</CardDescription>
             </div>
-            <Badge variant="outline" className="mb-1 tracking-tight text-sm rounded-2xl text-[hsl(216,32%,17%)] git">
+            <Badge variant="outline" className="mb-1 border-[hsl(214,20%,88%)] tracking-tight text-sm rounded-2xl text-[hsl(216,32%,17%)] git">
               {filteredProducts.length} of {products.length} products
             </Badge>
           </div>
