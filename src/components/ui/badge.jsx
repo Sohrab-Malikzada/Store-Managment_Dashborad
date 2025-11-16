@@ -9,6 +9,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
+        success:
+          "hover:bg-[hsl(142,76%,36%)]/90 rounded-full border-transparent bg-[hsl(142,76%,36%)] text-[hsl(0,0%,98%)] [a&]:hover:bg-[hsl(142,76%,36%)]/90 focus-visible:ring-[hsl(142,76%,36%)]/20 dark:focus-visible:ring-[hsl(142,76%,36%)]/40 dark:bg-success/60",
+        warning:
+          "hover:bg-[hsl(38,92%,50%)]/90 rounded-full border-transparent bg-[hsl(38,92%,50%)] text-[hsl(0,0%,98%)] [a&]:hover:bg-[hsl(38,92%,50%)]/90 focus-visible:ring-[hsl(38,92%,50%)]/20 dark:focus-visible:ring-[hsl(38,92%,50%)]/40 dark:bg-warning/60",
         default:
           "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
         secondary:

@@ -216,7 +216,7 @@ function Sales() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="rounded-[10px] bg-blue-500 text-white  shadow-[hsl(214,100%,70%)]">
+            <Button className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
               <Plus className="mr-2 h-4 w-4" />
               New Sale
             </Button>
@@ -620,25 +620,25 @@ function Sales() {
       </div>
 
       {/* Sales Table */}
-      <Card className="gradient-card shadow-soft">
+      <Card className="gradient-card border-[hsl(214,20%,88%)]">
         <CardHeader>
-          <CardTitle className="text-foreground">Sales Records</CardTitle>
-          <CardDescription>Complete history of all sales transactions</CardDescription>
+          <CardTitle className="text-[hsl(216,32%,17%)]">Sales Records</CardTitle>
+          <CardDescription className="text-[hsl(216,20%,45%)]">Complete history of all sales transactions</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[hsl(216,20%,45%)]" />
               <Input
                 placeholder="Search sales..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-10 py-5 bg-[hsl(248,250%,98%)] shadow-none"
               />
             </div>
-            <Select value={filterPaymentType} onValueChange={setFilterPaymentType}>
-              <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Filter by payment" />
+            <Select className="w-full  sm:w-48" value={filterPaymentType} onValueChange={setFilterPaymentType}>
+              <SelectTrigger className="w-full h-10 py-5 bg-[hsl(248,250%,98%)] shadow-none  sm:w-48">
+                <SelectValue className="text-[hsl(216,20%,45%)]" placeholder="Filter by payment" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Payments</SelectItem>
@@ -648,7 +648,7 @@ function Sales() {
             </Select>
           </div>
 
-          <div className="border rounded-lg">
+          <div className="border  border-[hsl(214,20%,88%)] rounded-[10px]">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -669,23 +669,23 @@ function Sales() {
                   const status = getPaymentStatus(sale);
                   return (
                     <TableRow key={sale.id}>
-                      <TableCell className="font-medium">{sale.id}</TableCell>
+                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">{sale.id}</TableCell>
                       <TableCell>
-                        <div className="font-medium text-foreground">{sale.customer}</div>
+                        <div className="font-medium text-[hsl(216,32%,17%)]">{sale.customer}</div>
                       </TableCell>
                       <TableCell>
-                        <div className="space-y-1">
+                        <div className="space-y-1 text-[hsl(216,32%,17%)]">
                           {sale.items.map((item, index) => (
-                            <div key={index} className="text-sm">
-                              <span className="font-medium">{item.productName}</span>
-                              <span className="text-muted-foreground ml-2">×{item.quantity}</span>
+                            <div key={index} className="text-sm text-[hsl(216,32%,17%)]">
+                              <span className="font-medium text-[hsl(216,32%,17%)]">{item.productName}</span>
+                              <span className="text-muted-foreground text-[hsl(216,20%,45%)] ml-2">×{item.quantity}</span>
                             </div>
                           ))}
                         </div>
                       </TableCell>
-                      <TableCell className="font-medium">؋{sale.totalAmount.toLocaleString()}</TableCell>
-                      <TableCell className="text-success">؋{sale.amountPaid.toLocaleString()}</TableCell>
-                      <TableCell className={sale.pendingAmount > 0 ? "text-destructive" : "text-muted-foreground"}>
+                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">؋{sale.totalAmount.toLocaleString()}</TableCell>
+                      <TableCell className="text-[hsl(142,76%,36%)]">؋{sale.amountPaid.toLocaleString()}</TableCell>
+                      <TableCell className={sale.pendingAmount > 0 ? "text-[hsl(0,84%,60%)]" : "text-[hsl(216,20%,45%)]"}>
                         ؋{sale.pendingAmount.toLocaleString()}
                       </TableCell>
                       <TableCell>
@@ -693,13 +693,14 @@ function Sales() {
                           {sale.paymentType === 'full' ? 'Full Payment' : 'Installment'}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-muted-foreground">{sale.saleDate}</TableCell>
+                      <TableCell className="text-[hsl(216,20%,45%)]">{sale.saleDate}</TableCell>
                       <TableCell>
                         <Badge variant={status.variant}>{status.label}</Badge>
                       </TableCell>
                       <TableCell>
-                        <div className="flex space-x-2">
+                        <div className="flex  space-x-2">
                           <Button 
+                            className="cursor-pointer hover:bg-[hsl(214,20%,94%)] rounded-[10px] border-[hsl(214,20%,88%)] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)]"
                             variant="outline" 
                             size="sm"
                             onClick={() => handleViewSale(sale)}
@@ -708,9 +709,9 @@ function Sales() {
                           </Button>
                           {sale.pendingAmount > 0 && (
                             <Button 
+                              className="cursor-pointer hover:bg-[hsl(214,20%,94%)] rounded-[10px] border-[hsl(214,20%,88%)] text-[hsl(214,84%,56%)] hover:text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)]"
                               variant="outline" 
                               size="sm" 
-                              className="text-primary"
                               onClick={() => handleViewSale(sale)}
                             >
                               Collect

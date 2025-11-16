@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -7,30 +6,38 @@ export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem("isAuthenticated") === "true";
   });
+
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+    try {
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      console.error("خطا در خواندن اطلاعات کاربر:", error);
+      return null;
+    }
   });
 
-
-  const login = async (email, password) => {
+  const login = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const userData = {
+        name: "Ali",
+        role: "admin", // می‌تونی این نقش را تغییر بدی
+      };
+
+      localStorage.setItem("token", "xdklvjxklcjvklsdjfg");
+      localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("isAuthenticated", "true");
+
       setIsAuthenticated(true);
-      setUser(res.data.user);
+      setUser(userData);
+
       return true;
-    } catch {
+    } catch (error) {
+      console.error("خطا در ورود:", error);
       return false;
     }
   };
 
- 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -40,13 +47,15 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{
-      isAuthenticated,
-      user,
-      userRole: user && user.role ? user.role : null,
-      login,
-      logout
-    }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        user,
+        userRole: user?.role || null,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -55,7 +64,7 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth باید درون AuthProvider استفاده شود");
   }
   return context;
 }

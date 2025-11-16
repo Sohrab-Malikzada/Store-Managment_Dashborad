@@ -44,10 +44,10 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border-[hsl(214,20%,88%)] max-w-2xl bg-[hsl(248,250%,98%)] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Sale Details</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl font-bold text-[hsl(216,32%,17%)]">Sale Details</DialogTitle>
+          <DialogDescription className="text-[hsl(216,20%,45%)] -mt-1"> 
             Complete sale information and payment details
           </DialogDescription>
         </DialogHeader>
@@ -55,34 +55,34 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
         <div className="space-y-6 py-4">
           {/* Sale Information */}
           <div className="space-y-3">
-            <h3 className="font-semibold text-foreground">Sale Information</h3>
+            <h3 className="font-semibold text-[hsl(216,32%,17%)]">Sale Information</h3>
             <div className="bg-muted/30 rounded-lg p-4 space-y-2">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Sale ID:</span>
-                <span className="font-medium">{sale.id}</span>
+                <span className="text-[hsl(216,20%,45%)]">Sale ID:</span>
+                <span className="font-medium text-[hsl(216,32%,17%)]">{sale.id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Customer:</span>
-                <span className="font-medium">{sale.customer}</span>
+                <span className="text-[hsl(216,20%,45%)]">Customer:</span>
+                <span className="font-medium text-[hsl(216,32%,17%)]">{sale.customer}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Sale Date:</span>
-                <span className="font-medium">{sale.saleDate}</span>
+                <span className="text-[hsl(216,20%,45%)]">Sale Date:</span>
+                <span className="font-medium text-[hsl(216,32%,17%)]">{sale.saleDate}</span>
               </div>
               {sale.dueDate && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Due Date:</span>
-                  <span className="font-medium">{sale.dueDate}</span>
+                  <span className="text-[hsl(216,20%,45%)]">Due Date:</span>
+                  <span className="font-medium text-[hsl(216,32%,17%)]">{sale.dueDate}</span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Payment Type:</span>
+                <span className="text-[hsl(216,20%,45%)]">Payment Type:</span>
                 <Badge variant={sale.paymentType === 'full' ? 'success' : 'warning'}>
                   {sale.paymentType === 'full' ? 'Full Payment' : 'Installment'}
                 </Badge>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Status:</span>
+                <span className="text-[hsl(216,20%,45%)]">Status:</span>
                 <Badge variant={status.variant}>{status.label}</Badge>
               </div>
             </div>
@@ -90,9 +90,9 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
 
           {/* Items List */}
           <div className="space-y-3">
-            <h3 className="font-semibold text-foreground">Items Purchased</h3>
-            <div className="border rounded-lg">
-              <Table>
+            <h3 className="font-semibold text-[hsl(216,32%,17%)]">Items Purchased</h3>
+            <div className="border p-2 pb-2  border-[hsl(214,20%,88%)] rounded-[10px]">
+              <Table className="h-20 text-[hsl(216,32%,17%)] min-w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Product</TableHead>
@@ -117,20 +117,20 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
 
           {/* Payment Summary */}
           <div className="space-y-3">
-            <h3 className="font-semibold text-foreground">Payment Summary</h3>
+            <h3 className="font-semibold text-[hsl(216,32%,17%)]">Payment Summary</h3>
             <div className="bg-muted/30 rounded-lg p-4 space-y-3">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Amount:</span>
-                <span className="font-bold text-lg">؋{sale.totalAmount.toLocaleString()}</span>
+                <span className="text-[hsl(216,20%,45%)]">Total Amount:</span>
+                <span className="font-bold text-[hsl(216,32%,17%)] text-lg">؋{sale.totalAmount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Amount Paid:</span>
-                <span className="font-medium text-success">؋{sale.amountPaid.toLocaleString()}</span>
+                <span className="text-[hsl(216,20%,45%)]">Amount Paid:</span>
+                <span className="font-medium text-[hsl(142,76%,36%)]">؋{sale.amountPaid.toLocaleString()}</span>
               </div>
               <div className="h-px bg-border"></div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Pending Amount:</span>
-                <span className="font-bold text-lg text-destructive">؋{sale.pendingAmount.toLocaleString()}</span>
+                <span className="text-[hsl(216,20%,45%)]">Pending Amount:</span>
+                <span className="font-bold text-lg text-[hsl(0,84%,60%)]">؋{sale.pendingAmount.toLocaleString()}</span>
               </div>
             </div>
           </div>
