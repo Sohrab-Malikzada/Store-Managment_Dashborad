@@ -168,12 +168,14 @@ export default function Purchases() {
       </div>
 
       <div className="grid gap-4  md:grid-cols-4 ">
+        <div className="h-40">
         <StatsCard
           title="Total Purchases"
           value={`؋${totalPurchases.toLocaleString()}`}
           icon={Package}
           trend={{ value: 8.2, label: "from last month" }}
         />
+        </div>
         <StatsCard
           title="Pending Payments"
           value={`؋${pendingPayments.toLocaleString()}`}
@@ -194,18 +196,18 @@ export default function Purchases() {
         />
       </div>
 
-      <Card>
+      <Card className="bg-white h-80 border-[hsl(214,20%,88%)] ">
         <CardHeader>
-          <CardTitle>Recent Purchases</CardTitle>
-          <CardDescription>Manage your supplier purchases and payments</CardDescription>
+          <CardTitle className=" text-[hsl(216,32%,17%)]">Recent Purchases</CardTitle>
+          <CardDescription className="text-[hsl(216,20%,45%)]">Manage your supplier purchases and payments</CardDescription>
           <div className="flex items-center space-x-2">
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className=" absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search purchases..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9"
+                className="pl-9 bg-[hsl(248,250%,99%)] shadow-none"
               />
             </div>
           </div>
@@ -227,18 +229,18 @@ export default function Purchases() {
             <TableBody>
               {filteredPurchases.map((purchase) => (
                 <TableRow key={purchase.id}>
-                  <TableCell className="font-medium">#{purchase.id}</TableCell>
-                  <TableCell>{purchase.supplier}</TableCell>
-                  <TableCell>{purchase.productName}</TableCell>
-                  <TableCell>{purchase.quantity}</TableCell>
-                  <TableCell>${purchase.unitPrice.toLocaleString()}</TableCell>
-                  <TableCell>؋{purchase.totalAmount.toLocaleString()}</TableCell>
+                  <TableCell className="font-medium text-[hsl(216,32%,17%)]">#{purchase.id}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{purchase.supplier}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{purchase.productName}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{purchase.quantity}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">${purchase.unitPrice.toLocaleString()}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">؋{purchase.totalAmount.toLocaleString()}</TableCell>
                   <TableCell>
                     <Badge variant={purchase.pendingAmount === 0 ? "default" : "destructive"}>
                       {purchase.pendingAmount === 0 ? "paid" : "pending"}
                     </Badge>
                   </TableCell>
-                  <TableCell>{purchase.purchaseDate}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{purchase.purchaseDate}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
