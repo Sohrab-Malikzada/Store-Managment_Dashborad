@@ -174,29 +174,41 @@ export default function Purchases() {
           value={`؋${totalPurchases.toLocaleString()}`}
           icon={Package}
           trend={{ value: 8.2, label: "from last month" }}
-        />
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-45 rounded-[12px] "
+         />
         </div>
         <StatsCard
           title="Pending Payments"
           value={`؋${pendingPayments.toLocaleString()}`}
           icon={DollarSign}
           trend={{ value: -2.4, label: "from last month" }}
+          trendchange="text-[hsl(0,84%,60%)] -ml-4 mt-[-5px]"
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-45 rounded-[12px] "            
         />
         <StatsCard
           title="Active Suppliers"
           value="24"
           icon={User}
           trend={{ value: 12.5, label: "from last month" }}
-        />
+          trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-45 rounded-[12px] "            
+       />
         <StatsCard
           title="Purchase Orders"
           value="87"
           icon={Calendar}
           trend={{ value: 5.1, label: "from last month" }}
-        />
+          trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-45 rounded-[12px] "
+      />
       </div>
 
-      <Card className="bg-white h-80 border-[hsl(214,20%,88%)] ">
+      <Card className="bg-white -mt-5 h-80 border-[hsl(214,20%,88%)] ">
         <CardHeader>
           <CardTitle className=" text-[hsl(216,32%,17%)]">Recent Purchases</CardTitle>
           <CardDescription className="text-[hsl(216,20%,45%)]">Manage your supplier purchases and payments</CardDescription>
