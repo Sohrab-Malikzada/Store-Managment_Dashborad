@@ -118,11 +118,11 @@ export default function Returns() {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-200">Pending</Badge>;
+        return <Badge variant="secondary" className="rounded-full hover:bg-yellow-100/40 bg-yellow-100 text-yellow-800 border-yellow-200">Pending</Badge>;
       case 'approved':
-        return <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">Approved</Badge>;
+        return <Badge variant="secondary" className="rounded-full hover:bg-green-100/40 bg-green-100 text-green-800 border-green-200">Approved</Badge>;
       case 'rejected':
-        return <Badge variant="secondary" className="bg-red-100 text-red-800 border-red-200">Rejected</Badge>;
+        return <Badge variant="secondary" className="rounded-full hover:bg-red-100/40 bg-red-100 text-red-800 border-red-200">Rejected</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
     }
@@ -141,29 +141,29 @@ export default function Returns() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="border-l-4 h-28 bg-[hsl(0,0%,100%)] border-l-blue-500 border-r-[hsl(214,20%,88%)] border-b-[hsl(214,20%,88%)] border-t-[hsl(214,20%,88%)] ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sale Returns</CardTitle>
-            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[hsl(216,32%,17%)]">Total Sale Returns</CardTitle>
+            <ShoppingCart className="h-4 w-4 text-[hsl(216,20%,45%)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{saleReturns.length}</div>
+            <div className="-mt-5 text-2xl font-bold text-[hsl(216,32%,17%)]">{saleReturns.length}</div>
           </CardContent>
         </Card>
         <Card className="border-l-4 h-28 bg-[hsl(0,0%,100%)] border-l-blue-500 border-r-[hsl(214,20%,88%)] border-b-[hsl(214,20%,88%)] border-t-[hsl(214,20%,88%)] ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Purchase Returns</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[hsl(216,32%,17%)]">Total Purchase Returns</CardTitle>
+            <Package className="h-4 w-4 text-[hsl(216,20%,45%)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{purchaseReturns.length}</div>
+            <div className="-mt-5 text-2xl font-bold text-[hsl(216,32%,17%)]">{purchaseReturns.length}</div>
           </CardContent>
         </Card>
         <Card className="border-l-4 h-28 bg-[hsl(0,0%,100%)] border-l-[rgb(249,115,22)] border-r-[hsl(214,20%,88%)] border-b-[hsl(214,20%,88%)] border-t-[hsl(214,20%,88%)] ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Returns</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[hsl(216,32%,17%)]">Pending Returns</CardTitle>
+            <Calendar className="h-4 w-4 text-[hsl(216,20%,45%)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="-mt-5 text-2xl font-bold text-[hsl(216,32%,17%)]">
               {saleReturns.filter(r => r.status === 'pending').length + 
                purchaseReturns.filter(r => r.status === 'pending').length}
             </div>
@@ -171,11 +171,11 @@ export default function Returns() {
         </Card>
         <Card className="border-l-4 h-28 bg-[hsl(0,0%,100%)] border-l-[rgb(34,197,94)] border-r-[hsl(214,20%,88%)] border-b-[hsl(214,20%,88%)] border-t-[hsl(214,20%,88%)] ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Approved Returns</CardTitle>
-            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[hsl(216,32%,17%)]">Approved Returns</CardTitle>
+            <CheckCircle className="h-4 w-4 text-[hsl(216,20%,45%)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="-mt-5 text-2xl font-bold text-[hsl(216,32%,17%)]">
               {saleReturns.filter(r => r.status === 'approved').length + 
                purchaseReturns.filter(r => r.status === 'approved').length}
             </div>
@@ -183,24 +183,24 @@ export default function Returns() {
         </Card>
       </div>
 
-      <Tabs defaultValue="sales" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="sales" className="flex items-center gap-2">
-            <ShoppingCart className="h-4 w-4" />
+      <Tabs defaultValue="sales" className="space-y-4x">
+        <TabsList className="bg-[hsl(214,20%,96%)] rounded[10px]">
+          <TabsTrigger value="sales" className="flex text-[hsl(216,20%,45%)] bg-[hsl(214,20%,96%)] items-center gap-2">
+            <ShoppingCart className="h-4 w-4 text-[hsl(216,20%,45%)]" />
             Sale Returns
           </TabsTrigger>
-          <TabsTrigger value="purchases" className="flex items-center gap-2">
-            <Package className="h-4 w-4" />
+          <TabsTrigger value="purchases" className="flex text-[hsl(216,20%,45%)] items-center gap-2">
+            <Package className="h-4 w-4 text-[hsl(216,20%,45%)]"/>
             Purchase Returns
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="sales" className="space-y-4">
-          <Card>
+          <Card className="bg-[hsl(0,0%,100%)] border-[hsl(214,20%,88%)]">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Sale Returns</CardTitle>
-                <CardDescription>Manage customer returns</CardDescription>
+                <CardTitle className="text-[hsl(216,32%,17%)]">Sale Returns</CardTitle>
+                <CardDescription className="text-[hsl(216,20%,45%)]">Manage customer returns</CardDescription>
               </div>
               <Dialog open={showSaleReturnDialog} onOpenChange={setShowSaleReturnDialog}>
                 <DialogTrigger asChild>
@@ -211,15 +211,15 @@ export default function Returns() {
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
                   <DialogHeader>
-                    <DialogTitle>Create Sale Return</DialogTitle>
-                    <DialogDescription>Create a new sale return request</DialogDescription>
+                    <DialogTitle className="text-[hsl(216,32%,17%)]">Create Sale Return</DialogTitle>
+                    <DialogDescription className="text-[hsl(216,20%,45%)]">Create a new sale return request</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>Select Sale</Label>
+                      <Label className="text-[hsl(216,32%,17%)] mb-1">Select Sale</Label>
                       <Select value={newSaleReturn.originalSaleId} onValueChange={(value) => setNewSaleReturn({...newSaleReturn, originalSaleId: value})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a sale" />
+                        <SelectTrigger className="text-[hsl(216,32%,17%)]">
+                          <SelectValue placeholder="Select a sale"  />
                         </SelectTrigger>
                         <SelectContent>
                           {mockSales.map((sale) => (
@@ -231,18 +231,19 @@ export default function Returns() {
                       </Select>
                     </div>
                     <div>
-                      <Label>Return Reason</Label>
+                      <Label className="text-[hsl(216,32%,17%)] mb-1">Return Reason</Label>
                       <Textarea
+                        className="text-[hsl(216,32%,17%)]"
                         value={newSaleReturn.reason}
                         onChange={(e) => setNewSaleReturn({...newSaleReturn, reason: e.target.value})}
                         placeholder="Enter reason for return"
                       />
                     </div>
                     <div className="flex gap-2">
-                      <Button onClick={handleSaleReturnSubmit} disabled={!newSaleReturn.originalSaleId || !newSaleReturn.reason}>
+                      <Button className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))]  text-white  rounded-[10px] cursor-pointer" onClick={handleSaleReturnSubmit} disabled={!newSaleReturn.originalSaleId || !newSaleReturn.reason}>
                         Create Return
                       </Button>
-                      <Button variant="outline" onClick={() => setShowSaleReturnDialog(false)}>
+                      <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none" variant="outline" onClick={() => setShowSaleReturnDialog(false)}>
                         Cancel
                       </Button>
                     </div>
@@ -253,7 +254,7 @@ export default function Returns() {
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-[hsl(214,20%,97%)]">
                     <TableHead>Return ID</TableHead>
                     <TableHead>Original Sale</TableHead>
                     <TableHead>Customer</TableHead>
@@ -266,13 +267,13 @@ export default function Returns() {
                 </TableHeader>
                 <TableBody>
                   {saleReturns.map((returnItem) => (
-                    <TableRow key={returnItem.id}>
-                      <TableCell className="font-medium">{returnItem.id}</TableCell>
-                      <TableCell>{returnItem.originalSaleId}</TableCell>
-                      <TableCell>{returnItem.customerName}</TableCell>
-                      <TableCell>AFN {returnItem.totalAmount.toLocaleString()}</TableCell>
-                      <TableCell className="max-w-xs truncate">{returnItem.reason}</TableCell>
-                      <TableCell>{returnItem.returnDate}</TableCell>
+                    <TableRow  className="hover:bg-[hsl(214,20%,97%)] not-hover:scroll-smooth" key={returnItem.id}>
+                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">{returnItem.id}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.originalSaleId}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.customerName}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">AFN {returnItem.totalAmount.toLocaleString()}</TableCell>
+                      <TableCell className="max-w-xs truncate text-[hsl(216,32%,17%)]">{returnItem.reason}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.returnDate}</TableCell>
                       <TableCell>{getStatusBadge(returnItem.status)}</TableCell>
                       <TableCell>
                         <div className="flex gap-2">
@@ -282,7 +283,7 @@ export default function Returns() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleApproveReturn('sale', returnItem.id)}
-                                className="text-green-600 border-green-300 hover:bg-green-50"
+                                className="rounded-[10px] bg-[hsl(214,20%,97%)]  text-green-600 hover:text-[hsl(216,32%,17%)] border-green-300 hover:bg-green-50"
                               >
                                 <CheckCircle className="h-3 w-3" />
                               </Button>
@@ -290,13 +291,13 @@ export default function Returns() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleRejectReturn('sale', returnItem.id)}
-                                className="text-red-600 border-red-300 hover:bg-red-50"
+                                className="rounded-[10px] hover:text-[hsl(216,32%,17%)] bg-[hsl(214,20%,97%)] text-red-600 border-red-300 hover:bg-red-50"
                               >
                                 <XCircle className="h-3 w-3" />
                               </Button>
                             </>
                           )}
-                          <Button size="sm" variant="outline">
+                          <Button className="rounded-[10px] hover:text-black bg-[hsl(214,20%,97%)] border-gray-300 hover:bg-gray-200" size="sm" variant="outline">
                             <Eye className="h-3 w-3" />
                           </Button>
                         </div>
@@ -309,12 +310,12 @@ export default function Returns() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="purchases" className="space-y-4">
-          <Card>
+        <TabsContent value="purchases" className="space-y-4 w-[1000px]">
+          <Card className="bg-[hsl(0,0%,100%)] border-[hsl(214,20%,88%)]">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Purchase Returns</CardTitle>
-                <CardDescription>Manage supplier returns</CardDescription>
+                <CardTitle className="text-[hsl(216,32%,17%)]">Purchase Returns</CardTitle>
+                <CardDescription className="text-[hsl(216,20%,45%)] -mt-1">Manage supplier returns</CardDescription>
               </div>
               <Dialog open={showPurchaseReturnDialog} onOpenChange={setShowPurchaseReturnDialog}>
                 <DialogTrigger asChild>
@@ -323,21 +324,21 @@ export default function Returns() {
                     Add Purchase Return
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-md h-106">
                   <DialogHeader>
-                    <DialogTitle>Create Purchase Return</DialogTitle>
-                    <DialogDescription>Create a new purchase return request</DialogDescription>
+                    <DialogTitle className="text-[hsl(216,32%,17%)]">Create Purchase Return</DialogTitle>
+                    <DialogDescription className="text-[hsl(216,20%,45%)]">Create a new purchase return request</DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <Label>Select Purchase</Label>
+                      <Label className="text-[hsl(216,32%,17%)] -mt-6 mb-1">Select Purchase</Label>
                       <Select value={newPurchaseReturn.originalPurchaseId} onValueChange={(value) => setNewPurchaseReturn({...newPurchaseReturn, originalPurchaseId: value})}>
-                        <SelectTrigger>
+                        <SelectTrigger className="text-[hsl(216,32%,17%)] bg-[hsl(253.33,100%,98.24%)]">
                           <SelectValue placeholder="Select a purchase" />
                         </SelectTrigger>
                         <SelectContent>
                           {mockPurchases.map((purchase) => (
-                            <SelectItem key={purchase.id} value={purchase.id}>
+                            <SelectItem className="text-[hsl(216,32%,17%)]" key={purchase.id} value={purchase.id}>
                               {purchase.id} - {purchase.supplier} - AFN {purchase.unitPrice.toLocaleString()}
                             </SelectItem>
                           ))}
@@ -345,8 +346,9 @@ export default function Returns() {
                       </Select>
                     </div>
                     <div>
-                      <Label>Quantity</Label>
+                      <Label className="text-[hsl(216,32%,17%)] mb-1 mt-5 ">Return Quantity</Label>
                       <Input
+                        className="text-[hsl(216,32%,17%)] h-10 shadow-none bg-[hsl(253.33,100%,98.24%)]"
                         type="number"
                         min={1}
                         value={newPurchaseReturn.quantity}
@@ -354,21 +356,24 @@ export default function Returns() {
                       />
                     </div>
                     <div>
-                      <Label>Return Reason</Label>
+                      <Label className="text-[hsl(216,32%,17%)] mb-1 mt-6">Return Reason</Label>
                       <Textarea
+                        className="shadow-none text-[hsl(216,32%,17%)]"
                         value={newPurchaseReturn.reason}
                         onChange={(e) => setNewPurchaseReturn({...newPurchaseReturn, reason: e.target.value})}
                         placeholder="Enter reason for return"
                       />
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 -mb-8">
                       <Button
+                        className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))]  text-white rounded-[10px] cursor-pointer"
                         onClick={handlePurchaseReturnSubmit}
                         disabled={!newPurchaseReturn.originalPurchaseId || !newPurchaseReturn.reason || newPurchaseReturn.quantity < 1}
                       >
+                        
                         Create Return
                       </Button>
-                      <Button variant="outline" onClick={() => setShowPurchaseReturnDialog(false)}>
+                      <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none" variant="outline" onClick={() => setShowPurchaseReturnDialog(false)}>
                         Cancel
                       </Button>
                     </div>
@@ -395,14 +400,14 @@ export default function Returns() {
                 <TableBody>
                   {purchaseReturns.map((returnItem) => (
                     <TableRow key={returnItem.id}>
-                      <TableCell className="font-medium">{returnItem.id}</TableCell>
-                      <TableCell>{returnItem.originalPurchaseId}</TableCell>
-                      <TableCell>{returnItem.supplierName}</TableCell>
-                      <TableCell>{returnItem.productName}</TableCell>
-                      <TableCell>{returnItem.quantity}</TableCell>
-                      <TableCell>AFN {returnItem.totalAmount.toLocaleString()}</TableCell>
-                      <TableCell className="max-w-xs truncate">{returnItem.reason}</TableCell>
-                      <TableCell>{returnItem.returnDate}</TableCell>
+                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">{returnItem.id}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.originalPurchaseId}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.supplierName}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.productName}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.quantity}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">AFN {returnItem.totalAmount.toLocaleString()}</TableCell>
+                      <TableCell className="max-w-xs truncate text-[hsl(216,32%,17%)]">{returnItem.reason}</TableCell>
+                      <TableCell className="text-[hsl(216,32%,17%)]">{returnItem.returnDate}</TableCell>
                       <TableCell>{getStatusBadge(returnItem.status)}</TableCell>
                       <TableCell>
                         <div className="flex gap-2">
@@ -412,7 +417,7 @@ export default function Returns() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleApproveReturn('purchase', returnItem.id)}
-                                className="text-green-600 border-green-300 hover:bg-green-50"
+                                className="rounded-[10px] bg-[hsl(214,20%,97%)]  text-green-600 hover:text-[hsl(216,32%,17%)] border-green-300 hover:bg-green-50"
                               >
                                 <CheckCircle className="h-3 w-3" />
                               </Button>
@@ -420,13 +425,13 @@ export default function Returns() {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleRejectReturn('purchase', returnItem.id)}
-                                className="text-red-600 border-red-300 hover:bg-red-50"
+                                className="rounded-[10px] hover:text-[hsl(216,32%,17%)] bg-[hsl(214,20%,97%)] text-red-600 border-red-300 hover:bg-red-50"
                               >
                                 <XCircle className="h-3 w-3" />
                               </Button>
                             </>
                           )}
-                          <Button size="sm" variant="outline">
+                          <Button className="rounded-[10px] hover:text-black bg-[hsl(214,20%,97%)] border-gray-300 hover:bg-gray-200" size="sm" variant="outline">
                             <Eye className="h-3 w-3" />
                           </Button>
                         </div>
