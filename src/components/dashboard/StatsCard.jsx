@@ -8,8 +8,12 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
  
   let colorClass = iconColor;
   if (!colorClass) {
-    if (title.toLowerCase().includes("purchase")) colorClass = "text-blue-500 bg-blue-100";
+    if (title.toLowerCase().includes("purchase")) colorClass = "text-blue-600 bg-blue-100";
     else if (title.toLowerCase().includes("pending")) colorClass = "text-yellow-600 bg-yellow-100";
+    else if (title.toLowerCase().includes("total employees")) colorClass = "text-blue-600 bg-blue-100";
+    else if (title.toLowerCase().includes("monthly payroll")) colorClass = "text-green-600 bg-green-100";
+    else if (title.toLowerCase().includes("advances given")) colorClass = "text-red-600 bg-red-100";
+    else if (title.toLowerCase().includes("pending requests")) colorClass = "text-red-600 bg-red-100";
     else if (title.toLowerCase().includes("supplier")) colorClass = "text-green-600 bg-green-100";
     else if (title.toLowerCase().includes("order")) colorClass = "text-purple-600 bg-purple-100";
     else if (title.toLowerCase().includes("profit")) colorClass = "text-emerald-600 bg-emerald-100";
@@ -22,7 +26,7 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
       <div className="position-relative  flex -mb-3 items-right gap-10">
         {Icon && (
           <span className={`rounded-lg p-2  flex items-right  justify-end`}>
-            <Icon className={`items-center ${icanchange}  ${colorClass} position-absolute -m-66 -mt-6   h-4 w-4 flex justify-end `} />
+            <Icon className={`items-center ${icanchange}  ${colorClass} position-absolute -m-66 -mt-6 -mr-53  h-4 w-4 flex justify-end `} />
           </span>
         )}
         <div className=" flex-1">

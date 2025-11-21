@@ -179,18 +179,23 @@ export default function Inventory() {
           title="Total Products"
           value={totalProducts}
           icon={Package}
-          iconColor="bg-[hsl(211,100%,50%))]/10 text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
+          variant="warning"
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
+          iconColor="bg-[hsl(211,100%,50%))]/10  text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
           icon={AlertTriangle}
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
+
         />
         <StatsCard
           title="Inventory Value"
           value={`؋${totalValue.toLocaleString()}`}
           icon={Package}
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(142,76%,36%)]/10 text-[hsl(144,100%,29%)] rounded-[12px] p-2 h-8 w-8"
           variant="success"
         />

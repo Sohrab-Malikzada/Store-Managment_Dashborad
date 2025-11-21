@@ -163,36 +163,36 @@ export default function Employees() {
     <div className="space-y-6 m-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-3xl font-bold text-[hsl(216,32%,17%)]">
             Employee Management
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-[hsl(216,20%,45%)]">
             Manage staff, salaries, and advance payments
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="gradient-primary text-white shadow-elegant">
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="mr-2  h-4 w-4" />
               Add Employee
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="h-110">
             <DialogHeader>
-              <DialogTitle>Add New Employee</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-[hsl(216,32%,17%)]">Add New Employee</DialogTitle>
+              <DialogDescription className="text-[hsl(216,20%,45%)] -mt-0.5">
                 Enter the details for the new employee.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
+                <div className="grid grid-cols-4  items-center gap-4">
+                  <Label htmlFor="name" className="text-right text-[hsl(216,32%,17%)]">
                     Name
                   </Label>
                   <Input
                     id="name"
-                    className="col-span-3"
+                    className="col-span-3 h-10 shadow-none text-[hsl(216,32%,17%)]"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
@@ -201,12 +201,12 @@ export default function Employees() {
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="position" className="text-right">
+                  <Label htmlFor="position" className="text-right text-[hsl(216,32%,17%)]">
                     Position
                   </Label>
                   <Input
                     id="position"
-                    className="col-span-3"
+                    className="col-span-3 h-10 shadow-none text-[hsl(216,32%,17%)]"
                     value={formData.position}
                     onChange={(e) =>
                       setFormData({ ...formData, position: e.target.value })
@@ -215,13 +215,13 @@ export default function Employees() {
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="monthlySalary" className="text-right">
+                  <Label htmlFor="monthlySalary" className="text-right text-[hsl(216,32%,17%)]">
                     Monthly Salary
                   </Label>
                   <Input
                     id="monthlySalary"
                     type="number"
-                    className="col-span-3"
+                    className="col-span-3 h-10 shadow-none text-[hsl(216,32%,17%)]"
                     value={formData.monthlySalary}
                     onChange={(e) =>
                       setFormData({
@@ -235,12 +235,12 @@ export default function Employees() {
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="phoneNumber" className="text-right">
+                  <Label htmlFor="phoneNumber" className="text-right text-[hsl(216,32%,17%)]">
                     Phone Number
                   </Label>
                   <Input
                     id="phoneNumber"
-                    className="col-span-3"
+                    className="col-span-3 h-10 shadow-none text-[hsl(216,32%,17%)]"
                     value={formData.phoneNumber}
                     onChange={(e) =>
                       setFormData({ ...formData, phoneNumber: e.target.value })
@@ -248,13 +248,13 @@ export default function Employees() {
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="joinDate" className="text-right">
+                  <Label htmlFor="joinDate" className="text-right text-[hsl(216,32%,17%)]">
                     Join Date
                   </Label>
                   <Input
                     id="joinDate"
                     type="date"
-                    className="col-span-3"
+                    className="col-span-3 h-10  shadow-none text-[hsl(216,32%,17%)]"
                     value={formData.joinDate}
                     onChange={(e) =>
                       setFormData({ ...formData, joinDate: e.target.value })
@@ -264,7 +264,7 @@ export default function Employees() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" className="gradient-primary text-white">
+                <Button type="submit" className="gradient-primary  text-white">
                   Add Employee
                 </Button>
               </DialogFooter>
@@ -279,41 +279,57 @@ export default function Employees() {
           value={employees.length.toString()}
           icon={Users}
           trend={{ value: 5.2, label: "from last month" }}
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+
         />
         <StatsCard
           title="Monthly Payroll"
           value={`؋${totalSalary.toLocaleString()}`}
           icon={DollarSign}
           trend={{ value: 3.1, label: "from last month" }}
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+
         />
         <StatsCard
           title="Advances Given"
           value={`؋${advancesGiven.toLocaleString()}`}
           icon={CreditCard}
           trend={{ value: -12.5, label: "from last month" }}
+          trendchange="text-[hsl(0,84%,60%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+
         />
         <StatsCard
           title="Pending Requests"
           value="3"
           icon={Calendar}
           trend={{ value: 0, label: "from last month" }}
+          trendchange="text-[hsl(216,20%,45%)]   -ml-4 mt-[-5px] "
+          box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+
         />
       </div>
 
-      <Card>
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle>Employee Records</CardTitle>
-          <CardDescription>
+          <CardDescription className="-mt-1">
             Manage employee information and salary details
           </CardDescription>
           <div className="flex items-center space-x-2">
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[hsl(216,20%,45%)]" />
               <Input
                 placeholder="Search employees..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9"
+                className="pl-9 shadow-none bg-[hsl(248,250%,98%)] text-[hsl(216,32%,17%)]"
               />
             </div>
           </div>
@@ -335,20 +351,20 @@ export default function Employees() {
             <TableBody>
               {filteredEmployees.map((employee) => (
                 <TableRow key={employee.id}>
-                  <TableCell className="font-medium">#{employee.id}</TableCell>
-                  <TableCell className="font-medium">{employee.name}</TableCell>
-                  <TableCell>{employee.position}</TableCell>
-                  <TableCell>
+                  <TableCell className="font-medium text-[hsl(216,32%,17%)]">#{employee.id}</TableCell>
+                  <TableCell className="font-medium text-[hsl(216,32%,17%)]">{employee.name}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{employee.position}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">
                     ؋{employee.monthlySalary.toLocaleString()}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">
                     ؋{employee.advanceReceived.toLocaleString()}
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <button onClick={() => toggleEmployeeStatus(employee.id)}>
                         {employee.isActive ? (
-                          <ToggleRight className="h-5 w-5 text-green-600" />
+                          <ToggleRight className="h-5 w-5 cursor-pointer text-[hsl(142,76%,36%)]" />
                         ) : (
                           <ToggleLeft
                             className="h-5 w-5"
@@ -358,31 +374,32 @@ export default function Employees() {
                       </button>
                       <Badge
                         className={employee.isActive
-                          ? "bg-green-100 text-green-700 border-0"
-                          : "bg-gray-200 text-gray-600 border-0"}
+                          
+                          ? "bg-[hsl(214,84%,56%)]  text-white h-6 border-0"
+                          : "bg-[hsl(214,20%,96%)]  text-[hsl(216,32%,17%)] border-0"}
                       >
                         {employee.isActive ? "Active" : "Inactive"}
                       </Badge>
                     </div>
                   </TableCell>
-                  <TableCell>{employee.joinDate}</TableCell>
+                  <TableCell className="text-[hsl(216,32%,17%)]">{employee.joinDate}</TableCell>
                   <TableCell>
                     <div className="flex gap-1">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => viewEmployeeDetails(employee)}
-                        className="hover:bg-primary/10"
+                        className="hover:bg-[hsl(214,84%,56%)]/10 cursor-pointer rounded-[12px]"
                       >
-                        <Eye className="h-4 w-4" />
+                        <Eye className="h-4 w-4 text-[hsl(216,32%,17%)]" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleEdit(employee)}
-                        className="hover:bg-warning/10"
+                        className="hover:bg-[hsl(38,92%,50%)]/10 cursor-pointer rounded-[12px]"
                       >
-                        <Edit className="h-4 w-4" />
+                        <Edit className="h-4 w-4 text-[hsl(216,32%,17%)]" />
                       </Button>
                     </div>
                   </TableCell>
@@ -397,61 +414,61 @@ export default function Employees() {
       <Dialog open={detailsDialog} onOpenChange={setDetailsDialog}>
         <DialogContent className="gradient-card max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Eye className="h-5 w-5 text-primary" />
+            <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
+              <Eye className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Employee Details
             </DialogTitle>
           </DialogHeader>
           {selectedEmployee && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Employee ID</Label>
-                <p className="text-muted-foreground">#{selectedEmployee.id}</p>
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Employee ID</Label>
+                <p className="text-[hsl(216,20%,45%)]">#{selectedEmployee.id}</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Full Name</Label>
-                <p className="font-medium">{selectedEmployee.name}</p>
+                <Label className="text-sm text-[hsl(216,32%,17%)] font-medium">Full Name</Label>
+                <p className="font-medium text-[hsl(216,32%,17%)]">{selectedEmployee.name}</p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Position</Label>
-                <p className="text-muted-foreground">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Position</Label>
+                <p className="text-[hsl(216,20%,45%)]">
                   {selectedEmployee.position}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Monthly Salary</Label>
-                <p className="font-medium text-primary">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Monthly Salary</Label>
+                <p className="font-medium text-[hsl(214,84%,56%)]">
                   ؋{selectedEmployee.monthlySalary.toLocaleString()}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Phone Number</Label>
-                <p className="text-muted-foreground">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Phone Number</Label>
+                <p className="text-[hsl(216,20%,45%)]">
                   {selectedEmployee.phoneNumber}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Join Date</Label>
-                <p className="text-muted-foreground">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Join Date</Label>
+                <p className="text-[hsl(216,20%,45%)]">
                   {selectedEmployee.joinDate}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Advance Received</Label>
-                <p className="text-yellow-500">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Advance Received</Label>
+                <p className="text-[hsl(38,92%,50%)]">
                   ؋{selectedEmployee.advanceReceived.toLocaleString()}
                 </p>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Pending Salary</Label>
-                <p className="text-green-600">
+                <Label className="text-sm font-medium text-[hsl(216,32%,17%)]">Pending Salary</Label>
+                <p className="text-[hsl(142,76%,36%)]">
                   ؋{selectedEmployee.pendingSalary.toLocaleString()}
                 </p>
               </div>
             </div>
-          )}
+          )}          
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDetailsDialog(false)}>
+            <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none" variant="outline" onClick={() => setDetailsDialog(false)}>
               Close
             </Button>
           </DialogFooter>
@@ -462,23 +479,23 @@ export default function Employees() {
       <Dialog open={editDialog} onOpenChange={setEditDialog}>
         <DialogContent className="gradient-card">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Edit className="h-5 w-5 text-primary" />
+            <DialogTitle className="flex text-[hsl(216,32%,17%)]   items-center gap-2">
+              <Edit className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Edit Employee
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-[hsl(216,20%,45%)]">
               Update employee information and salary details.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleUpdate}>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-name" className="text-right">
+                <Label htmlFor="edit-name" className="text-right text-[hsl(216,32%,17%)]">
                   Name
                 </Label>
                 <Input
                   id="edit-name"
-                  className="col-span-3"
+                  className="col-span-3 shadow-none text-[hsl(216,32%,17%)] bg-[#f8f6ff]"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -487,12 +504,12 @@ export default function Employees() {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-position" className="text-right">
+                <Label htmlFor="edit-position" className="text-right text-[hsl(216,32%,17%)]">
                   Position
                 </Label>
                 <Input
                   id="edit-position"
-                  className="col-span-3"
+                  className="col-span-3 shadow-none text-[hsl(216,32%,17%)] bg-[#f8f6ff]"
                   value={formData.position}
                   onChange={(e) =>
                     setFormData({ ...formData, position: e.target.value })
@@ -501,13 +518,13 @@ export default function Employees() {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-salary" className="text-right">
+                <Label htmlFor="edit-salary" className="text-right text-[hsl(216,32%,17%)]">
                   Monthly Salary
                 </Label>
                 <Input
                   id="edit-salary"
                   type="number"
-                  className="col-span-3"
+                  className="col-span-3 shadow-none text-[hsl(216,32%,17%)] bg-[#f8f6ff]"
                   value={formData.monthlySalary}
                   onChange={(e) =>
                     setFormData({
@@ -521,12 +538,12 @@ export default function Employees() {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-phone" className="text-right">
+                <Label htmlFor="edit-phone" className="text-right text-[hsl(216,32%,17%)]">
                   Phone Number
                 </Label>
                 <Input
                   id="edit-phone"
-                  className="col-span-3"
+                  className="col-span-3 shadow-none text-[hsl(216,32%,17%)] bg-[#f8f6ff]"
                   value={formData.phoneNumber}
                   onChange={(e) =>
                     setFormData({ ...formData, phoneNumber: e.target.value })
@@ -534,13 +551,13 @@ export default function Employees() {
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="edit-joinDate" className="text-right">
+                <Label htmlFor="edit-joinDate" className="text-right text-[hsl(216,32%,17%)]">
                   Join Date
                 </Label>
                 <Input
                   id="edit-joinDate"
                   type="date"
-                  className="col-span-3"
+                  className="col-span-3 shadow-none text-[hsl(216,32%,17%)] bg-[#f8f6ff]"
                   value={formData.joinDate}
                   onChange={(e) =>
                     setFormData({ ...formData, joinDate: e.target.value })
@@ -550,14 +567,14 @@ export default function Employees() {
               </div>
             </div>
             <DialogFooter>
-              <Button
+              <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none"
                 type="button"
                 variant="outline"
                 onClick={() => setEditDialog(false)}
               >
                 Cancel
               </Button>
-              <Button type="submit" className="gradient-primary">
+              <Button type="submit" className=" bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))]  text-white  rounded-[10px] cursor-pointer">
                 Update Employee
               </Button>
             </DialogFooter>
