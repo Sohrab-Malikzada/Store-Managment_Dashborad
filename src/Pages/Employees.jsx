@@ -281,7 +281,7 @@ export default function Employees() {
           trend={{ value: 5.2, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
 
         />
         <StatsCard
@@ -291,7 +291,7 @@ export default function Employees() {
           trend={{ value: 3.1, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
 
         />
         <StatsCard
@@ -301,7 +301,7 @@ export default function Employees() {
           trend={{ value: -12.5, label: "from last month" }}
           trendchange="text-[hsl(0,84%,60%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
 
         />
         <StatsCard
@@ -311,7 +311,7 @@ export default function Employees() {
           trend={{ value: 0, label: "from last month" }}
           trendchange="text-[hsl(216,20%,45%)]   -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
 
         />
       </div>

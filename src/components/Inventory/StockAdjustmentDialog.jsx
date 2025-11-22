@@ -96,27 +96,27 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gradient-card shadow-medium">
+      <DialogContent className="gradient-card h-138 shadow-medium">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-foreground">
-            <Package className="h-5 w-5 text-primary" />
+          <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
+            <Package className="h-5 w-5 text-[hsl(214,84%,56%)]" />
             Stock Adjustment
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-[hsl(216,20%,45%)]">
             Adjust inventory levels for {product.name} (SKU: {product.sku})
           </DialogDescription>
         </DialogHeader>
 
-        <div className="bg-muted/50 rounded-lg p-4 mb-6">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Current Stock:</span>
-            <span className="font-semibold text-lg">{product.stockLevel}</span>
+        <div className="bg-[hsl(210deg,14.29%,95.25%)]/50 rounded-[12px] p-4 mb-6">
+          <div className="flex items-center  justify-between">
+            <span className="text-sm text-[hsl(216,20%,45%)]">Current Stock:</span>
+            <span className="font-semibold text-[hsl(216,32%,17%)] text-lg">{product.stockLevel}</span>
           </div>
           <div className="flex items-center justify-between mt-2">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-[hsl(216,20%,45%)]">
               New Stock Level:
             </span>
-            <span className="font-semibold text-lg text-primary">
+            <span className="font-semibold text-lg text-[hsl(214,84%,56%)]">
               {getNewStockLevel()}
             </span>
           </div>
@@ -124,32 +124,32 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="adjustmentType" className="text-sm font-medium">
+            <Label htmlFor="adjustmentType" className="text-sm text-[hsl(216,32%,17%)] font-medium">
               Adjustment Type
             </Label>
             <Select
               value={adjustmentType}
               onValueChange={(value) => setAdjustmentType(value)}
             >
-              <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+              <SelectTrigger className="shadow-soft  bg-[hsl(214,20%,97%)] text-[hsl(216,32%,17%)] focus:shadow-glow transition-smooth">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className={"shadow-soft bg-white"}>
                 <SelectItem value="add">
                   <div className="flex items-center gap-2">
-                    <Plus className="h-4 w-4 text-success" />
+                    <Plus className="h-4 w-4 text-[hsl(142,76%,45%)]" />
                     Add Stock (Restock)
                   </div>
                 </SelectItem>
                 <SelectItem value="subtract">
                   <div className="flex items-center gap-2">
-                    <Minus className="h-4 w-4 text-warning" />
+                    <Minus className="h-4 w-4 text-[hsl(38,92%,55%)]" />
                     Remove Stock (Damage/Loss)
                   </div>
                 </SelectItem>
                 <SelectItem value="set">
                   <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-primary" />
+                    <Package className="h-4 w-4 text-[hsl(214,84%,56%)]" />
                     Set Exact Stock (Inventory Count)
                   </div>
                 </SelectItem>
@@ -158,7 +158,7 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="quantity" className="text-sm font-medium">
+            <Label htmlFor="quantity" className="text-sm text-[hsl(216,32%,17%)] font-medium">
               {adjustmentType === "set" ? "New Stock Level" : "Quantity"}
             </Label>
             <Input
@@ -172,17 +172,17 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
                   : "Enter quantity"
               }
               min="0"
-              className="shadow-soft focus:shadow-glow transition-smooth"
+              className="shadow-soft bg-[hsl(214,20%,97%)] text-[hsl(216,32%,17%)] focus:shadow-glow transition-smooth"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="reason" className="text-sm font-medium">
+            <Label htmlFor="reason" className="text-sm text-[hsl(216,32%,17%)] font-medium">
               Reason for Adjustment
             </Label>
             <Select value={reason} onValueChange={setReason}>
-              <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+              <SelectTrigger className="shadow-soft bg-[hsl(214,20%,97%)] text-[hsl(216,32%,17%)] focus:shadow-glow transition-smooth">
                 <SelectValue  placeholder="Select reason" />
               </SelectTrigger>
               <SelectContent className={"shadow-soft bg-white"}>
@@ -229,7 +229,7 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
               type="button"
               variant="outline"
               onClick={onClose}
-              className="shadow-soft hover:shadow-medium transition-smooth"
+              className="shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer  mr-2  rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
             >
               Cancel
             </Button>

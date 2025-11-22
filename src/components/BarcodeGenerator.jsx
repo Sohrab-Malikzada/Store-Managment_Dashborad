@@ -86,18 +86,18 @@ export function BarcodeGenerator({ isOpen, onClose, productSku, productName }) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="gradient-card max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
             Barcode Generator
           </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4">
           <div className="text-center">
-            <h3 className="font-semibold text-lg">{productName}</h3>
-            <p className="text-muted-foreground">SKU: {productSku}</p>
+            <h3 className="font-semibold text-[hsl(216,32%,17%)] text-lg">{productName}</h3>
+            <p className="text-[hsl(216,20%,45%)]">SKU: {productSku}</p>
           </div>
           
-          <div className="flex justify-center p-4 bg-white rounded-lg border">
+          <div className="flex justify-center p-4 bg-[hsl(0deg,0%,100%)]  border-[hsl(214,20%,88%)] rounded-[10px] border">
             <canvas 
               ref={canvasRef}
               className="max-w-full"
@@ -108,14 +108,14 @@ export function BarcodeGenerator({ isOpen, onClose, productSku, productName }) {
             <Button 
               variant="outline" 
               onClick={downloadBarcode}
-              className="shadow-soft hover:shadow-medium transition-smooth"
+              className="shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer   rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
             >
               Download PNG
             </Button>
             <Button 
               variant="outline" 
               onClick={printBarcode}
-              className="shadow-soft hover:shadow-medium transition-smooth"
+              className="shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer   rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
             >
               Print Barcode
             </Button>

@@ -176,7 +176,7 @@ export default function Purchases() {
           trend={{ value: 8.2, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "            
+            icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "            
          />
         </div>
         <StatsCard
@@ -186,7 +186,7 @@ export default function Purchases() {
           trend={{ value: -2.4, label: "from last month" }}
           trendchange="text-[hsl(0,84%,60%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "            
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "            
         />
         <StatsCard
           title="Active Suppliers"
@@ -195,7 +195,7 @@ export default function Purchases() {
           trend={{ value: 12.5, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "            
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "            
        />
         <StatsCard
           title="Purchase Orders"
@@ -204,7 +204,7 @@ export default function Purchases() {
           trend={{ value: 5.1, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-53 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
       />
       </div>
 

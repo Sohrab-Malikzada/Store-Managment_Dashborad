@@ -150,7 +150,7 @@ export default function Inventory() {
           <CSVImport  onImport={(importedProducts) => {
             const newProducts = importedProducts.map((product, index) => ({
               id: `PRD-${Date.now()}-${index}`,
-              ...product
+              ...product 
             }));
             setProducts(prev => [...prev, ...newProducts]);
           }} />
@@ -180,13 +180,13 @@ export default function Inventory() {
           value={totalProducts}
           icon={Package}
           variant="warning"
-          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(211,100%,50%))]/10  text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
           icon={AlertTriangle}
-          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
 
@@ -195,7 +195,7 @@ export default function Inventory() {
           title="Inventory Value"
           value={`؋${totalValue.toLocaleString()}`}
           icon={Package}
-          icanchange="items-center position-absolute -m-66 -mt-6 -mr-78  h-4 w-4 flex justify-end"
+          icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(142,76%,36%)]/10 text-[hsl(144,100%,29%)] rounded-[12px] p-2 h-8 w-8"
           variant="success"
         />
@@ -219,8 +219,8 @@ export default function Inventory() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col xl:flex-row gap-4 mb-6">
-            <div className=" relative flex-1 rounded-md bg-gray-50">
-              <Search className=" text-[hsl(216,20%,45%)] shadow-[0_1px_2px_-1px_hsl(216,20%,45%,0.5)] absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <div className=" relative  flex-1 rounded-md bg-gray-50">
+              <Search className="text-[hsl(216,20%,45%)] shadow-[0_1px_2px_-1px_hsl(216,20%,45%,0.5)] absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" />
               <Input
                 placeholder="Search products, SKU, or supplier..."
                 value={searchTerm}
@@ -258,11 +258,11 @@ export default function Inventory() {
           </div>
 
           {/* Products Table */}
-          <div className="hover:bg-[hsl(0,0%,96%)] hover:transition-all duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
+          <div className="hover:transition-all duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Product</TableHead>
+                  <TableHead className="pl-4">Product</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>Stock Level</TableHead>
                   <TableHead>Min Stock</TableHead>
@@ -277,19 +277,19 @@ export default function Inventory() {
                   const status = getStockStatus(product);
                   return (
                     <TableRow key={product.id || product._id}>
-                      <TableCell>
+                      <TableCell className="pl-4">
                         <div>
-                          <div className="font-medium text-foreground">{product.name}kljkljlj</div>
-                          <div className="text-sm text-muted-foreground">SKU: {product.sku}</div>
+                          <div className="font-medium text-[hsl(216,32%,17%)]">{product.name}</div>
+                          <div className="text-sm text-[hsl(216,20%,45%)]">SKU: {product.sku}</div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline">{product.category}</Badge>
+                        <Badge className="text-[hsl(216,32%,17%)] rounded-full border-[hsl(214,20%,88%)]" variant="outline">{product.category}</Badge>
                       </TableCell>
-                      <TableCell className="font-medium">{product.stockLevel}</TableCell>
-                      <TableCell className="text-muted-foreground">{product.minStock}</TableCell>
-                      <TableCell className="text-muted-foreground">؋{Number(product.purchasePrice).toLocaleString()}</TableCell>
-                      <TableCell className="font-medium text-success">؋{Number(product.salePrice).toLocaleString()}</TableCell>
+                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">{product.stockLevel}</TableCell>
+                      <TableCell className="text-[hsl(216,20%,45%)]">{product.minStock}</TableCell>
+                      <TableCell className="text-[hsl(216,20%,45%)]">؋{Number(product.purchasePrice).toLocaleString()}</TableCell>
+                      <TableCell className="font-medium text-[hsl(142,76%,36%)]">؋{Number(product.salePrice).toLocaleString()}</TableCell>
                       <TableCell>
                         <Badge variant={status.variant}>{status.label}</Badge>
                       </TableCell>
@@ -302,7 +302,7 @@ export default function Inventory() {
                               setSelectedProduct(product);
                               setEditProductDialog(true);
                             }}
-                            className="hover:bg-primary/10 hover:text-primary transition-smooth"
+                            className="cursor-pointer border-[hsl(214,20%,85%)] rounded-[10px] my-2 text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(214,84%,60%)]/10 hover:text-[hsl(214,84%,56%)] transition-smooth"
                           >
                             <Edit className="h-3 w-3" />
                           </Button>
@@ -313,7 +313,7 @@ export default function Inventory() {
                               setSelectedProduct(product);
                               setBarcodeDialog(true);
                             }}
-                            className="hover:bg-primary/10 hover:text-primary transition-smooth"
+                            className="cursor-pointer border-[hsl(214,20%,85%)] rounded-[10px] my-2 text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(214,84%,60%)]/10 hover:text-[hsl(214,84%,56%)] transition-smooth"
                           >
                             <QrCode className="h-3 w-3" />
                           </Button>
@@ -324,7 +324,7 @@ export default function Inventory() {
                               setSelectedProduct(product);
                               setStockAdjustmentDialog(true);
                             }}
-                            className="hover:bg-success/10 hover:text-success transition-smooth"
+                            className="cursor-pointer border-[hsl(214,20%,85%)] rounded-[10px] my-2 text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(214,84%,60%)]/10 hover:text-[hsl(142,76%,36%)] transition-smooth"
                           >
                             <Settings className="h-3 w-3" />
                           </Button>
