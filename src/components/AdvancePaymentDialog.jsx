@@ -37,13 +37,13 @@ export function AdvancePaymentDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gradient-card max-w-2xl">
+      <DialogContent className="gradient-card  max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-primary" />
+          <DialogTitle className="tracking-tight flex items-center text-[hsl(216,32%,17%)] gap-2">
+            <CreditCard className="h-5 w-5 text-[hsl(214,84%,56%)]" />
             Advance Payment
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="mt-[-2px]">
             Provide advance salary payments to employees
           </DialogDescription>
         </DialogHeader>
@@ -51,9 +51,9 @@ export function AdvancePaymentDialog({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 py-4">
             <div className="space-y-2">
-              <Label>Select Employee</Label>
+              <Label className="mt-[6px] text-[hsl(216,32%,17%)]">Select Employee</Label>
               <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
-                <SelectTrigger>
+                <SelectTrigger className="mt-[12px] text-[hsl(216,32%,17%)]">
                   <SelectValue placeholder="Choose employee" />
                 </SelectTrigger>
                 <SelectContent className={"bg-white"}>
@@ -70,29 +70,29 @@ export function AdvancePaymentDialog({
             </div>
 
             {selectedEmployee && (
-              <Card className="bg-muted/20">
-                <CardContent className="pt-4">
+              <Card className="bg-muted/20  -mt-2">
+                <CardContent className="pt-[-2px] -mt-2">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Monthly Salary</p>
-                      <p className="text-lg font-semibold text-primary">${selectedEmployee.salary}</p>
+                      <p className="text-sm text-[hsl(216,20%,45%)]">Monthly Salary</p>
+                      <p className="text-lg font-semibold text-[hsl(214,84%,56%)]">${selectedEmployee.salary}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Total Advances</p>
-                      <p className="text-lg font-semibold text-warning">${totalAdvances}</p>
+                      <p className="text-sm text-[hsl(216,20%,45%)]">Total Advances</p>
+                      <p className="text-lg font-semibold text-[hsl(38,92%,55%)]">${totalAdvances}</p>
                     </div>
                   </div>
                   
                   {selectedEmployee.advances.length > 0 && (
                     <div className="mt-4">
-                      <p className="text-sm font-medium mb-2">Previous Advances:</p>
+                      <p className="text-sm text-[hsl(216,32%,17%)] font-medium mb-2">Previous Advances:</p>
                       <div className="space-y-1">
                         {selectedEmployee.advances.slice(-3).map((advance, index) => (
                           <div key={index} className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">{advance.reason}</span>
-                            <Badge variant="outline">${advance.amount}</Badge>
+                            <span className="text-[hsl(216,20%,45%)]">{advance.reason}</span>
+                            <Badge variant="outline" className="border-[hsl(214,20%,88%)] rounded-full text-[hsl(216,32%,17%)]">${advance.amount}</Badge>
                           </div>
-                        ))}
+                        ))} 
                       </div>
                     </div>
                   )}
@@ -102,21 +102,21 @@ export function AdvancePaymentDialog({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="amount">Advance Amount</Label>
+                <Label htmlFor="amount" className="mt-[-4px] text-[hsl(216,32%,17%)]">Advance Amount</Label>
                 <Input
                   id="amount"
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="Enter amount"
-                  className="shadow-soft focus:shadow-glow transition-smooth"
+                  className="shadow-soft mt-[5px] bg-[hsl(248,250%,98%)] transition-smooth"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="reason-select">Reason</Label>
+                <Label htmlFor="reason-select" className="mt-[-4px] text-[hsl(216,32%,17%)]">Reason</Label>
                 <Select value={reason} onValueChange={setReason}>
-                  <SelectTrigger>
+                  <SelectTrigger className="mt-[12px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)]">
                     <SelectValue placeholder="Select reason" />
                   </SelectTrigger>
                   <SelectContent className={"bg-white"}>
@@ -137,19 +137,24 @@ export function AdvancePaymentDialog({
                 <Textarea
                   id="custom-reason"
                   placeholder="Specify the reason for advance"
-                  className="shadow-soft focus:shadow-glow transition-smooth"
+                  className="shadow-soft  focus:shadow-glow transition-smooth"
                 />
               </div>
             )}
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button
+             type="button"
+             variant="outline"
+             onClick={onClose} 
+             className="-mt-[9px] mr-[1px] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
+             >
               Cancel
             </Button>
             <Button 
               type="submit"
-              className="gradient-primary shadow-soft hover:shadow-medium"
+              className="-mt-[9px] mr-[-1px] w-44  gradient-primary cursor-pointer text-[#ffffff] shadow-soft hover:shadow-medium"
               disabled={!selectedEmployeeId || !amount || !reason}
             >
               <DollarSign className="h-4 w-4 mr-2" />

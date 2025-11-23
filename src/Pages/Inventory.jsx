@@ -185,7 +185,7 @@ export default function Inventory() {
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
-          icon={AlertTriangle}
+          icon={AlertTriangle}  
           icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"

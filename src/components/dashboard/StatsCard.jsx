@@ -14,6 +14,11 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
     else if (title.toLowerCase().includes("monthly payroll")) colorClass = "text-green-600 bg-green-100";
     else if (title.toLowerCase().includes("advances given")) colorClass = "text-red-600 bg-red-100";
     else if (title.toLowerCase().includes("pending requests")) colorClass = "text-red-600 bg-red-100";
+    else if (title.toLowerCase().includes("total bonuses")) colorClass = "text-green-600 bg-green-100";
+    else if (title.toLowerCase().includes("employees paid")) colorClass = "text-purple-600 bg-purple-100";
+    else if (title.toLowerCase().includes("total paid this month")) colorClass = "text-blue-600 bg-blue-100";
+    else if (title.toLowerCase().includes("pending payments")) colorClass = "text-red-600 bg-red-100";
+
     else if (title.toLowerCase().includes("supplier")) colorClass = "text-green-600 bg-green-100";
     else if (title.toLowerCase().includes("order")) colorClass = "text-purple-600 bg-purple-100";
     else if (title.toLowerCase().includes("profit")) colorClass = "text-emerald-600 bg-emerald-100";

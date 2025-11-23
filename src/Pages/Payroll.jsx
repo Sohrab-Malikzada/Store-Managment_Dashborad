@@ -164,13 +164,13 @@ export default function Payroll() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-primary" />
+                <DollarSign className="h-5 w-5 text-[hsl(214,84%,56%)]" />
                 Payroll Records
               </CardTitle>
               <CardDescription>Monthly salary processing and payment history</CardDescription>
             </div>
             <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-              <SelectTrigger className="w-48 bg-white shadow-soft focus:shadow-glow transition-smooth">
+              <SelectTrigger className="w-48  bg-[hsl(214,20%,98%)] shadow-soft  transition-smooth">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className={"bg-white"}>
@@ -188,13 +188,13 @@ export default function Payroll() {
 
       {/* Dialogs */}
       <Dialog open={deductionDialog} onOpenChange={setDeductionDialog}>
-        <DialogContent className="gradient-card shadow-medium">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-foreground">
-              <Minus className="h-5 w-5 text-warning" />
+        <DialogContent className="gradient-card h-107  shadow-medium">
+          <DialogHeader >
+            <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
+              <Minus className="h-5 w-5 text-[hsl(38,92%,55%)]" />
               Add Employee Deduction
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="mt-[-2px]">
               Apply deductions for taxes, advances, or other adjustments
             </DialogDescription>
           </DialogHeader>
@@ -203,11 +203,11 @@ export default function Payroll() {
             const formData = new FormData(e.currentTarget);
             handleAddDeduction(formData);
           }}>
-            <div className="grid gap-4 py-4">
+            <div className="grid gap-4 py-4 mt-[6px]">
               <div className="space-y-2">
-                <Label htmlFor="employee">Select Employee</Label>
+                <Label htmlFor="employee" className="text-[hsl(216,32%,17%)]">Select Employee</Label>
                 <Select name="employee" required>
-                  <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+                  <SelectTrigger className="shadow-soft mt-[12px] text-[hsl(216,32%,17%)] bg-[hsl(214,20%,98%)]  transition-smooth">
                     <SelectValue placeholder="Choose employee" />
                   </SelectTrigger>
                   <SelectContent className={"bg-white"}>
@@ -218,19 +218,19 @@ export default function Payroll() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="deduction-amount">Deduction Amount (؋)</Label>
+                <Label htmlFor="deduction-amount" className="text-[hsl(216,32%,17%)] mt-[-4px]">Deduction Amount (؋)</Label>
                 <Input
                   name="amount"
                   type="number"
                   placeholder="Enter deduction amount"
-                  className="shadow-soft focus:shadow-glow transition-smooth"
+                  className="shadow-soft mt-[4px] bg-[hsl(214,20%,98%)] transition-smooth"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="deduction-reason">Reason</Label>
+                <Label htmlFor="deduction-reason" className="text-[hsl(216,32%,17%)] mt-[6px]">Reason</Label>
                 <Select name="reason" required>
-                  <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+                  <SelectTrigger className="shadow-soft mt-[12px]  text-[hsl(216,32%,17%)]  bg-[hsl(214,20%,98%)] transition-smooth">
                     <SelectValue placeholder="Select deduction type" />
                   </SelectTrigger>
                   <SelectContent className={"bg-white"}>
@@ -249,14 +249,14 @@ export default function Payroll() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setDeductionDialog(false)}
-                className="shadow-soft hover:shadow-medium transition-smooth"
+                className="mt-[-10px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
                 variant="outline" 
-                className="text-orange-500 border-warning hover:bg-warning/10 shadow-soft hover:shadow-medium transition-smooth"
+                className="mt-[-10px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer hover:text-[hsl(216,32%,17%))]  hover:bg-[hsl(38,92%,50%)]/10   rounded-[10px] text-[hsl(38,92%,50%)] bg-[hsl(248,250%,98%)] border-[hsl(38,92%,50%)] hover:shadow-medium transition-smooth"
               >
                 Add Deduction
               </Button>
@@ -266,13 +266,13 @@ export default function Payroll() {
       </Dialog>
 
       <Dialog open={bonusDialog} onOpenChange={setBonusDialog}>
-        <DialogContent className="gradient-card shadow-medium">
+        <DialogContent className="gradient-card h-144 shadow-medium">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-foreground">
-              <Gift className="h-5 w-5 text-primary" />
+            <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
+              <Gift className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Allocate Employee Bonus
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="-mt-[2px]">
               Distribute bonuses to employees for special occasions or performance rewards
             </DialogDescription>
           </DialogHeader>
@@ -281,11 +281,11 @@ export default function Payroll() {
             const formData = new FormData(e.currentTarget);
             handleAllocateBonus(formData);
           }}>
-            <div className="grid gap-4 py-4">
+            <div className="grid gap-4 py-7">
               <div className="space-y-2">
-                <Label htmlFor="employees">Select Employees</Label>
+                <Label htmlFor="employees" className="text-[hsl(216,32%,17%)] -mt-[6px]">Select Employees</Label>
                 <Select name="employees">
-                  <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+                  <SelectTrigger className="shadow-soft bg-[hsl(214,20%,98%)] mt-[12px] text-[hsl(216,32%,17%)] transition-smooth">
                     <SelectValue placeholder="Choose employees" />
                   </SelectTrigger>
                   <SelectContent className={"bg-white"}>
@@ -297,9 +297,9 @@ export default function Payroll() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="occasion">Occasion</Label>
+                <Label htmlFor="occasion" className="text-[hsl(216,32%,17%)] -mt-[4px]">Occasion</Label>
                 <Select name="occasion">
-                  <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+                  <SelectTrigger className="shadow-soft mt-[12px] bg-[hsl(214,20%,98%)] text-[hsl(216,32%,17%)] transition-smooth">
                     <SelectValue placeholder="Select occasion" />
                   </SelectTrigger>
                   <SelectContent className={"bg-white"}>
@@ -313,20 +313,20 @@ export default function Payroll() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="amount">Bonus Amount (؋)</Label>
+                <Label htmlFor="amount" className="text-[hsl(216,32%,17%)] -mt-[4px]">Bonus Amount (؋)</Label>
                 <Input
                   name="amount"
                   type="number"
                   placeholder="Enter bonus amount"
-                  className="shadow-soft focus:shadow-glow transition-smooth"
+                  className="shadow-soft mt-[5px] bg-[hsl(214,20%,98%)] transition-smooth"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="reason">Reason/Notes</Label>
+                <Label htmlFor="reason" className="text-[hsl(216,32%,17%)] mt-[5px]">Reason/Notes</Label>
                 <Textarea
                   name="reason"
                   placeholder="Enter reason for bonus allocation"
-                  className="shadow-soft focus:shadow-glow transition-smooth"
+                  className="shadow-soft mt-[12px] bg-[hsl(214,20%,98%)] transition-smooth"
                 />
               </div>
             </div>
@@ -335,13 +335,13 @@ export default function Payroll() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setBonusDialog(false)}
-                className="shadow-soft hover:shadow-medium transition-smooth"
+                className="-mt-[16px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="gradient-primary shadow-soft hover:shadow-medium transition-smooth"
+                className="-mt-[16px] gradient-primary text-[#ffffff] shadow-soft hover:shadow-medium transition-smooth"
               >
                 Allocate Bonus
               </Button>
@@ -351,31 +351,31 @@ export default function Payroll() {
       </Dialog>
 
       <Dialog open={processingDialog} onOpenChange={setProcessingDialog}>
-        <DialogContent className="gradient-card shadow-medium max-w-2xl">
+        <DialogContent className="gradient-card h-137 shadow-medium max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-foreground">
-              <Calendar className="h-5 w-5 text-primary" />
+            <DialogTitle className="flex tracking-tight text-[18px] mt-[-3px] items-center gap-2 text-[hsl(216,32%,17%)]">
+              <Calendar className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Process Monthly Payroll
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="mt-[-6px]">
               Select employees to process payroll payments for the current period
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4 max-h-96 overflow-y-auto">
             <div className="space-y-3">
               {mockEmployees.map((employee) => (
-                <div key={employee.id} className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/20 transition-smooth">
+                <div key={employee.id} className="flex items-center justify-between p-4 border border-[hsl(214,20%,88%)] rounded-[12px] hover:bg-muted/20 transition-smooth">
                   <div>
-                    <h4 className="font-medium text-foreground">{employee.name}</h4>
-                    <p className="text-sm text-muted-foreground">{employee.position}</p>
+                    <h4 className="font-medium text-[hsl(216,32%,17%)]">{employee.name}</h4>
+                    <p className="text-sm text-[hsl(216,20%,45%)]">{employee.position}</p>
                     {employee.advances.length > 0 && (
-                      <p className="text-xs text-warning">
+                      <p className="text-xs text-[hsl(38,92%,50%)]">
                         {employee.advances.length} advance payment(s)
                       </p>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-primary">؋{employee.salary.toLocaleString()}</p>
+                    <p className="font-medium text-[hsl(214,84%,56%)]">؋{employee.salary.toLocaleString()}</p>
                     <Button 
                       variant="outline" 
                       size="sm"
@@ -389,8 +389,8 @@ export default function Payroll() {
                       className={cn(
                         "shadow-soft hover:shadow-medium transition-smooth",
                         selectedEmployees.includes(employee.id) 
-                          ? "bg-primary text-primary-foreground border-primary" 
-                          : "hover:bg-primary/10 hover:text-primary"
+                          ? "tracking-tight hover:bg-[hsl(214,20%,95%)] bg-[hsl(214,84%,56%)]  hover:border-[hsl(214,84%,56%)]  hover:text-[hsl(216,32%,17%)] text-[#ffffff] rounded-[11px] px-[14px] py-[18px] mr-[-1px] mt-[-1px] cursor-pointer"
+                          : "hover:bg-[hsl(214,84%,56%)]/10 cursor-pointer  bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)] rounded-[10px] border-[hsl(214,20%,88%)] hover:border-[hsl(214,20%,88%)] hover:text-[hsl(214,84%,56%)]"
                       )}
                     >
                       {selectedEmployees.includes(employee.id) ? "Selected" : "Select"}
@@ -404,14 +404,14 @@ export default function Payroll() {
             <Button 
               variant="outline"
               onClick={() => setProcessingDialog(false)}
-              className="shadow-soft hover:shadow-medium transition-smooth"
+              className="shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
             >
               Cancel
             </Button>
             <Button 
               onClick={handleProcessPayroll}
               disabled={selectedEmployees.length === 0}
-              className="gradient-primary shadow-soft hover:shadow-medium transition-smooth"
+              className="gradient-primary text-[#ffffff] shadow-soft hover:shadow-medium transition-smooth"
             >
               Process Payroll ({selectedEmployees.length})
             </Button>

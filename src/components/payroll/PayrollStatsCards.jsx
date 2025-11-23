@@ -21,28 +21,36 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
         value={`؋${totalPaidThisMonth.toLocaleString()}`}
         icon={DollarSign}
         trend={{ value: 8.2, label: "from last month" }}
-        className="gradient-card shadow-soft hover:shadow-medium transition-smooth"
+        trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+        box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
       />
       <StatsCard
         title="Employees Paid"
         value={employeesPaid.toString()}
         icon={Users}
         trend={{ value: 100, label: "completion rate" }}
-        className="gradient-card shadow-soft hover:shadow-medium transition-smooth"
+        trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+        box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
       />
       <StatsCard
         title="Total Bonuses"
         value={`؋${totalBonusPaid.toLocaleString()}`}
         icon={Award}
         trend={{ value: 25.3, label: "this period" }}
-        className="gradient-card shadow-soft hover:shadow-medium transition-smooth"
+        trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+        box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
       />
       <StatsCard
         title="Pending Payments"
         value={pendingPayments.toString()}
         icon={Calendar}
         trend={{ value: -12.5, label: "processing" }}
-        className="gradient-card shadow-soft hover:shadow-medium transition-smooth"
+        trendchange="text-[hsl(0,84%,60%)]  -ml-4 mt-[-5px] "
+        box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
       />
     </div>
   );
