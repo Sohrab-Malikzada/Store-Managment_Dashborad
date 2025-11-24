@@ -20,10 +20,10 @@ export default function Debts() {
 
   const totalCustomerDebt = customerDebts.reduce((sum, debt) => sum + debt.pendingAmount, 0);
   const totalSupplierDebt = supplierDebts.reduce((sum, debt) => sum + debt.pendingAmount, 0);
-  const overdueCustomerDebts = customerDebts.filter(debt => 
+  const overdueCustomerDebts = customerDebts.filter(debt =>
     new Date(debt.dueDate) < new Date() && debt.pendingAmount > 0
   ).length;
-  const overdueSupplierDebts = supplierDebts.filter(debt => 
+  const overdueSupplierDebts = supplierDebts.filter(debt =>
     new Date(debt.dueDate) < new Date() && debt.pendingAmount > 0
   ).length;
 
@@ -45,23 +45,23 @@ export default function Debts() {
 
   const handlePaymentUpdate = (debtId, paymentAmount) => {
     if (dialogType === 'customer') {
-      setCustomerDebts(prev => prev.map(debt => 
-        debt.id === debtId 
-          ? { 
-              ...debt, 
-              paidAmount: debt.paidAmount + paymentAmount,
-              pendingAmount: debt.pendingAmount - paymentAmount
-            }
+      setCustomerDebts(prev => prev.map(debt =>
+        debt.id === debtId
+          ? {
+            ...debt,
+            paidAmount: debt.paidAmount + paymentAmount,
+            pendingAmount: debt.pendingAmount - paymentAmount
+          }
           : debt
       ));
     } else {
-      setSupplierDebts(prev => prev.map(debt => 
-        debt.id === debtId 
-          ? { 
-              ...debt, 
-              paidAmount: debt.paidAmount + paymentAmount,
-              pendingAmount: debt.pendingAmount - paymentAmount
-            }
+      setSupplierDebts(prev => prev.map(debt =>
+        debt.id === debtId
+          ? {
+            ...debt,
+            paidAmount: debt.paidAmount + paymentAmount,
+            pendingAmount: debt.pendingAmount - paymentAmount
+          }
           : debt
       ));
     }
@@ -72,57 +72,66 @@ export default function Debts() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Debt Management</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Debt Management</h1>
+          <p className="text-[hsl(216,20%,45%)] mt-1">
             Track customer and supplier payment obligations
           </p>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid  gap-4 md:grid-cols-4">
         <StatsCard
           title="Customer Debts"
           value={`$${totalCustomerDebt.toFixed(2)}`}
           icon={Users}
           variant="warning"
+          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
           title="Supplier Debts"
           value={`$${totalSupplierDebt.toFixed(2)}`}
           icon={Truck}
           variant="destructive"
+          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
+
         />
         <StatsCard
           title="Overdue Customer"
           value={overdueCustomerDebts}
           icon={AlertCircle}
           variant="destructive"
+          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
           title="Overdue Supplier"
           value={overdueSupplierDebts}
           icon={AlertCircle}
           variant="destructive"
+          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
         />
       </div>
 
       {/* Debts Tabs */}
       <Tabs defaultValue="customers" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="mt-[1px] grid w-full grid-cols-2 bg-[hsl(210deg,20%,96.08%)]">
           <TabsTrigger value="customers">Customer Debts</TabsTrigger>
           <TabsTrigger value="suppliers">Supplier Debts</TabsTrigger>
         </TabsList>
 
         {/* Customer Debts */}
         <TabsContent value="customers">
-          <Card className="gradient-card shadow-soft">
+          <Card className="mt-[-5px] gradient-card shadow-soft">
             <CardHeader>
-              <CardTitle className="text-foreground flex items-center gap-2">
-                <Users className="h-5 w-5" />
+              <CardTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
+                <Users className="h-5 w-5 text-[hsl(216,32%,17%)]" />
                 Customer Debts
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="mt-[-4px]">
                 Money owed by customers for installment purchases
               </CardDescription>
             </CardHeader>
@@ -159,17 +168,17 @@ export default function Debts() {
                           </TableCell>
                           <TableCell>
                             <div className="flex space-x-2">
-                              <Button 
-                                variant="outline" 
+                              <Button
+                                variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'customer')}
                               >
                                 View Details
                               </Button>
                               {debt.pendingAmount > 0 && (
-                                <Button 
-                                  variant="default" 
-                                  size="sm" 
+                                <Button
+                                  variant="default"
+                                  size="sm"
                                   className="bg-gradient-to-r from-blue-400 to-blue-500 text-white"
                                   onClick={() => handleViewDebt(debt, 'customer')}
                                 >
@@ -233,17 +242,17 @@ export default function Debts() {
                           </TableCell>
                           <TableCell>
                             <div className="flex space-x-2">
-                              <Button 
-                                variant="outline" 
+                              <Button
+                                variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'supplier')}
                               >
                                 View Details
                               </Button>
                               {debt.pendingAmount > 0 && (
-                                <Button 
-                                  variant="default" 
-                                  size="sm" 
+                                <Button
+                                  variant="default"
+                                  size="sm"
                                   className="gradient-primary text-white"
                                   onClick={() => handleViewDebt(debt, 'supplier')}
                                 >

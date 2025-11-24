@@ -18,6 +18,10 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
     else if (title.toLowerCase().includes("employees paid")) colorClass = "text-purple-600 bg-purple-100";
     else if (title.toLowerCase().includes("total paid this month")) colorClass = "text-blue-600 bg-blue-100";
     else if (title.toLowerCase().includes("pending payments")) colorClass = "text-red-600 bg-red-100";
+    else if (title.toLowerCase().includes("customer debts")) colorClass = "text-yellow-600 bg-yellow-100";
+    else if (title.toLowerCase().includes("supplier debts")) colorClass = "text-red-600 bg-red-100";
+    else if (title.toLowerCase().includes("overdue customer")) colorClass = "text-red-600 bg-red-100";
+    else if (title.toLowerCase().includes("overdue supplier")) colorClass = "text-red-600 bg-red-100";
 
     else if (title.toLowerCase().includes("supplier")) colorClass = "text-green-600 bg-green-100";
     else if (title.toLowerCase().includes("order")) colorClass = "text-purple-600 bg-purple-100";
@@ -38,7 +42,7 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
           <div className="flex  justify-start -ml-18 -mt-2  tracking-tight items-center text-sm font-medium text-[hsl(216,20%,45%)]  leading-none">
             {title}
           </div>
-          <div className="mt-4 -ml-18 space-x-7 flex justify-start text-2xl font-bold text-foreground leading-tight">
+          <div className="mt-4 -ml-18 space-x-7 flex justify-start text-2xl font-bold text-[hsl(216,32%,17%)] leading-tight">
             <span className="self-end">{value}</span>
           </div>
         </div>
