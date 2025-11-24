@@ -175,13 +175,13 @@ export default function Inventory() {
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <StatsCard
-          className=" m-5  text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
+          className=" m-5 absolute text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
           title="Total Products"
           value={totalProducts}
           icon={Package}
           variant="warning"
-          icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
-          iconColor="bg-[hsl(211,100%,50%))]/10  text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
+          icanchange="items-center relative -m-66 -mt-6 -mr-66  h-4 w-4"
+          iconColor="bg-[hsl(211,100%,50%))]/10   text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}

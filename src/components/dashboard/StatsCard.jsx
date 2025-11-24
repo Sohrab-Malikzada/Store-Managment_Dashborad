@@ -28,10 +28,10 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
 
   return (
     <Card className={`gradient-card ${box} shadow-[0,4px,30px]	 hover:shadow-[hsl(45,8%,69%)] transition-all duration-300 p-10 border-[hsl(214,20%,88%)] hover:shadow-medium `}>
-      <div className="position-relative  flex -mb-3 items-right gap-10">
+      <div className="relative  flex -mb-3 items-right gap-10">
         {Icon && (
           <span className={`rounded-lg p-2  flex items-right  justify-end`}>
-            <Icon className={`items-center ${icanchange}  ${colorClass} position-absolute -m-66 -mt-6 -mr-0  h-4 w-4 flex justify-end `} />
+            <Icon className={`items-center ${icanchange}  ${colorClass} absolute -m-66 -mt-6 -mr-0  h-4 w-4 flex justify-end `} />
           </span>
         )}
         <div className=" flex-1">
