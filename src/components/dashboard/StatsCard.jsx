@@ -4,7 +4,7 @@
 import { Card } from "@/components/ui/card";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
-export function StatsCard({trendchange, icanchange, box, title, value, icon: Icon, trend, iconColor }) {
+export function StatsCard({trendchange, valuechange, titlechange, icanchange, box, title, value, icon: Icon, trend, iconColor }) {
  
   let colorClass = iconColor;
   if (!colorClass) {
@@ -39,16 +39,16 @@ export function StatsCard({trendchange, icanchange, box, title, value, icon: Ico
           </span>
         )}
         <div className=" flex-1">
-          <div className="flex  justify-start -ml-18 -mt-2  tracking-tight items-center text-sm font-medium text-[hsl(216,20%,45%)]  leading-none">
+          <div className={`${titlechange} flex  justify-start -ml-18 -mt-2  tracking-tight items-center text-sm font-medium text-[hsl(216,20%,45%)]  leading-none`}>
             {title}
           </div>
-          <div className="mt-4 -ml-18 space-x-7 flex justify-start text-2xl font-bold text-[hsl(216,32%,17%)] leading-tight">
+          <div className={`${valuechange} mt-4 -ml-18 space-x-7 flex justify-start text-2xl font-bold text-[hsl(216,32%,17%)] leading-tight`}>
             <span className="self-end">{value}</span>
           </div>
         </div>
       </div>
       {trend && (
-        <div className={`flex ${trendchange} items-center gap-1 text-xs font-semibold mt-2 ${trend.value > 0 ? 'text-emerald-600' : trend.value < 0 ? 'text-foreground' : 'text-muted-foreground'}`}>
+        <div className={`flex ${trendchange} items-center gap-1 text-xs font-semibold mt-2 ${trend.value > 0 ? 'text-emerald-600' : trend.value < 0 ? 'text-[hsl(0,84%,60%)]' : 'text-muted-foreground'}`}>
           {trend.value > 0 ? <ArrowUpRight className="w-4 h-4" /> : trend.value < 0 ? <ArrowDownRight className="w-4 h-4" /> : null}
           {trend.value > 0 ? '+' : ''}{trend.value}% {trend.label}
         </div>

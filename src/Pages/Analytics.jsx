@@ -70,14 +70,14 @@ export default function Analytics() {
     <div className="space-y-6 m-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">Analytics & Reports</h1>
-          <p className="text-muted-foreground">Comprehensive business insights and performance metrics</p>
+          <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">Analytics & Reports</h1>
+          <p className="text-[hsl(216,20%,45%)]">Comprehensive business insights and performance metrics</p>
         </div>
         <div className="flex items-center space-x-3">
-          <Calendar className="h-5 w-5 text-muted-foreground" />
+          <Calendar className="h-5 w-5 text-[hsl(216,20%,45%)]" />
           <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-32">
-              <SelectValue />
+            <SelectTrigger className="w-32 bg-[hsl(216,20%,98%)]">
+              <SelectValue/>
             </SelectTrigger>
             <SelectContent className={"bg-white"}>
               <SelectItem value="2024">2024</SelectItem>
@@ -93,41 +93,76 @@ export default function Analytics() {
           value={currentData.stats.totalRevenue}
           icon={DollarSign}
           trend={{ value: selectedYear === "2024" ? 17.8 : 15.2, label: "from last year" }}
-        />
+          trendchange="mt-[-6px] text-[hsl(142,76%,36%)] -mr-6 -ml-[16px] text-[hsl(142,76%,36%)] text-left text-[12px]"
+          variant="warning"
+          valuechange="mt-[18px]"
+          box=" h-[141px]"
+          titlechange="mt-[-7px]"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"
+          />
         <StatsCard
           title="Net Profit"
           value={currentData.stats.netProfit}
           icon={TrendingUp}
           trend={{ value: selectedYear === "2024" ? 25.3 : 22.5, label: "from last year" }}
+          trendchange="mt-[-6px] text-[hsl(142,76%,36%)] -mr-6 -ml-[16px] text-[hsl(142,76%,36%)] text-left text-[12px]"
+          variant="warning"
+          valuechange="mt-[18px]"
+          box=" h-[141px]"
+          titlechange="mt-[-7px]"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          iconColor="text-green-600 bg-green-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
           title="Products Sold"
           value={currentData.stats.productsSold}
           icon={Package}
           trend={{ value: selectedYear === "2024" ? 18.7 : 8.1, label: "this year" }}
+          trendchange="mt-[-6px] text-[hsl(142,76%,36%)] -mr-6 -ml-[16px] text-[hsl(142,76%,36%)] text-left text-[12px]"
+          variant="warning"
+          valuechange="mt-[18px]"
+          box=" h-[141px]"
+          titlechange="mt-[-7px]"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          iconColor="text-blue-600 bg-blue-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
           title="Active Customers"
           value={currentData.stats.activeCustomers}
           icon={Users}
           trend={{ value: selectedYear === "2024" ? 19.0 : 12.3, label: "total" }}
+          trendchange="mt-[-6px] text-[hsl(142,76%,36%)] -mr-6 -ml-[16px] text-[hsl(142,76%,36%)] text-left text-[12px]"
+          variant="warning"
+          valuechange="mt-[18px]"
+          box=" h-[141px]"
+          titlechange="mt-[-7px]"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          iconColor="text-purple-600 bg-purple-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
           title="Avg Order Value"
           value={currentData.stats.avgOrderValue}
           icon={ShoppingCart}
           trend={{ value: selectedYear === "2024" ? 10.6 : -2.4, label: "this year" }}
+          trendchange="mt-[-6px]  -mr-6 -ml-[16px] text-left text-[12px]"
+          variant="warning"
+          valuechange="mt-[18px]"
+          box=" h-[141px]"
+          titlechange="mt-[-7px]"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          iconColor="text-blue-600 bg-blue-100 rounded-[12px] p-2 h-8 w-8"
         />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="gradient-card shadow-medium">
+        <Card className="gradient-card rounded-[12px] shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-primary" />
+              <TrendingUp className="h-5 w-5 text-[hsl(141.86deg,76.09%,36.08%)]" />
               Monthly Performance - {selectedYear}
             </CardTitle>
-            <CardDescription>Sales, purchases, and profit comparison</CardDescription>
+            <CardDescription className="-mt-[4px]">Sales, purchases, and profit comparison</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
