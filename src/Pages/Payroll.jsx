@@ -170,7 +170,7 @@ export default function Payroll() {
               <CardDescription>Monthly salary processing and payment history</CardDescription>
             </div>
             <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-              <SelectTrigger className="w-48  bg-[hsl(214,20%,98%)] shadow-soft  transition-smooth">
+              <SelectTrigger className="w-48 text-[hsl(216,32%,17%)]  bg-[hsl(214,20%,98%)] shadow-soft  transition-smooth">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className={"bg-white"}>

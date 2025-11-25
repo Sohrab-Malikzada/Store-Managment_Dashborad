@@ -196,7 +196,7 @@ export default function Returns() {
         </TabsList>
 
         <TabsContent value="sales" className="space-y-4">
-          <Card className="bg-[hsl(0,0%,100%)] border-[hsl(214,20%,88%)]">
+          <Card className="bg-[hsl(0,0%,100%)] mt-[10px] border-[hsl(214,20%,88%)]">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-[hsl(216,32%,17%)]">Sale Returns</CardTitle>
@@ -204,7 +204,7 @@ export default function Returns() {
               </div>
               <Dialog open={showSaleReturnDialog} onOpenChange={setShowSaleReturnDialog}>
                 <DialogTrigger asChild>
-                  <Button className="bg-blue-500 text-white">
+                  <Button className="gradient-primary w-41 text-white">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Sale Return
                   </Button>
@@ -311,7 +311,7 @@ export default function Returns() {
         </TabsContent>
 
         <TabsContent value="purchases" className="space-y-4 w-[1000px]">
-          <Card className="bg-[hsl(0,0%,100%)] border-[hsl(214,20%,88%)]">
+          <Card className="bg-[hsl(0,0%,100%)] mt-[10px] border-[hsl(214,20%,88%)]">
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-[hsl(216,32%,17%)]">Purchase Returns</CardTitle>
@@ -319,7 +319,7 @@ export default function Returns() {
               </div>
               <Dialog open={showPurchaseReturnDialog} onOpenChange={setShowPurchaseReturnDialog}>
                 <DialogTrigger asChild>
-                  <Button className="gradient-primary text-white">
+                  <Button className="gradient-primary w-50 text-white">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Purchase Return
                   </Button>

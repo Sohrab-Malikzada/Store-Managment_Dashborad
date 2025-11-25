@@ -172,7 +172,7 @@ export default function Employees() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="gradient-primary text-white shadow-elegant">
+            <Button className="gradient-primary w-39 text-white shadow-elegant">
               <Plus className="mr-2  h-4 w-4" />
               Add Employee
             </Button>

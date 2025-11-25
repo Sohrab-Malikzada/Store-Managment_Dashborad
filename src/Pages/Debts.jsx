@@ -125,10 +125,10 @@ export default function Debts() {
 
         {/* Customer Debts */}
         <TabsContent value="customers">
-          <Card className="mt-[-5px] gradient-card shadow-soft">
+          <Card className="mt-[-5px] gradient-card shadow-none">
             <CardHeader>
               <CardTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
-                <Users className="h-5 w-5 text-[hsl(216,32%,17%)]" />
+                <Users className="h-5 w-5 text-[hsl(38,92%,50%)]" />
                 Customer Debts
               </CardTitle>
               <CardDescription className="mt-[-4px]">
@@ -136,17 +136,17 @@ export default function Debts() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="border  rounded-lg">
+              <div className="border border-[hsl(214,20%,88%)]  rounded-[12px]">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Total Debt</TableHead>
-                      <TableHead>Amount Paid</TableHead>
+                      <TableHead className="px-4 py-[14px]">Customer</TableHead>
+                      <TableHead className="px-2 pr-6 pl-4 py-[14px]">Total Debt</TableHead>
+                      <TableHead className="pr-8">Amount Paid</TableHead>
                       <TableHead>Pending Amount</TableHead>
-                      <TableHead>Due Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead className=" pl-6">Due Date</TableHead>
+                      <TableHead className="-pr-6 pl-13">Status</TableHead>
+                      <TableHead className="-pr-6 pl-13" >Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -154,21 +154,22 @@ export default function Debts() {
                       const status = getDebtStatus(debt.dueDate, debt.pendingAmount);
                       return (
                         <TableRow key={debt.id}>
-                          <TableCell>
-                            <div className="font-medium text-foreground">{debt.customerName}</div>
+                          <TableCell className="px-4 py-4">
+                            <div className="text-[hsl(216,32%,17%)] font-medium text-foreground">{debt.customerName}</div>
                           </TableCell>
-                          <TableCell className="font-medium">${debt.totalDebt.toFixed(2)}</TableCell>
-                          <TableCell className="text-success">${debt.paidAmount.toFixed(2)}</TableCell>
-                          <TableCell className="text-destructive font-medium">
+                          <TableCell className="text-[hsl(216,32%,17%)] pl-4 py-6 font-medium">${debt.totalDebt.toFixed(2)}</TableCell>
+                          <TableCell className="py-6 text-[hsl(142,76%,36%)]">${debt.paidAmount.toFixed(2)}</TableCell>
+                          <TableCell className="py-6 text-[hsl(0,84%,60%)] font-medium">
                             ${debt.pendingAmount.toFixed(2)}
                           </TableCell>
-                          <TableCell className="text-muted-foreground">{debt.dueDate}</TableCell>
+                          <TableCell className="pl-6 text-[hsl(216,20%,45%)]">{debt.dueDate}</TableCell>
                           <TableCell>
-                            <Badge variant={status.variant}>{status.label}</Badge>
+                            <Badge className="px-[10px] -mr-6 ml-11" variant={status.variant}>{status.label}</Badge>
                           </TableCell>
                           <TableCell>
                             <div className="flex space-x-2">
                               <Button
+                                className="-mr-9 ml-11 cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'customer')}
@@ -179,7 +180,7 @@ export default function Debts() {
                                 <Button
                                   variant="default"
                                   size="sm"
-                                  className="bg-gradient-to-r from-blue-400 to-blue-500 text-white"
+                                  className="ml-11 rounded-[10px] bg-gradient-to-l from-blue-400 to-blue-500 text-white"
                                   onClick={() => handleViewDebt(debt, 'customer')}
                                 >
                                   Collect Payment
@@ -199,28 +200,28 @@ export default function Debts() {
 
         {/* Supplier Debts */}
         <TabsContent value="suppliers">
-          <Card className="gradient-card shadow-soft">
+          <Card className="gradient-card -mt-[5px] shadow-none">
             <CardHeader>
-              <CardTitle className="text-foreground flex items-center gap-2">
-                <Truck className="h-5 w-5" />
+              <CardTitle className="text-[hsl(216,32%,17%)]  flex items-center gap-2">
+                <Truck className="h-5 w-5 text-[hsl(0,84%,60%)]" />
                 Supplier Debts
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="-mt-[4px]">
                 Money owed to suppliers for purchases
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="border rounded-lg">
+              <div className="border border-[hsl(214,20%,88%)] rounded-lg">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Supplier</TableHead>
-                      <TableHead>Total Debt</TableHead>
-                      <TableHead>Amount Paid</TableHead>
-                      <TableHead>Pending Amount</TableHead>
-                      <TableHead>Due Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead className="p-[14px] px-[16px]">Supplier</TableHead>
+                      <TableHead  className="p-[14px] px-[6px]">Total Debt</TableHead>
+                      <TableHead  className="p-[14px]">Amount Paid</TableHead>
+                      <TableHead  className="p-[14px]">Pending Amount</TableHead>
+                      <TableHead  className="p-[14px]">Due Date</TableHead>
+                      <TableHead  className="p-[14px]">Status</TableHead>
+                      <TableHead  className="p-[14px] pl-[8px]">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -229,20 +230,21 @@ export default function Debts() {
                       return (
                         <TableRow key={debt.id}>
                           <TableCell>
-                            <div className="font-medium text-foreground">{debt.supplierName}</div>
+                            <div className="font-medium px-[8px] py-[16px] text-[hsl(216,32%,17%)]">{debt.supplierName}</div>
                           </TableCell>
-                          <TableCell className="font-medium">${debt.totalDebt.toFixed(2)}</TableCell>
-                          <TableCell className="text-success">${debt.paidAmount.toFixed(2)}</TableCell>
-                          <TableCell className="text-destructive font-medium">
+                          <TableCell className="font-medium  px-[6px] text-[hsl(216,32%,17%)]">${debt.totalDebt.toFixed(2)}</TableCell>
+                          <TableCell className="text-[hsl(142,76%,36%)] pl-[14px]">${debt.paidAmount.toFixed(2)}</TableCell>
+                          <TableCell className="text-[hsl(0,84%,60%)] pl-[14px] font-medium">
                             ${debt.pendingAmount.toFixed(2)}
                           </TableCell>
-                          <TableCell className="text-muted-foreground">{debt.dueDate}</TableCell>
-                          <TableCell>
+                          <TableCell className=" pl-[14px] text-[hsl(216,20%,45%)]">{debt.dueDate}</TableCell>
+                          <TableCell className=" pl-[14px]">
                             <Badge variant={status.variant}>{status.label}</Badge>
                           </TableCell>
                           <TableCell>
                             <div className="flex space-x-2">
                               <Button
+                                className="cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'supplier')}
@@ -253,7 +255,7 @@ export default function Debts() {
                                 <Button
                                   variant="default"
                                   size="sm"
-                                  className="gradient-primary text-white"
+                                  className="gradient-primary rounded-[10px] -mr-3 text-white"
                                   onClick={() => handleViewDebt(debt, 'supplier')}
                                 >
                                   Make Payment
