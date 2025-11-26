@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { StatsCard } from "@/components/dashboard/StatsCard";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster, toast } from "sonner";
 import {
   Users,
   Shield,
@@ -47,7 +47,6 @@ import {
   Settings,
   Crown,
 } from "lucide-react";
-import axios from "axios";
 
 const roleConfigs = {
   admin: {
@@ -76,134 +75,199 @@ const roleConfigs = {
   },
 };
 
+const LOCAL_KEY = "app_users_v1";
+
+function getDefaultPermissions(role) {
+  switch (role) {
+    case "admin":
+      return {
+        dashboard: true,
+        sales: true,
+        inventory: true,
+        employees: true,
+        analytics: true,
+        payroll: true,
+        debts: true,
+        purchases: true,
+        userManagement: true,
+      };
+    case "cashier":
+      return {
+        dashboard: true,
+        sales: true,
+        inventory: false,
+        employees: false,
+        analytics: false,
+        payroll: false,
+        debts: true,
+        purchases: false,
+        userManagement: false,
+      };
+    case "pos":
+      return {
+        dashboard: true,
+        sales: true,
+        inventory: true,
+        employees: false,
+        analytics: false,
+        payroll: false,
+        debts: true,
+        purchases: false,
+        userManagement: false,
+      };
+    case "data_entry":
+      return {
+        dashboard: true,
+        sales: false,
+        inventory: true,
+        employees: false,
+        analytics: false,
+        payroll: false,
+        debts: false,
+        purchases: true,
+        userManagement: false,
+      };
+    default:
+      return {};
+  }
+}
+
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
   const [addUserDialog, setAddUserDialog] = useState(false);
   const [editUserDialog, setEditUserDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [roleState, setRoleState] = useState("");
+
+  // Settings modal state
+  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
+  const [settingsUser, setSettingsUser] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/users/list")
-      .then((res) => setUsers(res.data))
-      .catch(() => setUsers([]));
+    try {
+      const raw = localStorage.getItem(LOCAL_KEY);
+      if (raw) setUsers(JSON.parse(raw));
+      else setUsers([]);
+    } catch (err) {
+      console.error("Failed to read users from localStorage", err);
+      setUsers([]);
+    }
   }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(users));
+    } catch (err) {
+      console.error("Failed to write users to localStorage", err);
+    }
+  }, [users]);
 
   const activeUsers = users.filter((u) => u.status === "active").length;
   const adminUsers = users.filter((u) => u.role === "admin").length;
   const totalUsers = users.length;
 
-  const handleAddUser = async (formData) => {
-    const role = formData.get("role");
+  const toggleUserStatus = (userId) => {
+    setUsers((prev) =>
+      prev.map((user) =>
+        user.id === userId
+          ? { ...user, status: user.status === "active" ? "inactive" : "active" }
+          : user
+      )
+    );
+    toast.success("User status updated");
+  };
+
+  const handleAddUser = (formData) => {
+    const roleFromForm = formData.get("role");
+    const role = roleFromForm || roleState || "cashier";
+
     const newUser = {
+      id: Date.now(),
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
-      role: role,
+      role,
       permissions: getDefaultPermissions(role),
       status: "active",
       lastLogin: "Never",
       createdAt: new Date().toISOString().split("T")[0],
     };
 
-    try {
-      await axios.post("http://localhost:3000/users/add", newUser);
-
-      const res = await axios.get("http://localhost:3000/users/list");
-      setUsers(res.data);
-      setAddUserDialog(false);
-      Toaster.success(
-        `Successfully added ${newUser.name} as ${roleConfigs[newUser.role].name
-        }.`
-      );
-    } catch (err) {
-      Toaster.error("Failed to add user. " + (err.response?.data?.error || ""));
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      toast.error("Please fill all required fields");
+      return;
     }
+
+    if (users.some((u) => u.email === newUser.email)) {
+      toast.error("A user with this email already exists");
+      return;
+    }
+
+    setUsers((prev) => [newUser, ...prev]);
+    setAddUserDialog(false);
+    setRoleState("");
+    toast.success(`Successfully added ${newUser.name} as ${roleConfigs[newUser.role]?.name || newUser.role}`);
   };
 
-  function getDefaultPermissions(role) {
-    switch (role) {
-      case "admin":
-        return {
-          dashboard: true,
-          sales: true,
-          inventory: true,
-          employees: true,
-          analytics: true,
-          payroll: true,
-          debts: true,
-          purchases: true,
-          userManagement: true,
-        };
-      case "cashier":
-        return {
-          dashboard: true,
-          sales: true,
-          inventory: false,
-          employees: false,
-          analytics: false,
-          payroll: false,
-          debts: true,
-          purchases: false,
-          userManagement: false,
-        };
-      case "pos":
-        return {
-          dashboard: true,
-          sales: true,
-          inventory: true,
-          employees: false,
-          analytics: false,
-          payroll: false,
-          debts: true,
-          purchases: false,
-          userManagement: false,
-        };
-      case "data_entry":
-        return {
-          dashboard: true,
-          sales: false,
-          inventory: true,
-          employees: false,
-          analytics: false,
-          payroll: false,
-          debts: false,
-          purchases: true,
-          userManagement: false,
-        };
-      default:
-        return {};
-    }
-  }
+  // Open settings modal for a user (copy object for safe editing)
+  const openSettingsForUser = (user) => {
+    setSettingsUser({ ...user });
+    setSettingsDialogOpen(true);
+  };
 
-  const toggleUserStatus = (userId) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId
-          ? {
-            ...user,
-            status: user.status === "active" ? "inactive" : "active",
-          }
-          : user
-      )
-    );
+  // Save settings (including permissions) back to users state
+  const saveUserSettings = () => {
+    if (!settingsUser) return;
+    if (!settingsUser.name || !settingsUser.email) {
+      toast.error("Name and email are required");
+      return;
+    }
+    setUsers((prev) => prev.map((u) => (u.id === settingsUser.id ? settingsUser : u)));
+    setSettingsDialogOpen(false);
+    setSettingsUser(null);
+    toast.success("User settings saved");
+  };
+
+  // When role changes in settings, optionally reset permissions to defaults
+  const onSettingsRoleChange = (val) => {
+    setSettingsUser((prev) => ({
+      ...prev,
+      role: val,
+      permissions: getDefaultPermissions(val),
+    }));
+  };
+
+  // Helper to toggle a permission in settingsUser
+  const togglePermissionInSettings = (key) => {
+    setSettingsUser((prev) => ({
+      ...prev,
+      permissions: { ...prev.permissions, [key]: !prev.permissions[key] },
+    }));
+  };
+
+  // Save edited permissions from Edit dialog (if used)
+  const handleSaveEditedPermissions = (updatedUser) => {
+    setUsers((prev) => prev.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
+    setEditUserDialog(false);
+    toast.success("User updated");
   };
 
   return (
     <div className="space-y-6 m-6">
+      <Toaster />
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
             User Management
           </h1>
           <p className="text-[hsl(216,20%,45%)]">
-            Manage system users, roles, and access permissions
+            Manage system users, roles, and access permissions (local only)
           </p>
         </div>
         <Dialog open={addUserDialog} onOpenChange={setAddUserDialog}>
           <DialogTrigger asChild>
-            <Button
-              className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth">
+            <Button className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth">
               <Plus className="h-4 w-4 mr-2 text-white" />
               Add User
             </Button>
@@ -215,7 +279,7 @@ export default function UserManagement() {
                 Add New User
               </DialogTitle>
               <DialogDescription className="mt-[-2px]">
-                Create a new user account with specific role and permissions
+                Create a new user account locally (no backend)
               </DialogDescription>
             </DialogHeader>
             <form
@@ -227,38 +291,21 @@ export default function UserManagement() {
             >
               <div className="grid gap-4 py-[22px]">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Full Name</Label>
-                  <Input
-                    name="name"
-                    placeholder="Enter full name"
-                    required
-                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
-                  />
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input name="name" placeholder="Enter full name" required />
                 </div>
-                <div className="space-y-2 py-[-10px] -mt-[5px]">
-                  <Label htmlFor="email" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Email Address</Label>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Enter email address"
-                    required
-                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input name="email" type="email" placeholder="Enter email address" required />
                 </div>
-                <div className="space-y-2 py-[-10px] -mt-[5px]">
-                  <Label htmlFor="password" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Password</Label>
-                  <Input
-                    name="password"
-                    type="password"
-                    placeholder="Enter password"
-                    required
-                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input name="password" type="password" placeholder="Enter password" required />
                 </div>
-                <div className="space-y-2 py-[-10px] -mt-[5px]">
-                  <Label htmlFor="role" className="mb-[12px]  text-[hsl(216,32%,17%)] ">User Role</Label>
-                  <Select name="role" required>
-                    <SelectTrigger className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] text-[hsl(216,32%,17%)] shadow-soft  transition-smooth">
+                <div className="space-y-2">
+                  <Label htmlFor="role">User Role</Label>
+                  <Select name="role" value={roleState} onValueChange={(v) => setRoleState(v)} required>
+                    <SelectTrigger>
                       <SelectValue placeholder="Select user role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -272,15 +319,11 @@ export default function UserManagement() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <input type="hidden" name="role" value={roleState} />
                 </div>
               </div>
               <DialogFooter>
-                <Button
-                  type="submit"
-                  className="mt-[-19px] bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white  rounded-[10px] cursor-pointer"
-                >
-                  Create User
-                </Button>
+                <Button type="submit">Create User</Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -288,46 +331,10 @@ export default function UserManagement() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-4">
-        <StatsCard
-          title="Total Users"
-          value={totalUsers.toString()}
-          icon={Users}
-          trend={{ value: 12.5, label: "active accounts" }}
-          titlechange="mt-[-7px]"
-          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
-          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-blue-600 bg-blue-100 -mr-44 rounded-[12px] "            
-        />
-        <StatsCard
-          title="Active Users"
-          value={activeUsers.toString()}
-          icon={UserCheck}
-          trend={{ value: 95.2, label: "online rate" }}
-          titlechange="mt-[-7px]"
-          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
-          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-green-600 bg-green-100 -mr-44 rounded-[12px] "            
-        />
-        <StatsCard
-          title="Administrators"
-          value={adminUsers.toString()}
-          icon={Crown}
-          trend={{ value: 100, label: "security level" }}
-          titlechange="mt-[-7px]"
-          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
-          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-red-600 bg-red-100 -mr-44 rounded-[12px] "            
-        />
-        <StatsCard
-          title="System Access"
-          value="24/7"
-          icon={Shield}
-          trend={{ value: 99.9, label: "uptime" }}
-          titlechange="mt-[-7px]"
-          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
-          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-yellow-600 bg-yellow-100 -mr-44 rounded-[12px] "            
-        />
+        <StatsCard title="Total Users" value={totalUsers.toString()} icon={Users} />
+        <StatsCard title="Active Users" value={activeUsers.toString()} icon={UserCheck} />
+        <StatsCard title="Administrators" value={adminUsers.toString()} icon={Crown} />
+        <StatsCard title="System Access" value="local" icon={Shield} />
       </div>
 
       <Card className="gradient-card rounded-[12px] shadow-medium">
@@ -337,7 +344,7 @@ export default function UserManagement() {
             System Users
           </CardTitle>
           <CardDescription className="mt-[-4px] text-[hsl(216,20%,45%)]">
-            Manage user accounts, roles, and access permissions
+            Manage user accounts locally
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -355,32 +362,24 @@ export default function UserManagement() {
             </TableHeader>
             <TableBody>
               {users.map((user) => {
-                const roleConfig = roleConfigs[user.role];
+                const roleConfig = roleConfigs[user.role] || {};
                 const permissionsObj = user.permissions || {};
-                const activePermissions =
-                  Object.values(permissionsObj).filter(Boolean).length;
+                const activePermissions = Object.values(permissionsObj).filter(Boolean).length;
                 const totalPermissions = Object.keys(permissionsObj).length;
 
                 return (
-                  <TableRow
-                    key={user.id}
-                    className="hover:bg-muted/50 transition-smooth"
-                  >
+                  <TableRow key={user.id} className="hover:bg-muted/50 transition-smooth">
                     <TableCell>
                       <div>
                         <div className="font-medium">{user.name}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {user.email}
-                        </div>
+                        <div className="text-sm text-muted-foreground">{user.email}</div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
-                        <Badge
-                          className={`${roleConfig.color} text-white flex items-center gap-1`}
-                        >
-                          <roleConfig.icon className="h-3 w-3 mr-1" />
-                          {roleConfig.name}
+                        <Badge className={`${roleConfig.color || "bg-muted"} text-white flex items-center gap-1`}>
+                          {roleConfig.icon ? <roleConfig.icon className="h-3 w-3 mr-1" /> : null}
+                          {roleConfig.name || user.role}
                         </Badge>
                         <span className="text-xs text-muted-foreground font-mono px-2 py-0.5 rounded bg-muted/40 w-fit mt-1 border p-4 border-border">
                           {user.role}
@@ -389,40 +388,20 @@ export default function UserManagement() {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <span className="font-medium">
-                          {activePermissions}/{totalPermissions}
-                        </span>
-                        <span className="text-muted-foreground ml-1">
-                          modules
-                        </span>
+                        <span className="font-medium">{activePermissions}/{totalPermissions}</span>
+                        <span className="text-muted-foreground ml-1">modules</span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <Switch
-                          checked={user.status === "active"}
-                          onCheckedChange={() => toggleUserStatus(user.id)}
-                        />
-                        <Badge
-                          variant={
-                            user.status === "active" ? "default" : "secondary"
-                          }
-                          className={
-                            user.status === "active"
-                              ? "bg-success hover:bg-success/80"
-                              : ""
-                          }
-                        >
+                        <Switch checked={user.status === "active"} onCheckedChange={() => toggleUserStatus(user.id)} />
+                        <Badge variant={user.status === "active" ? "default" : "secondary"} className={user.status === "active" ? "bg-success hover:bg-success/80" : ""}>
                           {user.status}
                         </Badge>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground text-sm">
-                      {user.lastLogin}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground text-sm">
-                      {user.createdAt}
-                    </TableCell>
+                    <TableCell className="text-muted-foreground text-sm">{user.lastLogin}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm">{user.createdAt}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button
@@ -436,9 +415,12 @@ export default function UserManagement() {
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
+
+                        {/* Settings button now opens settings modal */}
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => openSettingsForUser(user)}
                           className="hover:bg-primary/10"
                         >
                           <Settings className="h-4 w-4" />
@@ -453,7 +435,7 @@ export default function UserManagement() {
         </CardContent>
       </Card>
 
-      {/* Edit User Dialog */}
+      {/* Edit User Dialog (permissions quick edit) */}
       <Dialog open={editUserDialog} onOpenChange={setEditUserDialog}>
         <DialogContent className="gradient-card max-w-2xl">
           <DialogHeader>
@@ -461,9 +443,7 @@ export default function UserManagement() {
               <Edit className="h-5 w-5 text-primary" />
               Edit User Permissions
             </DialogTitle>
-            <DialogDescription>
-              Modify user role and specific module permissions
-            </DialogDescription>
+            <DialogDescription>Modify user role and specific module permissions</DialogDescription>
           </DialogHeader>
           {selectedUser && (
             <div className="grid gap-4 py-4">
@@ -472,39 +452,95 @@ export default function UserManagement() {
                   <Label>User Information</Label>
                   <div className="p-3 border border-border rounded-lg bg-muted/30">
                     <div className="font-medium">{selectedUser.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {selectedUser.email}
-                    </div>
+                    <div className="text-sm text-muted-foreground">{selectedUser.email}</div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <Label>Module Permissions</Label>
                   <div className="grid grid-cols-2 gap-3">
-                    {Object.entries(selectedUser.permissions).map(
-                      ([module, hasAccess]) => (
-                        <div
-                          key={module}
-                          className="flex items-center justify-between p-2 border border-border rounded"
-                        >
-                          <span className="capitalize text-sm">
-                            {module.replace(/([A-Z])/g, " $1").trim()}
-                          </span>
-                          <Switch checked={hasAccess} />
-                        </div>
-                      )
-                    )}
+                    {Object.entries(selectedUser.permissions || {}).map(([module, hasAccess]) => (
+                      <div key={module} className="flex items-center justify-between p-2 border border-border rounded">
+                        <span className="capitalize text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
+                        <Switch checked={hasAccess} onCheckedChange={(v) => {
+                          const updated = { ...selectedUser, permissions: { ...selectedUser.permissions, [module]: v } };
+                          setSelectedUser(updated);
+                        }} />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditUserDialog(false)}>
+            <Button variant="outline" onClick={() => setEditUserDialog(false)}>Cancel</Button>
+            <Button onClick={() => handleSaveEditedPermissions(selectedUser)}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Dialog (ویرایش کامل: نام، ایمیل، نقش، وضعیت، مجوزها) */}
+      <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
+        <DialogContent className="gradient-card max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5 text-primary" />
+              User Settings
+            </DialogTitle>
+            <DialogDescription>Update user basic settings and module permissions</DialogDescription>
+          </DialogHeader>
+
+          {settingsUser && (
+            <div className="grid gap-4 py-4">
+              <div className="space-y-3">
+                <Label>Full Name</Label>
+                <Input value={settingsUser.name} onChange={(e) => setSettingsUser({ ...settingsUser, name: e.target.value })} />
+
+                <Label>Email</Label>
+                <Input type="email" value={settingsUser.email} onChange={(e) => setSettingsUser({ ...settingsUser, email: e.target.value })} />
+
+                <Label>User Role</Label>
+                <Select value={settingsUser.role} onValueChange={onSettingsRoleChange}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(roleConfigs).map(([role, config]) => (
+                      <SelectItem key={role} value={role}>
+                        <div className="flex items-center gap-2">
+                          <config.icon className="h-4 w-4" />
+                          {config.name}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <div className="flex items-center justify-between">
+                  <Label>Status</Label>
+                  <Switch checked={settingsUser.status === "active"} onCheckedChange={(v) => setSettingsUser({ ...settingsUser, status: v ? "active" : "inactive" })} />
+                </div>
+
+                <div>
+                  <Label>Module Permissions</Label>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {Object.entries(settingsUser.permissions || {}).map(([module, hasAccess]) => (
+                      <div key={module} className="flex items-center justify-between p-2 border border-border rounded">
+                        <span className="capitalize text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
+                        <Switch checked={hasAccess} onCheckedChange={() => togglePermissionInSettings(module)} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { setSettingsDialogOpen(false); setSettingsUser(null); }}>
               Cancel
             </Button>
-            <Button className="gradient-primary shadow-soft hover:shadow-medium">
-              Save Changes
-            </Button>
+            <Button onClick={saveUserSettings}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
