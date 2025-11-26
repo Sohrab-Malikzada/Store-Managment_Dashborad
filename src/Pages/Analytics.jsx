@@ -56,11 +56,11 @@ const yearlyData = {
 };
 
 const categoryData = [
-  { name: "Electronics", value: 35, color: "url(#pie-gradient-1)" },
-  { name: "Clothing", value: 25, color: "url(#pie-gradient-2)" },
-  { name: "Home & Garden", value: 20, color: "url(#pie-gradient-3)" },
-  { name: "Sports", value: 12, color: "url(#pie-gradient-4)" },
-  { name: "Books", value: 8, color: "url(#pie-gradient-5)" },
+  { name: "Electronics", value: 35, color: "hsl(214.15deg 83.93% 56.08%)" },
+  { name: "Clothing", value: 25, color: "hsl(141.86deg 76.09% 36.08%)" },
+  { name: "Home & Garden", value: 20, color: "hsl(38.04deg 92.16% 50%)" },
+  { name: "Sports", value: 12, color: "hsl(261.91deg 83.18% 58.04%)" },
+  { name: "Books", value: 8, color: "hsl(345.94deg 76.8% 49.02%)" },
 ];
 
 export default function Analytics() {
@@ -111,7 +111,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[122px]  h-4 w-4"
           iconColor="text-green-600 bg-green-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -137,7 +137,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          icanchange="items-center relative -m-66 -mt-6 -mr-[122px]  h-4 w-4"
           iconColor="text-purple-600 bg-purple-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -168,34 +168,30 @@ export default function Analytics() {
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={currentData.monthly}>
                 <defs>
-                  <linearGradient id="bar-gradient-sales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#4f8cff" />
-                    <stop offset="100%" stopColor="#a0e9ff" />
+                  <linearGradient id="bar-gradient-sales">
+                    <stop stopColor="hsl(214.15deg 83.93% 56.08%)" />
                   </linearGradient>
-                  <linearGradient id="bar-gradient-purchases" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ffb347" />
-                    <stop offset="100%" stopColor="#ffcc80" />
+                  <linearGradient id="bar-gradient-purchases">
+                    <stop stopColor="hsl(141.86deg 76.09% 36.08%)" />
                   </linearGradient>
-                  <linearGradient id="bar-gradient-profit" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#43e97b" />
-                    <stop offset="100%" stopColor="#38f9d7" />
+                  <linearGradient id="bar-gradient-profit">
+                    <stop stopColor="hsl(38.04deg 92.16% 50%)" />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                <XAxis dataKey="month" className="text-muted-foreground" />
-                <YAxis className="text-muted-foreground" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
+                <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
+                <YAxis className="text-[hsl(216,20%,45%)]" />
                 <Tooltip 
                   contentStyle={{ 
-                    background: "linear-gradient(135deg, #e0e7ff 60%, #fff 100%)", 
-                    border: "1px solid #a0aec0",
-                    borderRadius: "12px",
-                    boxShadow: "0 4px 16px 0 rgba(80,120,255,0.10)"
+                    background: "hsl(0deg 0% 99.22%)", 
+                    border: "1px solid hsl(214,20%,88%)",
+                    borderRadius: "10px",
                   }}
                   itemStyle={{ fontWeight: 600 }}
                 />
-                <Bar dataKey="sales" fill="url(#bar-gradient-sales)" name="Sales" radius={[8,8,0,0]} />
-                <Bar dataKey="purchases" fill="url(#bar-gradient-purchases)" name="Purchases" radius={[8,8,0,0]} />
-                <Bar dataKey="profit" fill="url(#bar-gradient-profit)" name="Profit" radius={[8,8,0,0]} />
+                <Bar dataKey="sales" fill="hsl(214.15deg 83.93% 56.08%)" name="Sales" radius={[0,0,0,0]} />
+                <Bar dataKey="purchases" fill="hsl(141.86deg 76.09% 36.08%)" name="Purchases" radius={[0,0,0,0]} />
+                <Bar dataKey="profit" fill="hsl(38.04deg 92.16% 50%)" name="Profit" radius={[0,0,0,0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -204,34 +200,29 @@ export default function Analytics() {
         <Card className="gradient-card shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Package className="h-5 w-5 text-primary" />
+              <Package className="h-5 w-5 text-[hsl(214.15deg,83.93%,56.08%)]" />
               Sales by Category
             </CardTitle>
-            <CardDescription>Product category distribution</CardDescription>
+            <CardDescription className="-mt-[4px]">Product category distribution</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <defs>
-                  <radialGradient id="pie-gradient-1" cx="50%" cy="50%" r="80%">
-                    <stop offset="0%" stopColor="#4f8cff" stopOpacity={0.7} />
-                    <stop offset="100%" stopColor="#1e3a8a" stopOpacity={1} />
+                  <radialGradient id="pie-gradient-1">
+                    <stop stopColor="hsl(214.15deg 83.93% 56.08%)"/>
                   </radialGradient>
-                  <radialGradient id="pie-gradient-2" cx="50%" cy="50%" r="80%">
-                    <stop offset="0%" stopColor="#ffb347" stopOpacity={0.7} />
-                    <stop offset="100%" stopColor="#ff7e5f" stopOpacity={1} />
+                  <radialGradient id="pie-gradient-2">
+                    <stop stopColor="hsl(141.86deg 76.09% 36.08%)"/>
                   </radialGradient>
-                  <radialGradient id="pie-gradient-3" cx="50%" cy="50%" r="80%">
-                    <stop offset="0%" stopColor="#43e97b" stopOpacity={0.7} />
-                    <stop offset="100%" stopColor="#38f9d7" stopOpacity={1} />
+                  <radialGradient id="pie-gradient-3">
+                    <stop stopColor="hsl(38.04deg 92.16% 50%)"/>
                   </radialGradient>
-                  <radialGradient id="pie-gradient-4" cx="50%" cy="50%" r="80%">
-                    <stop offset="0%" stopColor="#a770ef" stopOpacity={0.7} />
-                    <stop offset="100%" stopColor="#f6d365" stopOpacity={1} />
+                  <radialGradient id="pie-gradient-4">
+                    <stop stopColor="hsl(261.91deg 83.18% 58.04%)"/>
                   </radialGradient>
-                  <radialGradient id="pie-gradient-5" cx="50%" cy="50%" r="80%">
-                    <stop offset="0%" stopColor="#f7971e" stopOpacity={0.7} />
-                    <stop offset="100%" stopColor="#ffd200" stopOpacity={1} />
+                  <radialGradient id="pie-gradient-5">
+                    <stop stopColor="hsl(345.94deg 76.8% 49.02%)"/>
                   </radialGradient>
                 </defs>
                 <Pie
@@ -242,9 +233,6 @@ export default function Analytics() {
                   outerRadius={120}
                   paddingAngle={5}
                   dataKey="value"
-                  stroke="#fff"
-                  strokeWidth={2}
-                  blendMode="multiply"
                 >
                   {categoryData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -252,10 +240,9 @@ export default function Analytics() {
                 </Pie>
                 <Tooltip 
                   contentStyle={{ 
-                    background: "linear-gradient(135deg, #fffbe6 60%, #fff 100%)", 
-                    border: "1px solid #ffd200",
-                    borderRadius: "12px",
-                    boxShadow: "0 4px 16px 0 rgba(255,200,80,0.10)"
+                    background: "hsl(0deg 0% 99.22%)", 
+                    border: "1px solid hsl(214,20%,88%)",
+                    borderRadius: "10px",
                   }}
                   itemStyle={{ fontWeight: 600 }}
                 />
@@ -269,19 +256,19 @@ export default function Analytics() {
                       className="w-3 h-3 rounded-full mr-2" 
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="text-sm text-muted-foreground">{item.name}</span>
+                    <span className="text-sm text-[hsl(216,20%,45%)]">{item.name}</span>
                   </div>
-                  <span className="text-sm font-medium">{item.value}%</span>
+                  <span className="text-sm text-[hsl(216,32%,17%)] font-medium">{item.value}%</span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 gradient-card shadow-medium">
+        <Card className="md:col-span-2 h-106 rounded-[12px]  gradient-card shadow-medium">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center -mb-1 mt-[-4px] gap-2">
+              <DollarSign className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Profit Trend - {selectedYear}
             </CardTitle>
             <CardDescription>Monthly profit analysis over time</CardDescription>
@@ -290,30 +277,27 @@ export default function Analytics() {
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={currentData.monthly}>
                 <defs>
-                  <linearGradient id="line-gradient" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#43e97b" />
-                    <stop offset="100%" stopColor="#38f9d7" />
+                  <linearGradient id="line-gradient">
+                    <stop stopColor="hsl(214.15deg 83.93% 56.08%)" />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                <XAxis dataKey="month" className="text-muted-foreground" />
-                <YAxis className="text-muted-foreground" />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
+                <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
+                <YAxis className="text-[hsl(216,20%,45%)]" />
                 <Tooltip 
                   contentStyle={{ 
-                    background: "linear-gradient(135deg, #e0ffe6 60%, #fff 100%)", 
-                    border: "1px solid #43e97b",
-                    borderRadius: "12px",
-                    boxShadow: "0 4px 16px 0 rgba(80,255,120,0.10)"
+                    background: "hsl(0deg 0% 99.22%)",
+                    border: "1px solid hsl(214,20%,88%)",
+                    borderRadius: "10px",
                   }}
                   itemStyle={{ fontWeight: 600 }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="profit" 
-                  stroke="url(#line-gradient)"
-                  strokeWidth={4}
-                  dot={{ fill: "#43e97b", stroke: "#38f9d7", strokeWidth: 2, r: 8, filter: "drop-shadow(0 0 8px #38f9d7)" }}
-                  activeDot={{ r: 12, fill: "#fff", stroke: "#43e97b", strokeWidth: 4, filter: "drop-shadow(0 0 12px #43e97b)" }}
+                  stroke="hsl(214,84%,56%)"
+                  strokeWidth={3}
+                  dot={{ fill: "hsl(214,84%,56%)", stroke: "hsl(214,84%,56%)", strokeWidth: 2, r: 6,}}
                 />
               </LineChart>
             </ResponsiveContainer>
