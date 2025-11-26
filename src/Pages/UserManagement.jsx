@@ -113,8 +113,7 @@ export default function UserManagement() {
       setUsers(res.data);
       setAddUserDialog(false);
       Toaster.success(
-        `Successfully added ${newUser.name} as ${
-          roleConfigs[newUser.role].name
+        `Successfully added ${newUser.name} as ${roleConfigs[newUser.role].name
         }.`
       );
     } catch (err) {
@@ -182,9 +181,9 @@ export default function UserManagement() {
       prev.map((user) =>
         user.id === userId
           ? {
-              ...user,
-              status: user.status === "active" ? "inactive" : "active",
-            }
+            ...user,
+            status: user.status === "active" ? "inactive" : "active",
+          }
           : user
       )
     );
@@ -197,24 +196,25 @@ export default function UserManagement() {
           <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
             User Management
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-[hsl(216,20%,45%)]">
             Manage system users, roles, and access permissions
           </p>
         </div>
         <Dialog open={addUserDialog} onOpenChange={setAddUserDialog}>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-soft hover:shadow-medium transition-smooth">
+            <Button
+              className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth">
               <Plus className="h-4 w-4 mr-2 text-white" />
               Add User
             </Button>
           </DialogTrigger>
-          <DialogContent className="gradient-card">
+          <DialogContent className="gradient-card h-129">
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
+              <DialogTitle className="flex tracking-tight text-[hsl(216,32%,17%)] items-center gap-2">
+                <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
                 Add New User
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="mt-[-2px]">
                 Create a new user account with specific role and permissions
               </DialogDescription>
             </DialogHeader>
@@ -225,40 +225,40 @@ export default function UserManagement() {
                 handleAddUser(formData);
               }}
             >
-              <div className="grid gap-4 py-4">
+              <div className="grid gap-4 py-[22px]">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Full Name</Label>
                   <Input
                     name="name"
                     placeholder="Enter full name"
                     required
-                    className="shadow-soft focus:shadow-glow transition-smooth"
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                <div className="space-y-2 py-[-10px] -mt-[5px]">
+                  <Label htmlFor="email" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Email Address</Label>
                   <Input
                     name="email"
                     type="email"
                     placeholder="Enter email address"
                     required
-                    className="shadow-soft focus:shadow-glow transition-smooth"
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                <div className="space-y-2 py-[-10px] -mt-[5px]">
+                  <Label htmlFor="password" className="mb-[12px]  text-[hsl(216,32%,17%)] ">Password</Label>
                   <Input
                     name="password"
                     type="password"
                     placeholder="Enter password"
                     required
-                    className="shadow-soft focus:shadow-glow transition-smooth"
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">User Role</Label>
+                <div className="space-y-2 py-[-10px] -mt-[5px]">
+                  <Label htmlFor="role" className="mb-[12px]  text-[hsl(216,32%,17%)] ">User Role</Label>
                   <Select name="role" required>
-                    <SelectTrigger className="shadow-soft focus:shadow-glow transition-smooth">
+                    <SelectTrigger className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] text-[hsl(216,32%,17%)] shadow-soft  transition-smooth">
                       <SelectValue placeholder="Select user role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -277,7 +277,7 @@ export default function UserManagement() {
               <DialogFooter>
                 <Button
                   type="submit"
-                  className="bg-gradient-to-r from-blue-500 to-blue-400 shadow-soft hover:shadow-medium"
+                  className="mt-[-19px] bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white  rounded-[10px] cursor-pointer"
                 >
                   Create User
                 </Button>
@@ -293,39 +293,55 @@ export default function UserManagement() {
           value={totalUsers.toString()}
           icon={Users}
           trend={{ value: 12.5, label: "active accounts" }}
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-blue-600 bg-blue-100 -mr-44 rounded-[12px] "            
         />
         <StatsCard
           title="Active Users"
           value={activeUsers.toString()}
           icon={UserCheck}
           trend={{ value: 95.2, label: "online rate" }}
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-green-600 bg-green-100 -mr-44 rounded-[12px] "            
         />
         <StatsCard
           title="Administrators"
           value={adminUsers.toString()}
           icon={Crown}
           trend={{ value: 100, label: "security level" }}
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-red-600 bg-red-100 -mr-44 rounded-[12px] "            
         />
         <StatsCard
           title="System Access"
           value="24/7"
           icon={Shield}
           trend={{ value: 99.9, label: "uptime" }}
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[141px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-yellow-600 bg-yellow-100 -mr-44 rounded-[12px] "            
         />
       </div>
 
-      <Card className="gradient-card shadow-medium">
+      <Card className="gradient-card rounded-[12px] shadow-medium">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-primary" />
+          <CardTitle className="flex mt-[-3px] items-center gap-2">
+            <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
             System Users
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="mt-[-4px] text-[hsl(216,20%,45%)]">
             Manage user accounts, roles, and access permissions
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
+          <Table className="mt-[3px]">
             <TableHeader>
               <TableRow>
                 <TableHead>User</TableHead>
