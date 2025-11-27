@@ -520,30 +520,30 @@ export default function UserManagement() {
 
       {/* Edit User Dialog (permissions quick edit) */}
       <Dialog open={editUserDialog} onOpenChange={setEditUserDialog}>
-        <DialogContent className="gradient-card max-w-2xl">
+        <DialogContent className="gradient-card h-[603px] max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Edit className="h-5 w-5 text-primary" />
+            <DialogTitle className="text-[hsl(216,32%,17%)] flex tracking-tight items-center gap-2">
+              <Edit className="h-5 w-5 mt-[1px] text-[hsl(38,92%,55%)]" />
               Edit User Permissions
             </DialogTitle>
-            <DialogDescription>Modify user role and specific module permissions</DialogDescription>
+            <DialogDescription className="mt-[-2px]">Modify user role and specific module permissions</DialogDescription>
           </DialogHeader>
           {selectedUser && (
             <div className="grid gap-4 py-4">
               <div className="space-y-4">
                 <div>
-                  <Label>User Information</Label>
-                  <div className="p-3 border border-border rounded-lg bg-muted/30">
-                    <div className="font-medium">{selectedUser.name}</div>
-                    <div className="text-sm text-muted-foreground">{selectedUser.email}</div>
+                  <Label className="text-[hsl(216,32%,17%)] mt-[6px] mb-[-1px]">User Information</Label>
+                  <div className="p-3 border border-[hsl(214,20%,88%)] mt-[5px] rounded-[12px] bg-[hsl(210deg,20%,96.04%)]/30">
+                    <div className="font-medium text-[hsl(216,32%,17%)]">{selectedUser.name}</div>
+                    <div className="text-sm text-[hsl(216,20%,45%)]">{selectedUser.email}</div>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <Label>Module Permissions</Label>
+                <div className="space-y-3 mt-[25px]">
+                  <Label className="mt-[-2px]">Module Permissions</Label>
                   <div className="grid grid-cols-2 gap-3">
                     {Object.entries(selectedUser.permissions || {}).map(([module, hasAccess]) => (
-                      <div key={module} className="flex items-center justify-between p-2 border border-border rounded">
-                        <span className="capitalize text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
+                      <div key={module} className="flex items-center justify-between p-2 border border-[hsl(214,20%,88%)] rounded-[4px]">
+                        <span className="capitalize text-[hsl(216,32%,17%)] text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
                         <Switch checked={hasAccess} onCheckedChange={(v) => {
                           const updated = { ...selectedUser, permissions: { ...selectedUser.permissions, [module]: v } };
                           setSelectedUser(updated);
@@ -555,9 +555,13 @@ export default function UserManagement() {
               </div>
             </div>
           )}
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditUserDialog(false)}>Cancel</Button>
-            <Button onClick={() => handleSaveEditedPermissions(selectedUser)}>Save Changes</Button>
+          <DialogFooter className="mt-[-6px]">
+            <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none"
+              variant="outline"
+              onClick={() => setEditUserDialog(false)}>Cancel</Button>
+            <Button type="submit" className=" bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))]  text-white hover:shadow-medium rounded-[10px] cursor-pointer"
+              onClick={() => handleSaveEditedPermissions(selectedUser)}>Save Changes
+              </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -565,9 +569,10 @@ export default function UserManagement() {
       {/* Settings Dialog (ویرایش کامل: نام، ایمیل، نقش، وضعیت، مجوزها) */}
       <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
         <DialogContent className="gradient-card max-w-lg">
+          {/* overflow-y-auto */}
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5 text-primary" />
+            <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
+              <Settings className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               User Settings
             </DialogTitle>
             <DialogDescription>Update user basic settings and module permissions</DialogDescription>
@@ -577,14 +582,14 @@ export default function UserManagement() {
             <div className="grid gap-4 py-4">
               <div className="space-y-3">
                 <Label>Full Name</Label>
-                <Input value={settingsUser.name} onChange={(e) => setSettingsUser({ ...settingsUser, name: e.target.value })} />
+                <Input className="bg-[hsl(214,20%,98%)] shadow-none text-[hsl(216,32%,17%)]" placeholder="Enter full name" value={settingsUser.name} onChange={(e) => setSettingsUser({ ...settingsUser, name: e.target.value })} />
 
                 <Label>Email</Label>
-                <Input type="email" value={settingsUser.email} onChange={(e) => setSettingsUser({ ...settingsUser, email: e.target.value })} />
+                <Input className="bg-[hsl(214,20%,98%)] shadow-none text-[hsl(216,32%,17%)]" placeholder="Enter email address" type="email" value={settingsUser.email} onChange={(e) => setSettingsUser({ ...settingsUser, email: e.target.value })} />
 
                 <Label>User Role</Label>
-                <Select value={settingsUser.role} onValueChange={onSettingsRoleChange}>
-                  <SelectTrigger>
+                <Select className="text-[hsl(216,32%,17%)]" value={settingsUser.role} onValueChange={onSettingsRoleChange}>
+                  <SelectTrigger className="text-[hsl(216,32%,17%)]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -600,7 +605,7 @@ export default function UserManagement() {
                 </Select>
 
                 <div className="flex items-center justify-between">
-                  <Label>Status</Label>
+                  <Label className="mr-[8px]">Status</Label>
                   <Switch checked={settingsUser.status === "active"} onCheckedChange={(v) => setSettingsUser({ ...settingsUser, status: v ? "active" : "inactive" })} />
                 </div>
 
@@ -608,8 +613,8 @@ export default function UserManagement() {
                   <Label>Module Permissions</Label>
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     {Object.entries(settingsUser.permissions || {}).map(([module, hasAccess]) => (
-                      <div key={module} className="flex items-center justify-between p-2 border border-border rounded">
-                        <span className="capitalize text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
+                      <div key={module} className="flex items-center justify-between p-2 border border-[hsl(214,20%,88%)] rounded-[4px]">
+                        <span className="capitalize text-[hsl(216,32%,17%)] text-sm">{module.replace(/([A-Z])/g, " $1").trim()}</span>
                         <Switch checked={hasAccess} onCheckedChange={() => togglePermissionInSettings(module)} />
                       </div>
                     ))}
@@ -620,10 +625,13 @@ export default function UserManagement() {
           )}
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => { setSettingsDialogOpen(false); setSettingsUser(null); }}>
+            <Button className="hover:bg-[hsl(214,20%,94%)]  cursor-pointer border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,32%,17%)] shadow-none"
+              variant="outline"
+              onClick={() => { setSettingsDialogOpen(false); setSettingsUser(null); }}>
               Cancel
             </Button>
-            <Button onClick={saveUserSettings}>Save</Button>
+            <Button type="submit" className=" bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))]  text-white hover:shadow-medium rounded-[10px] cursor-pointer"
+              onClick={saveUserSettings}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
