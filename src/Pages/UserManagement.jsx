@@ -262,68 +262,110 @@ export default function UserManagement() {
             User Management
           </h1>
           <p className="text-[hsl(216,20%,45%)]">
-            Manage system users, roles, and access permissions (local only)
+            Manage system users, roles, and access permissions
           </p>
         </div>
-        <Dialog open={addUserDialog} onOpenChange={setAddUserDialog}>
-          <DialogTrigger asChild>
-            <Button className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth">
+        < Dialog open={addUserDialog} onOpenChange={setAddUserDialog} >
+          <DialogTrigger asChild >
+            <Button className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth" >
               <Plus className="h-4 w-4 mr-2 text-white" />
               Add User
             </Button>
           </DialogTrigger>
-          <DialogContent className="gradient-card h-129">
+          < DialogContent className="gradient-card h-129" >
             <DialogHeader>
-              <DialogTitle className="flex tracking-tight text-[hsl(216,32%,17%)] items-center gap-2">
+              <DialogTitle className="flex tracking-tight text-[hsl(216,32%,17%)] items-center gap-2" >
                 <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
                 Add New User
               </DialogTitle>
-              <DialogDescription className="mt-[-2px]">
-                Create a new user account locally (no backend)
+              < DialogDescription className="mt-[-2px]" >
+                Create a new user account with specific role and permissions
               </DialogDescription>
             </DialogHeader>
-            <form
+            < form
               onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget);
                 handleAddUser(formData);
-              }}
+              }
+              }
             >
-              <div className="grid gap-4 py-[22px]">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input name="name" placeholder="Enter full name" required />
+              <div className="grid gap-4 py-[22px]" >
+                <div className="space-y-2" >
+                  <Label htmlFor="name" className="mb-[12px]  text-[hsl(216,32%,17%)] " >
+                    Full Name
+                  </Label>
+                  < Input
+                    name="name"
+                    placeholder="Enter full name"
+                    required
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input name="email" type="email" placeholder="Enter email address" required />
+                < div className="space-y-2 py-[-10px] -mt-[5px]" >
+                  <Label htmlFor="email" className="mb-[12px]  text-[hsl(216,32%,17%)] " >
+                    Email Address
+                  </Label>
+                  < Input
+                    name="email"
+                    type="email"
+                    placeholder="Enter email address"
+                    required
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input name="password" type="password" placeholder="Enter password" required />
+                < div className="space-y-2 py-[-10px] -mt-[5px]" >
+                  <Label htmlFor="password" className="mb-[12px]  text-[hsl(216,32%,17%)] " >
+                    Password
+                  </Label>
+                  < Input
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
+                    required
+                    className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] shadow-soft  transition-smooth"
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="role">User Role</Label>
-                  <Select name="role" value={roleState} onValueChange={(v) => setRoleState(v)} required>
-                    <SelectTrigger>
+                < div className="space-y-2 py-[-10px] -mt-[5px]" >
+                  <Label htmlFor="role" className="mb-[12px]  text-[hsl(216,32%,17%)] " >
+                    User Role
+                  </Label>
+
+                  {/* Select کنترل‌شده */}
+                  <Select
+                    name="role"
+                    value={roleState}
+                    onValueChange={(val) => setRoleState(val)}
+                    required
+                  >
+                    <SelectTrigger className="bg-[hsl(253.33deg,100%,98.24%)] mb-[11px] text-[hsl(216,32%,17%)] shadow-soft  transition-smooth" >
                       <SelectValue placeholder="Select user role" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(roleConfigs).map(([role, config]) => (
-                        <SelectItem key={role} value={role}>
-                          <div className="flex items-center gap-2">
-                            <config.icon className="h-4 w-4" />
-                            {config.name} - {config.description}
-                          </div>
-                        </SelectItem>
-                      ))}
+                      {
+                        Object.entries(roleConfigs).map(([role, config]) => (
+                          <SelectItem key={role} value={role} >
+                            <div className="flex items-center gap-2" >
+                              <config.icon className="h-4 w-4" />
+                              {config.name} - {config.description}
+                            </div>
+                          </SelectItem>
+                        ))
+                      }
                     </SelectContent>
                   </Select>
+
+                  {/* hidden input تا FormData همیشه role داشته باشد */}
                   <input type="hidden" name="role" value={roleState} />
                 </div>
               </div>
-              <DialogFooter>
-                <Button type="submit">Create User</Button>
+              < DialogFooter >
+                <Button
+                  type="submit"
+                  className="mt-[-19px] bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white  rounded-[10px] cursor-pointer"
+                >
+                  Create User
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -331,24 +373,68 @@ export default function UserManagement() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-4">
-        <StatsCard title="Total Users" value={totalUsers.toString()} icon={Users} />
-        <StatsCard title="Active Users" value={activeUsers.toString()} icon={UserCheck} />
-        <StatsCard title="Administrators" value={adminUsers.toString()} icon={Crown} />
-        <StatsCard title="System Access" value="local" icon={Shield} />
+        <StatsCard
+          title="Total Users"
+          value={totalUsers.toString()}
+          icon={Users}
+          trend={{ value: 12.5, label: "active accounts" }}
+          valuechange="mt-[18px]"
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-blue-600 bg-blue-100 -mr-44 rounded-[12px] "
+
+        />
+        <StatsCard
+          title="Active Users"
+          value={activeUsers.toString()}
+          icon={UserCheck}
+          trend={{ value: 95.2, label: "online rate" }}
+          valuechange="mt-[18px]"
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-green-600 bg-green-100 -mr-44 rounded-[12px] "
+
+        />
+        <StatsCard
+          title="Administrators"
+          value={adminUsers.toString()}
+          icon={Crown}
+          trend={{ value: 100, label: "security level" }}
+          valuechange="mt-[18px]"
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-red-600 bg-red-100 -mr-[175px] rounded-[12px] "
+
+        />
+        <StatsCard
+          title="System Access"
+          value="24/7"
+          icon={Shield}
+          trend={{ value: 99.9, label: "uptime" }}
+          valuechange="mt-[18px]"
+          titlechange="mt-[-7px]"
+          trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+          box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+          icanchange="h-8 w-8 mb-2 p-2 text-yellow-600 bg-yellow-100 -mr-44 rounded-[12px] "
+
+        />
       </div>
 
       <Card className="gradient-card rounded-[12px] shadow-medium">
-        <CardHeader>
+        <CardHeader className="mt-[-1px]">
           <CardTitle className="flex mt-[-3px] items-center gap-2">
             <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
             System Users
           </CardTitle>
           <CardDescription className="mt-[-4px] text-[hsl(216,20%,45%)]">
-            Manage user accounts locally
+            Manage user accounts, roles, and access permissions
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table className="mt-[3px]">
+          <Table className="mt-[2px]">
             <TableHeader>
               <TableRow>
                 <TableHead>User</TableHead>
@@ -368,40 +454,37 @@ export default function UserManagement() {
                 const totalPermissions = Object.keys(permissionsObj).length;
 
                 return (
-                  <TableRow key={user.id} className="hover:bg-muted/50 transition-smooth">
+                  <TableRow key={user.id} className="hover:bg-[hsl(216,20%,95%)]/50 transition-smooth">
                     <TableCell>
                       <div>
-                        <div className="font-medium">{user.name}</div>
-                        <div className="text-sm text-muted-foreground">{user.email}</div>
+                        <div className="font-medium text-[hsl(216,32%,17%)]">{user.name}</div>
+                        <div className="text-sm text-[hsl(216,20%,45%)]">{user.email}</div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
-                        <Badge className={`${roleConfig.color || "bg-muted"} text-white flex items-center gap-1`}>
-                          {roleConfig.icon ? <roleConfig.icon className="h-3 w-3 mr-1" /> : null}
-                          {roleConfig.name || user.role}
+                        <Badge className={`${roleConfig.color}  text-white`}>
+                          <roleConfig.icon className="h-3  w-3 mr-1" />
+                          {roleConfig.name}
                         </Badge>
-                        <span className="text-xs text-muted-foreground font-mono px-2 py-0.5 rounded bg-muted/40 w-fit mt-1 border p-4 border-border">
-                          {user.role}
-                        </span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <span className="font-medium">{activePermissions}/{totalPermissions}</span>
-                        <span className="text-muted-foreground ml-1">modules</span>
+                        <span className="font-medium text-[hsl(216,32%,17%)]">{activePermissions}/{totalPermissions}</span>
+                        <span className="text-[hsl(216,20%,45%)] ml-1">modules</span>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Switch checked={user.status === "active"} onCheckedChange={() => toggleUserStatus(user.id)} />
-                        <Badge variant={user.status === "active" ? "default" : "secondary"} className={user.status === "active" ? "bg-success hover:bg-success/80" : ""}>
+                      <div className="flex p-4 items-center gap-2">
+                        <Switch className="" checked={user.status === "active"} onCheckedChange={() => toggleUserStatus(user.id)} />
+                        <Badge variant={user.status === "active" ? "default" : "secondary"} className={user.status === "active" ? "bg-[hsl(142,76%,36%)] hover:bg-[hsl(142,76%,36%)]/80" : "rounded-full text-[hsl(216,32%,17%)] bg-[hsl(214,20%,93%)] hover:bg-[hsl(214,20%,93%)]/80"}>
                           {user.status}
                         </Badge>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground text-sm">{user.lastLogin}</TableCell>
-                    <TableCell className="text-muted-foreground text-sm">{user.createdAt}</TableCell>
+                    <TableCell className="text-[hsl(216,20%,45%)] text-sm">{user.lastLogin}</TableCell>
+                    <TableCell className="text-[hsl(216,20%,45%)] text-sm">{user.createdAt}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button
@@ -411,7 +494,7 @@ export default function UserManagement() {
                             setSelectedUser(user);
                             setEditUserDialog(true);
                           }}
-                          className="hover:bg-primary/10"
+                          className="hover:bg-[hsl(38,92%,55%)]/10 hover:text-[hsl(38,92%,55%)] text-[hsl(216,32%,17%)] rounded-[12px]"
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -421,7 +504,7 @@ export default function UserManagement() {
                           variant="ghost"
                           size="sm"
                           onClick={() => openSettingsForUser(user)}
-                          className="hover:bg-primary/10"
+                          className="hover:bg-[hsl(214,84%,56%)]/10 hover:text-[hsl(214,84%,56%)] text-[hsl(216,32%,17%)] rounded-[12px]"
                         >
                           <Settings className="h-4 w-4" />
                         </Button>
