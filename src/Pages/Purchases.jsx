@@ -85,7 +85,7 @@ export default function Purchases() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-38 bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white  rounded-[10px] cursor-pointer">
+            <Button className="w-[151px] gradient-primary text-white  rounded-[10px] cursor-pointer">
               <Plus className="mr-2 h-4 w-4" />
               Add Purchase
             </Button>
@@ -174,7 +174,7 @@ export default function Purchases() {
             value={`؋${totalPurchases.toLocaleString()}`}
             icon={Package}
             trend={{ value: 8.2, label: "from last month" }}
-            trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
+            trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px]"
             box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
             icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
           />

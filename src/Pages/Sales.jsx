@@ -205,7 +205,7 @@ function Sales() {
   };
 
   return (
-    <div className="space-y-6 m-6 ">
+    <div className="space-y-6 space-x-[-17px] m-6  w-[1030px]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -216,8 +216,8 @@ function Sales() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-31 bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
-              <Plus className="mr-2 h-4 w-4" />
+            <Button className="w-31  bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
+              <Plus className="mr-2  h-4 w-4" />
               New Sale
             </Button>
           </DialogTrigger>
@@ -592,26 +592,38 @@ function Sales() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4  md:grid-cols-4">
         <StatsCard
+          className="h-[122px] rounded-[12px]"
+          headerClassName="mt-[-22px] ml-[2px]"
+          valueClassName="ml-[2px]"
           title="Total Sales"
           value={`؋${totalSales.toLocaleString()}`}
           icon={DollarSign}
           variant="success"
         />
         <StatsCard
+          className="h-[122px] rounded-[12px]"
+          headerClassName="mt-[-22px] ml-[2px]"
+          valueClassName="ml-[2px]"
           title="Amount Received"
           value={`؋${totalPaid.toLocaleString()}`}
           icon={DollarSign}
           variant="success"
         />
         <StatsCard
+          className="h-[122px] rounded-[12px]"
+          headerClassName="mt-[-22px] ml-[2px]"
+          valueClassName="ml-[2px]"
           title="Pending Payments"
           value={`؋${pendingAmount.toLocaleString()}`}
           icon={Clock}
           variant="warning"
         />
         <StatsCard
+          className="h-[122px] rounded-[12px]"
+          headerClassName="mt-[-22px] ml-[2px]"
+          valueClassName="ml-[2px]"
           title="Installment Sales"
           value={installmentSales}
           icon={CreditCard}
@@ -620,12 +632,12 @@ function Sales() {
       </div>
 
       {/* Sales Table */}
-      <Card className="gradient-card border-[hsl(214,20%,88%)]">
+      <Card className="gradient-card w-[1047px] rounded-[12px] border-[hsl(214,20%,88%)]">
         <CardHeader>
           <CardTitle className="text-[hsl(216,32%,17%)]">Sales Records</CardTitle>
-          <CardDescription className="text-[hsl(216,20%,45%)]">Complete history of all sales transactions</CardDescription>
+          <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Complete history of all sales transactions</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent> 
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[hsl(216,20%,45%)]" />
@@ -637,8 +649,8 @@ function Sales() {
               />
             </div>
             <Select className="w-full  sm:w-48" value={filterPaymentType} onValueChange={setFilterPaymentType}>
-              <SelectTrigger className="w-full h-10 py-5 bg-[hsl(248,250%,98%)] shadow-none  sm:w-48">
-                <SelectValue className="text-[hsl(216,20%,45%)]" placeholder="Filter by payment" />
+              <SelectTrigger className="w-full h-10 py-5 text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] shadow-none  sm:w-48">
+                <SelectValue placeholder="Filter by payment" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Payments</SelectItem>
@@ -677,7 +689,7 @@ function Sales() {
                         <div className="space-y-1 text-[hsl(216,32%,17%)]">
                           {sale.items.map((item, index) => (
                             <div key={index} className="text-sm text-[hsl(216,32%,17%)]">
-                              <span className="font-medium text-[hsl(216,32%,17%)]">{item.productName}</span>
+                              <span className="font-medium  text-[hsl(216,32%,17%)]">{item.productName}</span>
                               <span className="text-muted-foreground text-[hsl(216,20%,45%)] ml-2">×{item.quantity}</span>
                             </div>
                           ))}
