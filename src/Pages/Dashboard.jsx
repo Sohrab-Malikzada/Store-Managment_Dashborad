@@ -477,125 +477,253 @@ function DashboardWithReportBuilder() {
 
       {/* Main content (original styles preserved) */}
       <div ref={reportRef}>
-        {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
-          <StatsCard title="Total Products" value={stats.totalProducts} icon={Package} variant="default" />
-          <StatsCard title="Low Stock Alert" value={stats.lowStockProducts} icon={AlertTriangle} variant="warning" />
-          <StatsCard title="Total Sales" value={`؋${stats.totalSales.toLocaleString()}`} icon={DollarSign} variant="success" />
-          <StatsCard title="Monthly Profit" value={`؋${stats.monthlyProfit.toLocaleString()}`} icon={TrendingUp} variant="success" />
-        </div>
-
-        {/* Charts Section (IDs used for capture) */}
-        <div className="grid gap-6 md:grid-cols-2 mt-6">
-          <Card className="rounded-[12px]">
-            <CardHeader>
-              <CardTitle>Monthly Performance</CardTitle>
-              <CardDescription>Sales, purchases, and profit trends</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div id="chart-analytics-monthly" style={{ width: "100%", height: 300 }}>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={mockMonthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="sales" stroke="#2b6cb0" strokeWidth={2} />
-                    <Line type="monotone" dataKey="purchases" stroke="#16a34a" strokeWidth={2} />
-                    <Line type="monotone" dataKey="profit" stroke="#f59e0b" strokeWidth={2} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-[12px]">
-            <CardHeader>
-              <CardTitle>Sales by Category</CardTitle>
-              <CardDescription>Distribution</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div style={{ width: "100%", height: 300 }}>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie data={[
-                      { name: "Electronics", value: 35 },
-                      { name: "Clothing", value: 25 },
-                      { name: "Home & Garden", value: 20 },
-                      { name: "Sports", value: 12 },
-                      { name: "Books", value: 8 },
-                    ]} dataKey="value" cx="50%" cy="50%" outerRadius={100} innerRadius={50}>
-                      <Cell fill="#2b6cb0" />
-                      <Cell fill="#16a34a" />
-                      <Cell fill="#f59e0b" />
-                      <Cell fill="#7c3aed" />
-                      <Cell fill="#ef4444" />
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Example tables with IDs so they can be captured or their data used */}
-        <div className="grid gap-6 md:grid-cols-3 mt-6">
-          <Card className="h-[256px]">
-            <CardHeader>
-              <CardTitle>Low Stock Alert</CardTitle>
-              <CardDescription>Products running low</CardDescription>
-            </CardHeader>
-            <CardContent id="table-inventory">
-              {lowStockProducts.slice(0, 6).map((p) => (
-                <div key={p.id} className="flex items-center justify-between py-2">
-                  <div>
-                    <div className="font-medium">{p.name}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">SKU: {p.sku}</div>
-                  </div>
-                  <Badge variant="secondary">{p.stockLevel} left</Badge>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card className="h-[256px]">
-            <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
-              <CardDescription>Latest transactions</CardDescription>
-            </CardHeader>
-            <CardContent id="table-sales">
-              {recentSales.slice(0, 6).map((s) => (
-                <div key={s.id} className="flex items-center justify-between py-2">
-                  <div>
-                    <div className="font-medium">{s.customer}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">{s.items.map(i => i.productName).join(", ")}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-medium">؋{s.amountPaid.toLocaleString()}</div>
-                    {s.pendingAmount > 0 && <div className="text-xs text-[hsl(0,84%,60%)]">؋{s.pendingAmount.toLocaleString()} pending</div>}
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card className="h-[256px]">
-            <CardHeader>
-              <CardTitle>Urgent Collections</CardTitle>
-              <CardDescription>Debts due soon</CardDescription>
-            </CardHeader>
-            <CardContent id="table-debts">
-              {urgentDebts.map((d) => (
-                <div key={d.id} className="flex items-center justify-between py-2">
-                  <div>
-                    <div className="font-medium">{"customerName" in d ? d.customerName : d.supplierName}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">Due: {d.dueDate}</div>
-                  </div>
-                  <Badge variant="destructive">؋{d.pendingAmount.toLocaleString()}</Badge>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+       {/* Stats Grid */}
+               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] h-[142px] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Total Products"
+                   value={stats.totalProducts}
+                   icon={Package}
+                   trend={{ value: 12, label: "from last month" }}
+                   variant="default"
+                 />
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Low Stock Alert"
+                   value={stats.lowStockProducts}
+                   icon={AlertTriangle}
+                   variant="warning"
+                 />
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Total Sales"
+                   value={`؋${stats.totalSales.toLocaleString()}`}
+                   icon={DollarSign}
+                   trend={{ value: 18, label: "from last month" }}
+                   variant="success"
+                 />
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Monthly Profit"
+                   value={`؋${stats.monthlyProfit.toLocaleString()}`}
+                   icon={TrendingUp}
+                   trend={{ value: 14, label: "from last month" }}
+                   variant="success"
+                 />
+               </div>
+       
+               {/* Secondary Stats */}
+               <div className="grid gap-4 h-[122px] md:grid-cols-3 mt-6">
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Customer Debts"
+                   value={`؋${stats.pendingCustomerDebts.toLocaleString()}`}
+                   icon={CreditCard}
+                   variant="destructive"
+                 />
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Supplier Debts"
+                   value={`؋${stats.pendingSupplierDebts.toLocaleString()}`}
+                   icon={CreditCard}
+                   variant="destructive"
+                 />
+                 <StatsCard
+                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+                   title="Pending Salaries"
+                   value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
+                   icon={Users}
+                   variant="warning"
+                 />
+               </div>
+       
+               {/* Charts Section */}
+               <div className="grid gap-6 md:grid-cols-2 mt-6">
+                 <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+                   <CardHeader>
+                     <CardTitle className="text-[hsl(216,32%,17%)] text-2xl">
+                       Monthly Performance
+                     </CardTitle>
+                     <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">
+                       Sales, purchases, and profit trends
+                     </CardDescription>
+                   </CardHeader>
+                   <CardContent>
+                     <ResponsiveContainer width="100%" height={300}>
+                       <LineChart data={mockMonthlyData} className="outline-none">
+                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                         <XAxis dataKey="month" />
+                         <YAxis />
+                         <Tooltip
+                           contentStyle={{
+                             backgroundColor: "hsl(0,0%,100%)",
+                             border: "1px solid ",
+                             borderColor: "hsl(214,20%,88%)",
+                             borderRadius: "8px",
+                           }}
+                         />
+                         <Line
+                           type="monotone"
+                           dataKey="sales"
+                           stroke="hsl(214,84%,56%)"
+                           strokeWidth={2}
+                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                           activeDot={{ r: 4, fill: "hsl(214,84%,56%)" }}
+                         />
+                         <Line
+                           type="monotone"
+                           dataKey="purchases"
+                           stroke="hsl(38,92%,50%)"
+                           strokeWidth={2}
+                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                           activeDot={{ r: 4, fill: "hsl(38,92%,50%)" }}
+                         />
+                         <Line
+                           type="monotone"
+                           dataKey="profit"
+                           stroke="hsl(142,76%,36%)"
+                           strokeWidth={2}
+                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                           activeDot={{ r: 4, fill: "hsl(142,76%,36%)" }}
+                         />
+                       </LineChart>
+                     </ResponsiveContainer>
+                   </CardContent>
+                 </Card>
+       
+                 <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+                   <CardHeader>
+                     <CardTitle className=" text-[hsl(216,32%,17%)] text-2xl">
+                       Monthly Comparison
+                     </CardTitle>
+                     <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Revenue vs expenses breakdown</CardDescription>
+                   </CardHeader>
+                   <CardContent>
+                     <ResponsiveContainer width="100%" height={300}>
+                       <BarChart data={mockMonthlyData}>
+                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                         <XAxis dataKey="month" />
+                         <YAxis />
+                         <Tooltip
+                           contentStyle={{
+                             backgroundColor: "hsl(0,0%,100%)",
+                             border: "1px solid ",
+                             borderColor: "hsl(214,20%,88%)",
+                             borderRadius: "8px",
+                           }}
+                         />
+                         <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
+                         <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
+                       </BarChart>
+                     </ResponsiveContainer>
+                   </CardContent>
+                 </Card>
+               </div>
+       
+               {/* Quick Actions & Alerts */}
+               <div className="grid gap-6 md:grid-cols-3 mt-6">
+                 {/* Low Stock Alert */}
+                 <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+                   <CardHeader>
+                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                       <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
+                       Low Stock Alert
+                     </CardTitle>
+                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Products running low</CardDescription>
+                   </CardHeader>
+                   <CardContent className="space-y-3">
+                     {lowStockProducts.slice(0, 3).map((product) => (
+                       <div
+                         key={product.id}
+                         className="flex items-center text-[hsl(216,32%,17%)] justify-between"
+                       >
+                         <div>
+                           <p className="font-medium text-sm text-[hsl(216,32%,17%)] text-foreground">
+                             {product.name}
+                           </p>
+                           <p className="text-xs text-[hsl(220,15%,35%)]">
+                             SKU: {product.sku}
+                           </p>
+                         </div>
+                         <Badge
+                           variant="secondary"
+                           className="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] hover:bg-[hsl(210,20%,96%)] rounded-[40.75rem]"
+                         >
+                           {product.stockLevel} left
+                         </Badge>
+                       </div>
+                     ))}
+                   </CardContent>
+                 </Card>
+       
+                 {/* Recent Sales */}
+                 <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+                   <CardHeader>
+                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
+                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
+                   </CardHeader>
+                   <CardContent className="space-y-3">
+                     {recentSales.slice(0, 3).map((sale) => (
+                       <div
+                         key={sale.id}
+                         className="flex items-center justify-between"
+                       >
+                         <div>
+                           <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                             {sale.customer}
+                           </p>
+                           <p className="text-xs text-[hsl(220,15%,35%)]">
+                             {sale.items.map((item) => item.productName).join(", ")}
+                           </p>
+                         </div>
+                         <div className="text-right">
+                           <p className="font-medium text-sm text-[hsl(140,60%,40%)]">
+                             ؋{sale.amountPaid.toLocaleString()}
+                           </p>
+                           {sale.pendingAmount > 0 && (
+                             <p className="text-xs text-[hsl(0,84%,60%)]">
+                               ؋{sale.pendingAmount.toLocaleString()} pending
+                             </p>
+                           )}
+                         </div>
+                       </div>
+                     ))}
+                   </CardContent>
+                 </Card>
+       
+                 {/* Urgent Debts */}
+                 <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+                   <CardHeader>
+                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                       <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+                       Urgent Collections
+                     </CardTitle>
+                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
+                   </CardHeader>
+                   <CardContent className="space-y-3">
+                     {urgentDebts.map((debt) => (
+                       <div
+                         key={debt.id}
+                         className="flex items-center justify-between"
+                       >
+                         <div>
+                           <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                             {"customerName" in debt ? debt.customerName : debt.supplierName}
+                           </p>
+                           <p className="text-xs text-[hsl(220,15%,35%)]">
+                             Due: {debt.dueDate}
+                           </p>
+                         </div>
+                         <Badge
+                           variant="destructive"
+                           className="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-2xl hover:bg-[hsl(0,80%,60%,0.8)]"
+                         >
+                           ؋{debt.pendingAmount.toLocaleString()}
+                         </Badge>
+                       </div>
+                     ))}
+                   </CardContent>
+                 </Card>
         </div>
       </div>
 
