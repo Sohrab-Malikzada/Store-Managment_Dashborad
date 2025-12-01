@@ -221,7 +221,7 @@ function Sales() {
               New Sale
             </Button>
           </DialogTrigger>
-          <DialogContent className=" max-w-2xl max-h-[90vh] border-[hsl(214,20%,88%)] bg-gray-50 overflow-y-auto">
+          <DialogContent className="max-w-2xl w-full border-[hsl(214,20%,88%)] bg-gray-50 overflow-visible">
             <DialogHeader className="space-y-3 pb-6 border-b border-[hsl(214,20%,88%)]">
               <DialogTitle className="text-2xl font-bold text-[hsl(216,32%,17%)]">Record New Sale</DialogTitle>
               <DialogDescription className="-mt-2 text-base text-[hsl(216,20%,45%)]">
@@ -680,22 +680,22 @@ function Sales() {
                 {filteredSales.map((sale) => {
                   const status = getPaymentStatus(sale);
                   return (
-                    <TableRow key={sale.id}>
+                    <TableRow  key={sale.id}>
                       <TableCell className="font-medium text-[hsl(216,32%,17%)]">{sale.id}</TableCell>
                       <TableCell>
-                        <div className="font-medium text-[hsl(216,32%,17%)]">{sale.customer}</div>
+                        <div className="font-medium -mr-2 -ml-2 text-[hsl(216,32%,17%)]">{sale.customer}</div>
                       </TableCell>
                       <TableCell>
                         <div className="space-y-1 text-[hsl(216,32%,17%)]">
                           {sale.items.map((item, index) => (
                             <div key={index} className="text-sm text-[hsl(216,32%,17%)]">
-                              <span className="font-medium  text-[hsl(216,32%,17%)]">{item.productName}</span>
-                              <span className="text-muted-foreground text-[hsl(216,20%,45%)] ml-2">×{item.quantity}</span>
+                              <span className="font-medium -mr-1  text-[hsl(216,32%,17%)]">{item.productName}</span>
+                              <span className="text-muted-foreground -mr-1 text-[hsl(216,20%,45%)] ml-2">×{item.quantity}</span>
                             </div>
                           ))}
                         </div>
                       </TableCell>
-                      <TableCell className="font-medium text-[hsl(216,32%,17%)]">؋{sale.totalAmount.toLocaleString()}</TableCell>
+                      <TableCell className="font-medium  text-[hsl(216,32%,17%)]">؋{sale.totalAmount.toLocaleString()}</TableCell>
                       <TableCell className="text-[hsl(142,76%,36%)]">؋{sale.amountPaid.toLocaleString()}</TableCell>
                       <TableCell className={sale.pendingAmount > 0 ? "text-[hsl(0,84%,60%)]" : "text-[hsl(216,20%,45%)]"}>
                         ؋{sale.pendingAmount.toLocaleString()}
@@ -710,7 +710,7 @@ function Sales() {
                         <Badge variant={status.variant}>{status.label}</Badge>
                       </TableCell>
                       <TableCell>
-                        <div className="flex  space-x-2">
+                        <div className="flex -ml-2 space-x-2">
                           <Button 
                             className="cursor-pointer hover:bg-[hsl(214,20%,94%)] rounded-[10px] border-[hsl(214,20%,88%)] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)]"
                             variant="outline" 
