@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // use autoTable(doc, options) for jspdf-autotable v5+
+import autoTable, { Row } from "jspdf-autotable"; // use autoTable(doc, options) for jspdf-autotable v5+
 import {
   Package,
   AlertTriangle,
@@ -99,31 +99,39 @@ function DashboardWithReportBuilder() {
     switch (pageId) {
       case "dashboard_overview":
         return {
-          title: "Overview",
-          type: "cards",
+          title: "Dashboard",
+          type: "table",
+          columns: ["Metric", "Value"], 
           rows: [
             ["Total Products", stats.totalProducts],
-            ["Low Stock Items", stats.lowStockProducts],
+            ["Low Stock Alert", stats.lowStockProducts],
             ["Total Sales", `؋${stats.totalSales.toLocaleString()}`],
             ["Monthly Profit", `؋${stats.monthlyProfit.toLocaleString()}`],
-            ["Pending Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
-            ["Pending Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
+            ["Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
+            ["Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
             ["Pending Salaries", `؋${stats.totalEmployeeSalaries.toLocaleString()}`],
           ],
         };
 
+      // This chart is On Dashboard both of thime Monthly Performance and Monthly Comparison 
       case "analytics":
         return {
           title: "Analytics - Monthly Performance",
           type: "chart",
           chartId: "chart-analytics-monthly",
         };
+        case "analytics2":
+        return {
+          title: "Analytics - Monthly Comparison",
+          type: "chart",
+          chartId: "chart-analytics-MonthlyComparison",
+        };
 
       case "inventory":
         return {
-          title: "Inventory - Products",
+          title: "Inventory",
           type: "table",
-          columns: ["Product", "SKU", "Category", "Stock", "Min Stock", "Sale Price"],
+          columns: ["Product", "SKU", "Category", "Stock", "Min Stock", "Sale Price",],
           rows: mockProducts.map((p) => [
             p.name,
             p.sku,
@@ -136,9 +144,9 @@ function DashboardWithReportBuilder() {
 
       case "sales":
         return {
-          title: "Sales - Recent Transactions",
+          title: "Sales",
           type: "table",
-          columns: ["Sale ID", "Customer", "Items", "Total", "Paid", "Pending", "Date"],
+          columns: ["Sale ID", "Customer", "Items", "Total Amount", "Amount Paid", "Pending", "Date"],
           rows: mockSales.map((s) => [
             s.id,
             s.customer,
@@ -152,9 +160,9 @@ function DashboardWithReportBuilder() {
 
       case "purchases":
         return {
-          title: "Purchases - Recent",
+          title: "Purchases",
           type: "table",
-          columns: ["Purchase ID", "Supplier", "Product", "Qty", "Unit Price", "Total", "Pending", "Date"],
+          columns: ["Purchase ID", "Supplier", "Product", "Quantity", "Unit Price", "Total Amount", "Pending Amount", "Date"],
           rows: mockPurchases.map((p) => [
             p.id,
             p.supplier,
@@ -171,7 +179,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Returns",
           type: "table",
-          columns: ["Return ID", "Type", "Original", "Party", "Amount", "Status", "Date"],
+          columns: ["Return ID", "Type", "Original Sale", "Party", "Amount", "Status", "Date"],
           rows: [
             ...mockSaleReturns.map((r) => ["SR" + r.id, "Sale", r.originalSaleId, r.customerName, `؋${r.totalAmount.toLocaleString()}`, r.status, r.returnDate]),
             ...mockPurchaseReturns.map((r) => ["PR" + r.id, "Purchase", r.originalPurchaseId, r.supplierName, `؋${r.totalAmount.toLocaleString()}`, r.status, r.returnDate]),
@@ -180,7 +188,7 @@ function DashboardWithReportBuilder() {
 
       case "debts":
         return {
-          title: "Debts - Customers & Suppliers",
+          title: "Debts",
           type: "table",
           columns: ["Name", "Type", "Total Debt", "Paid", "Pending", "Due Date"],
           rows: [
@@ -193,7 +201,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Employees",
           type: "table",
-          columns: ["ID", "Name", "Position", "Monthly Salary", "Advance", "Pending Salary", "Join Date"],
+          columns: ["Employee ID", "Name", "Position", "Monthly Salary", "Advance Amount", "Pending Salary", "Join Date"],
           rows: mockEmployees.map((e) => [
             e.id,
             e.name,
@@ -209,7 +217,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Payroll Records",
           type: "table",
-          columns: ["Payroll ID", "Employee", "Base", "Bonus", "Deductions", "Net Pay", "Date", "Status"],
+          columns: ["Payroll ID", "Employee", "Base Salary", "Bonus", "Deductions", "Net Pay", "Payment Date", "Status"],
           rows: (function () {
             const payroll = (globalThis?.mockPayrollRecords) || [];
             if (payroll.length) {
@@ -221,7 +229,7 @@ function DashboardWithReportBuilder() {
 
       case "user_management":
         return {
-          title: "System Users",
+          title: "User Management",
           type: "table",
           columns: ["Name", "Email", "Role", "Status", "Created"],
           rows: (function () {
@@ -247,7 +255,7 @@ function DashboardWithReportBuilder() {
   const generatePdfFromSelection = async () => {
     const selectedIds = Object.keys(selectedPages).filter((k) => selectedPages[k]);
     if (selectedIds.length === 0) {
-      toast.error("لطفاً حداقل یک صفحه انتخاب کنید");
+      toast.error("لطفاً حداقل یک صفحه را انتخاب کنید");
       return;
     }
 
@@ -259,7 +267,7 @@ function DashboardWithReportBuilder() {
 
       // Title page
       doc.setFontSize(20);
-      doc.text("Business Report", margin, 70);
+      doc.text("Business Report", margin, 70 );
       doc.setFontSize(11);
       doc.text(`Generated: ${new Date().toLocaleString()}`, margin, 90);
       doc.addPage();
@@ -290,7 +298,7 @@ function DashboardWithReportBuilder() {
             margin: { left: margin, right: margin },
             styles: { fontSize: 10 },
             theme: "grid",
-            headStyles: { fillColor: [230, 230, 230] },
+            headStyles: { fillColor: [0, 136, 204] },
           });
           doc.addPage();
         } else if (data.type === "chart") {
@@ -365,7 +373,7 @@ function DashboardWithReportBuilder() {
       if (!printWindow) {
         toast.error("Unable to open print window");
         return;
-      }
+      } 
 
       printWindow.document.write(`
         <html>
@@ -456,13 +464,13 @@ function DashboardWithReportBuilder() {
                 onClick={() => { setSelectorOpen(true); setReportMenuOpen(false); }}
                 className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
               >
-                Build Report (Select Pages)
+                Build Report
               </button>
               <button
                 onClick={downloadReportAsPng}
                 className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
               >
-                Download PNG (full view)
+                Download PNG
               </button>
               <button
                 onClick={printReport}
@@ -477,253 +485,253 @@ function DashboardWithReportBuilder() {
 
       {/* Main content (original styles preserved) */}
       <div ref={reportRef}>
-       {/* Stats Grid */}
-               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] h-[142px] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Total Products"
-                   value={stats.totalProducts}
-                   icon={Package}
-                   trend={{ value: 12, label: "from last month" }}
-                   variant="default"
-                 />
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Low Stock Alert"
-                   value={stats.lowStockProducts}
-                   icon={AlertTriangle}
-                   variant="warning"
-                 />
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Total Sales"
-                   value={`؋${stats.totalSales.toLocaleString()}`}
-                   icon={DollarSign}
-                   trend={{ value: 18, label: "from last month" }}
-                   variant="success"
-                 />
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Monthly Profit"
-                   value={`؋${stats.monthlyProfit.toLocaleString()}`}
-                   icon={TrendingUp}
-                   trend={{ value: 14, label: "from last month" }}
-                   variant="success"
-                 />
-               </div>
-       
-               {/* Secondary Stats */}
-               <div className="grid gap-4 h-[122px] md:grid-cols-3 mt-6">
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Customer Debts"
-                   value={`؋${stats.pendingCustomerDebts.toLocaleString()}`}
-                   icon={CreditCard}
-                   variant="destructive"
-                 />
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Supplier Debts"
-                   value={`؋${stats.pendingSupplierDebts.toLocaleString()}`}
-                   icon={CreditCard}
-                   variant="destructive"
-                 />
-                 <StatsCard
-                   className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-                   title="Pending Salaries"
-                   value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
-                   icon={Users}
-                   variant="warning"
-                 />
-               </div>
-       
-               {/* Charts Section */}
-               <div className="grid gap-6 md:grid-cols-2 mt-6">
-                 <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
-                   <CardHeader>
-                     <CardTitle className="text-[hsl(216,32%,17%)] text-2xl">
-                       Monthly Performance
-                     </CardTitle>
-                     <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">
-                       Sales, purchases, and profit trends
-                     </CardDescription>
-                   </CardHeader>
-                   <CardContent>
-                     <ResponsiveContainer width="100%" height={300}>
-                       <LineChart data={mockMonthlyData} className="outline-none">
-                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                         <XAxis dataKey="month" />
-                         <YAxis />
-                         <Tooltip
-                           contentStyle={{
-                             backgroundColor: "hsl(0,0%,100%)",
-                             border: "1px solid ",
-                             borderColor: "hsl(214,20%,88%)",
-                             borderRadius: "8px",
-                           }}
-                         />
-                         <Line
-                           type="monotone"
-                           dataKey="sales"
-                           stroke="hsl(214,84%,56%)"
-                           strokeWidth={2}
-                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                           activeDot={{ r: 4, fill: "hsl(214,84%,56%)" }}
-                         />
-                         <Line
-                           type="monotone"
-                           dataKey="purchases"
-                           stroke="hsl(38,92%,50%)"
-                           strokeWidth={2}
-                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                           activeDot={{ r: 4, fill: "hsl(38,92%,50%)" }}
-                         />
-                         <Line
-                           type="monotone"
-                           dataKey="profit"
-                           stroke="hsl(142,76%,36%)"
-                           strokeWidth={2}
-                           dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                           activeDot={{ r: 4, fill: "hsl(142,76%,36%)" }}
-                         />
-                       </LineChart>
-                     </ResponsiveContainer>
-                   </CardContent>
-                 </Card>
-       
-                 <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
-                   <CardHeader>
-                     <CardTitle className=" text-[hsl(216,32%,17%)] text-2xl">
-                       Monthly Comparison
-                     </CardTitle>
-                     <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Revenue vs expenses breakdown</CardDescription>
-                   </CardHeader>
-                   <CardContent>
-                     <ResponsiveContainer width="100%" height={300}>
-                       <BarChart data={mockMonthlyData}>
-                         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                         <XAxis dataKey="month" />
-                         <YAxis />
-                         <Tooltip
-                           contentStyle={{
-                             backgroundColor: "hsl(0,0%,100%)",
-                             border: "1px solid ",
-                             borderColor: "hsl(214,20%,88%)",
-                             borderRadius: "8px",
-                           }}
-                         />
-                         <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
-                         <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
-                       </BarChart>
-                     </ResponsiveContainer>
-                   </CardContent>
-                 </Card>
-               </div>
-       
-               {/* Quick Actions & Alerts */}
-               <div className="grid gap-6 md:grid-cols-3 mt-6">
-                 {/* Low Stock Alert */}
-                 <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
-                   <CardHeader>
-                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
-                       <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
-                       Low Stock Alert
-                     </CardTitle>
-                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Products running low</CardDescription>
-                   </CardHeader>
-                   <CardContent className="space-y-3">
-                     {lowStockProducts.slice(0, 3).map((product) => (
-                       <div
-                         key={product.id}
-                         className="flex items-center text-[hsl(216,32%,17%)] justify-between"
-                       >
-                         <div>
-                           <p className="font-medium text-sm text-[hsl(216,32%,17%)] text-foreground">
-                             {product.name}
-                           </p>
-                           <p className="text-xs text-[hsl(220,15%,35%)]">
-                             SKU: {product.sku}
-                           </p>
-                         </div>
-                         <Badge
-                           variant="secondary"
-                           className="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] hover:bg-[hsl(210,20%,96%)] rounded-[40.75rem]"
-                         >
-                           {product.stockLevel} left
-                         </Badge>
-                       </div>
-                     ))}
-                   </CardContent>
-                 </Card>
-       
-                 {/* Recent Sales */}
-                 <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
-                   <CardHeader>
-                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
-                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
-                   </CardHeader>
-                   <CardContent className="space-y-3">
-                     {recentSales.slice(0, 3).map((sale) => (
-                       <div
-                         key={sale.id}
-                         className="flex items-center justify-between"
-                       >
-                         <div>
-                           <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
-                             {sale.customer}
-                           </p>
-                           <p className="text-xs text-[hsl(220,15%,35%)]">
-                             {sale.items.map((item) => item.productName).join(", ")}
-                           </p>
-                         </div>
-                         <div className="text-right">
-                           <p className="font-medium text-sm text-[hsl(140,60%,40%)]">
-                             ؋{sale.amountPaid.toLocaleString()}
-                           </p>
-                           {sale.pendingAmount > 0 && (
-                             <p className="text-xs text-[hsl(0,84%,60%)]">
-                               ؋{sale.pendingAmount.toLocaleString()} pending
-                             </p>
-                           )}
-                         </div>
-                       </div>
-                     ))}
-                   </CardContent>
-                 </Card>
-       
-                 {/* Urgent Debts */}
-                 <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
-                   <CardHeader>
-                     <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
-                       <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
-                       Urgent Collections
-                     </CardTitle>
-                     <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
-                   </CardHeader>
-                   <CardContent className="space-y-3">
-                     {urgentDebts.map((debt) => (
-                       <div
-                         key={debt.id}
-                         className="flex items-center justify-between"
-                       >
-                         <div>
-                           <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
-                             {"customerName" in debt ? debt.customerName : debt.supplierName}
-                           </p>
-                           <p className="text-xs text-[hsl(220,15%,35%)]">
-                             Due: {debt.dueDate}
-                           </p>
-                         </div>
-                         <Badge
-                           variant="destructive"
-                           className="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-2xl hover:bg-[hsl(0,80%,60%,0.8)]"
-                         >
-                           ؋{debt.pendingAmount.toLocaleString()}
-                         </Badge>
-                       </div>
-                     ))}
-                   </CardContent>
-                 </Card>
+        {/* Stats Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] h-[142px] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Total Products"
+            value={stats.totalProducts}
+            icon={Package}
+            trend={{ value: 12, label: "from last month" }}
+            variant="default"
+          />
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Low Stock Alert"
+            value={stats.lowStockProducts}
+            icon={AlertTriangle}
+            variant="warning"
+          />
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Total Sales"
+            value={`؋${stats.totalSales.toLocaleString()}`}
+            icon={DollarSign}
+            trend={{ value: 18, label: "from last month" }}
+            variant="success"
+          />
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Monthly Profit"
+            value={`؋${stats.monthlyProfit.toLocaleString()}`}
+            icon={TrendingUp}
+            trend={{ value: 14, label: "from last month" }}
+            variant="success"
+          />
+        </div>
+
+        {/* Secondary Stats */}
+        <div className="grid gap-4 h-[122px] md:grid-cols-3 mt-6">
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Customer Debts"
+            value={`؋${stats.pendingCustomerDebts.toLocaleString()}`}
+            icon={CreditCard}
+            variant="destructive"
+          />
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Supplier Debts"
+            value={`؋${stats.pendingSupplierDebts.toLocaleString()}`}
+            icon={CreditCard}
+            variant="destructive"
+          />
+          <StatsCard
+            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            title="Pending Salaries"
+            value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
+            icon={Users}
+            variant="warning"
+          />
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid gap-6 md:grid-cols-2 mt-6">
+          <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+            <CardHeader>
+              <CardTitle className="text-[hsl(216,32%,17%)] text-2xl">
+                Monthly Performance
+              </CardTitle>
+              <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">
+                Sales, purchases, and profit trends
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={mockMonthlyData} className="outline-none">
+                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "hsl(0,0%,100%)",
+                      border: "1px solid ",
+                      borderColor: "hsl(214,20%,88%)",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="sales"
+                    stroke="hsl(214,84%,56%)"
+                    strokeWidth={2}
+                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                    activeDot={{ r: 4, fill: "hsl(214,84%,56%)" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="purchases"
+                    stroke="hsl(38,92%,50%)"
+                    strokeWidth={2}
+                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                    activeDot={{ r: 4, fill: "hsl(38,92%,50%)" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="profit"
+                    stroke="hsl(142,76%,36%)"
+                    strokeWidth={2}
+                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
+                    activeDot={{ r: 4, fill: "hsl(142,76%,36%)" }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+            <CardHeader>
+              <CardTitle className=" text-[hsl(216,32%,17%)] text-2xl">
+                Monthly Comparison
+              </CardTitle>
+              <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Revenue vs expenses breakdown</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={mockMonthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "hsl(0,0%,100%)",
+                      border: "1px solid ",
+                      borderColor: "hsl(214,20%,88%)",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Actions & Alerts */}
+        <div className="grid gap-6 md:grid-cols-3 mt-6">
+          {/* Low Stock Alert */}
+          <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
+                Low Stock Alert
+              </CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Products running low</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {lowStockProducts.slice(0, 3).map((product) => (
+                <div
+                  key={product.id}
+                  className="flex items-center text-[hsl(216,32%,17%)] justify-between"
+                >
+                  <div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)] text-foreground">
+                      {product.name}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      SKU: {product.sku}
+                    </p>
+                  </div>
+                  <Badge
+                    variant="secondary"
+                    className="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] hover:bg-[hsl(210,20%,96%)] rounded-[40.75rem]"
+                  >
+                    {product.stockLevel} left
+                  </Badge>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Recent Sales */}
+          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {recentSales.slice(0, 3).map((sale) => (
+                <div
+                  key={sale.id}
+                  className="flex items-center justify-between"
+                >
+                  <div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                      {sale.customer}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      {sale.items.map((item) => item.productName).join(", ")}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-medium text-sm text-[hsl(140,60%,40%)]">
+                      ؋{sale.amountPaid.toLocaleString()}
+                    </p>
+                    {sale.pendingAmount > 0 && (
+                      <p className="text-xs text-[hsl(0,84%,60%)]">
+                        ؋{sale.pendingAmount.toLocaleString()} pending
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Urgent Debts */}
+          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+            <CardHeader>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+                Urgent Collections
+              </CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {urgentDebts.map((debt) => (
+                <div
+                  key={debt.id}
+                  className="flex items-center justify-between"
+                >
+                  <div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                      {"customerName" in debt ? debt.customerName : debt.supplierName}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      Due: {debt.dueDate}
+                    </p>
+                  </div>
+                  <Badge
+                    variant="destructive"
+                    className="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-2xl hover:bg-[hsl(0,80%,60%,0.8)]"
+                  >
+                    ؋{debt.pendingAmount.toLocaleString()}
+                  </Badge>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
         </div>
       </div>
 
