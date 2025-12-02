@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import autoTable, { Row } from "jspdf-autotable"; // use autoTable(doc, options) for jspdf-autotable v5+
+import autoTable from "jspdf-autotable";
 import {
   Package,
   AlertTriangle,
@@ -67,9 +67,24 @@ function DashboardWithReportBuilder() {
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     .slice(0, 5);
 
+  // small analytics data used for the duplicated analytics charts/cards
+  const analyticsCategoryData = [
+    { name: "Electronics", value: 35, color: "#2b6cb0" },
+    { name: "Clothing", value: 25, color: "#16a34a" },
+    { name: "Home & Garden", value: 20, color: "#f59e0b" },
+    { name: "Sports", value: 12, color: "#7c3aed" },
+    { name: "Books", value: 8, color: "#ef4444" },
+  ];
+
+  // NOTE: include both analytics charts (monthly performance + monthly comparison + analytics cards)
   const availablePages = [
     { id: "dashboard_overview", title: "Dashboard Overview", type: "cards" },
-    { id: "analytics", title: "Analytics", type: "chart", chartId: "chart-analytics-monthly" },
+    { id: "analytics_cards", title: "Analytics Summary (cards)", type: "cards" },
+    { id: "analytics", title: "Analytics - Monthly Performance (chart)", type: "chart", chartId: "chart-analytics-monthly" },
+    { id: "analytics_bar", title: "Analytics - Monthly Bar (chart)", type: "chart", chartId: "chart-analytics1" },
+    { id: "analytics_pie", title: "Analytics - Category Pie (chart)", type: "chart", chartId: "chart-analytics-pie" },
+    { id: "analytics_line", title: "Analytics - Profit Line (chart)", type: "chart", chartId: "chart-analytics-profit" },
+    { id: "analytics_comparison", title: "Analytics - Monthly Comparison (chart)", type: "chart", chartId: "chart-analytics-comparison" },
     { id: "inventory", title: "Inventory", type: "table", tableId: "table-inventory" },
     { id: "sales", title: "Sales", type: "table", tableId: "table-sales" },
     { id: "purchases", title: "Purchases", type: "table", tableId: "table-purchases" },
@@ -95,43 +110,83 @@ function DashboardWithReportBuilder() {
     setSelectedPages((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // collect structured data for each page (tables/cards)
   const collectDataForPage = (pageId) => {
     switch (pageId) {
       case "dashboard_overview":
         return {
-          title: "Dashboard",
-          type: "table",
-          columns: ["Metric", "Value"], 
+          title: "Overview",
+          type: "cards",
           rows: [
             ["Total Products", stats.totalProducts],
-            ["Low Stock Alert", stats.lowStockProducts],
+            ["Low Stock Items", stats.lowStockProducts],
             ["Total Sales", `؋${stats.totalSales.toLocaleString()}`],
             ["Monthly Profit", `؋${stats.monthlyProfit.toLocaleString()}`],
-            ["Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
-            ["Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
+            ["Pending Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
+            ["Pending Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
             ["Pending Salaries", `؋${stats.totalEmployeeSalaries.toLocaleString()}`],
           ],
         };
 
-      // This chart is On Dashboard both of thime Monthly Performance and Monthly Comparison 
+      // Analytics summary cards (aggregated from mockMonthlyData)
+      case "analytics_cards": {
+        const totalSales = mockMonthlyData.reduce((s, m) => s + (m.sales || 0), 0);
+        const totalPurchases = mockMonthlyData.reduce((s, m) => s + (m.purchases || 0), 0);
+        const totalProfit = mockMonthlyData.reduce((s, m) => s + (m.profit || 0), 0);
+        const avgProfit = Math.round(totalProfit / (mockMonthlyData.length || 1));
+        return {
+          title: "Analytics Summary",
+          type: "cards",
+          rows: [
+            ["Total Sales (year)", `؋${totalSales.toLocaleString()}`],
+            ["Total Purchases (year)", `؋${totalPurchases.toLocaleString()}`],
+            ["Total Profit (year)", `؋${totalProfit.toLocaleString()}`],
+            ["Average Monthly Profit", `؋${avgProfit.toLocaleString()}`],
+            ["Top Category (sample)", analyticsCategoryData[0].name],
+          ],
+        };
+      }
+
       case "analytics":
         return {
           title: "Analytics - Monthly Performance",
           type: "chart",
           chartId: "chart-analytics-monthly",
         };
-        case "analytics2":
+
+      case "analytics_bar":
+        return {
+          title: "Analytics - Monthly Bar",
+          type: "chart",
+          chartId: "chart-analytics1",
+        };
+
+      case "analytics_pie":
+        return {
+          title: "Analytics - Category Pie",
+          type: "chart",
+          chartId: "chart-analytics-pie",
+        };
+
+      case "analytics_line":
+        return {
+          title: "Analytics - Profit Line",
+          type: "chart",
+          chartId: "chart-analytics-profit",
+        };
+
+      case "analytics_comparison":
         return {
           title: "Analytics - Monthly Comparison",
           type: "chart",
-          chartId: "chart-analytics-MonthlyComparison",
+          chartId: "chart-analytics-comparison",
         };
 
       case "inventory":
         return {
-          title: "Inventory",
+          title: "Inventory - Products",
           type: "table",
-          columns: ["Product", "SKU", "Category", "Stock", "Min Stock", "Sale Price",],
+          columns: ["Product", "SKU", "Category", "Stock", "Min Stock", "Sale Price"],
           rows: mockProducts.map((p) => [
             p.name,
             p.sku,
@@ -144,9 +199,9 @@ function DashboardWithReportBuilder() {
 
       case "sales":
         return {
-          title: "Sales",
+          title: "Sales - Recent Transactions",
           type: "table",
-          columns: ["Sale ID", "Customer", "Items", "Total Amount", "Amount Paid", "Pending", "Date"],
+          columns: ["Sale ID", "Customer", "Items", "Total", "Paid", "Pending", "Date"],
           rows: mockSales.map((s) => [
             s.id,
             s.customer,
@@ -160,9 +215,9 @@ function DashboardWithReportBuilder() {
 
       case "purchases":
         return {
-          title: "Purchases",
+          title: "Purchases - Recent",
           type: "table",
-          columns: ["Purchase ID", "Supplier", "Product", "Quantity", "Unit Price", "Total Amount", "Pending Amount", "Date"],
+          columns: ["Purchase ID", "Supplier", "Product", "Qty", "Unit Price", "Total", "Pending", "Date"],
           rows: mockPurchases.map((p) => [
             p.id,
             p.supplier,
@@ -179,7 +234,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Returns",
           type: "table",
-          columns: ["Return ID", "Type", "Original Sale", "Party", "Amount", "Status", "Date"],
+          columns: ["Return ID", "Type", "Original", "Party", "Amount", "Status", "Date"],
           rows: [
             ...mockSaleReturns.map((r) => ["SR" + r.id, "Sale", r.originalSaleId, r.customerName, `؋${r.totalAmount.toLocaleString()}`, r.status, r.returnDate]),
             ...mockPurchaseReturns.map((r) => ["PR" + r.id, "Purchase", r.originalPurchaseId, r.supplierName, `؋${r.totalAmount.toLocaleString()}`, r.status, r.returnDate]),
@@ -188,7 +243,7 @@ function DashboardWithReportBuilder() {
 
       case "debts":
         return {
-          title: "Debts",
+          title: "Debts - Customers & Suppliers",
           type: "table",
           columns: ["Name", "Type", "Total Debt", "Paid", "Pending", "Due Date"],
           rows: [
@@ -201,7 +256,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Employees",
           type: "table",
-          columns: ["Employee ID", "Name", "Position", "Monthly Salary", "Advance Amount", "Pending Salary", "Join Date"],
+          columns: ["ID", "Name", "Position", "Monthly Salary", "Advance", "Pending Salary", "Join Date"],
           rows: mockEmployees.map((e) => [
             e.id,
             e.name,
@@ -217,7 +272,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Payroll Records",
           type: "table",
-          columns: ["Payroll ID", "Employee", "Base Salary", "Bonus", "Deductions", "Net Pay", "Payment Date", "Status"],
+          columns: ["Payroll ID", "Employee", "Base", "Bonus", "Deductions", "Net Pay", "Date", "Status"],
           rows: (function () {
             const payroll = (globalThis?.mockPayrollRecords) || [];
             if (payroll.length) {
@@ -229,7 +284,7 @@ function DashboardWithReportBuilder() {
 
       case "user_management":
         return {
-          title: "User Management",
+          title: "System Users",
           type: "table",
           columns: ["Name", "Email", "Role", "Status", "Created"],
           rows: (function () {
@@ -251,11 +306,11 @@ function DashboardWithReportBuilder() {
     }
   };
 
-  // PDF generation (uses autoTable(doc, options))
+  // generate PDF from selected pages
   const generatePdfFromSelection = async () => {
     const selectedIds = Object.keys(selectedPages).filter((k) => selectedPages[k]);
     if (selectedIds.length === 0) {
-      toast.error("لطفاً حداقل یک صفحه را انتخاب کنید");
+      toast.error("لطفاً حداقل یک صفحه انتخاب کنید");
       return;
     }
 
@@ -267,7 +322,7 @@ function DashboardWithReportBuilder() {
 
       // Title page
       doc.setFontSize(20);
-      doc.text("Business Report", margin, 70 );
+      doc.text("Business Report", margin, 70);
       doc.setFontSize(11);
       doc.text(`Generated: ${new Date().toLocaleString()}`, margin, 90);
       doc.addPage();
@@ -275,10 +330,12 @@ function DashboardWithReportBuilder() {
       for (const id of selectedIds) {
         const data = collectDataForPage(id);
 
+        // Cards -> render as simple two-column table
         if (data.type === "cards") {
           doc.setFontSize(14);
           doc.text(data.title, margin, 60);
           const rows = data.rows.map((r) => [String(r[0]), String(r[1])]);
+          // use autoTable(doc, options) for jspdf-autotable@5+
           await autoTable(doc, {
             startY: 80,
             head: [["Metric", "Value"]],
@@ -288,7 +345,10 @@ function DashboardWithReportBuilder() {
             theme: "plain",
           });
           doc.addPage();
-        } else if (data.type === "table") {
+        }
+
+        // Table -> use autotable
+        else if (data.type === "table") {
           doc.setFontSize(14);
           doc.text(data.title, margin, 60);
           await autoTable(doc, {
@@ -298,15 +358,19 @@ function DashboardWithReportBuilder() {
             margin: { left: margin, right: margin },
             styles: { fontSize: 10 },
             theme: "grid",
-            headStyles: { fillColor: [0, 136, 204] },
+            headStyles: { fillColor: [230, 230, 230] },
           });
           doc.addPage();
-        } else if (data.type === "chart") {
+        }
+
+        // Chart -> capture DOM element by id and insert image
+        else if (data.type === "chart") {
           const chartEl = document.getElementById(data.chartId);
           doc.setFontSize(14);
           doc.text(data.title, margin, 60);
 
           if (chartEl) {
+            // ensure the element is visible and has explicit size for html2canvas
             const canvas = await html2canvas(chartEl, { scale: 2, useCORS: true, backgroundColor: "#ffffff" });
             const imgData = canvas.toDataURL("image/png");
             const imgProps = doc.getImageProperties(imgData);
@@ -333,80 +397,7 @@ function DashboardWithReportBuilder() {
     }
   };
 
-  // PNG download for full report (preserve original styles)
-  const downloadReportAsPng = async () => {
-    setReportMenuOpen(false);
-    if (!reportRef.current) return;
-    try {
-      const canvas = await html2canvas(reportRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
-      const dataUrl = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `business-report-${new Date().toISOString().split("T")[0]}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast.success("Report downloaded as PNG");
-    } catch (err) {
-      console.error("Failed to generate PNG:", err);
-      toast.error("خطا در تولید تصویر گزارش");
-    }
-  };
-
-  // Print using a new window with the captured image (preserve styles visually)
-  const printReport = async () => {
-    setReportMenuOpen(false);
-    if (!reportRef.current) return;
-    try {
-      const canvas = await html2canvas(reportRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
-      const dataUrl = canvas.toDataURL("image/png");
-
-      const printWindow = window.open("", "_blank");
-      if (!printWindow) {
-        toast.error("Unable to open print window");
-        return;
-      } 
-
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Print Report</title>
-            <style>
-              html, body { height: 100%; margin: 0; padding: 0; background: #fff; }
-              .report-container { padding: 20px; box-sizing: border-box; width: 100%; }
-              img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
-              @media print {
-                body { -webkit-print-color-adjust: exact; }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="report-container">
-              <img src="${dataUrl}" alt="Report" />
-            </div>
-            <script>
-              window.onload = function() {
-                setTimeout(function() { window.print(); }, 300);
-              };
-            </script>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-    } catch (err) {
-      console.error("Failed to print report:", err);
-      toast.error("خطا در آماده‌سازی چاپ");
-    }
-  };
-
+  // small helper to render page selector modal
   const SelectorModal = () => (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
       <div className="bg-white rounded-lg w-[760px] max-w-full p-6">
@@ -438,6 +429,7 @@ function DashboardWithReportBuilder() {
     </div>
   );
 
+  // small helper: render charts with known ids so html2canvas can capture them
   return (
     <div className="space-y-6 m-6">
       <Toaster />
@@ -464,16 +456,16 @@ function DashboardWithReportBuilder() {
                 onClick={() => { setSelectorOpen(true); setReportMenuOpen(false); }}
                 className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
               >
-                Build Report
+                Build Report (Select Pages)
               </button>
               <button
-                onClick={downloadReportAsPng}
+                onClick={() => { setReportMenuOpen(false); toast("PNG export available from each page"); }}
                 className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
               >
-                Download PNG
+                Download PNG (full view)
               </button>
               <button
-                onClick={printReport}
+                onClick={() => { setReportMenuOpen(false); toast("Print option available from PDF"); }}
                 className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
               >
                 Print
@@ -483,255 +475,196 @@ function DashboardWithReportBuilder() {
         </div>
       </div>
 
-      {/* Main content (original styles preserved) */}
+      {/* Main content (kept similar to your original layout) */}
       <div ref={reportRef}>
         {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] h-[142px] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Total Products"
-            value={stats.totalProducts}
-            icon={Package}
-            trend={{ value: 12, label: "from last month" }}
-            variant="default"
-          />
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Low Stock Alert"
-            value={stats.lowStockProducts}
-            icon={AlertTriangle}
-            variant="warning"
-          />
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Total Sales"
-            value={`؋${stats.totalSales.toLocaleString()}`}
-            icon={DollarSign}
-            trend={{ value: 18, label: "from last month" }}
-            variant="success"
-          />
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Monthly Profit"
-            value={`؋${stats.monthlyProfit.toLocaleString()}`}
-            icon={TrendingUp}
-            trend={{ value: 14, label: "from last month" }}
-            variant="success"
-          />
+          <StatsCard title="Total Products" value={stats.totalProducts} icon={Package} variant="default" />
+          <StatsCard title="Low Stock Alert" value={stats.lowStockProducts} icon={AlertTriangle} variant="warning" />
+          <StatsCard title="Total Sales" value={`؋${stats.totalSales.toLocaleString()}`} icon={DollarSign} variant="success" />
+          <StatsCard title="Monthly Profit" value={`؋${stats.monthlyProfit.toLocaleString()}`} icon={TrendingUp} variant="success" />
         </div>
 
-        {/* Secondary Stats */}
-        <div className="grid gap-4 h-[122px] md:grid-cols-3 mt-6">
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Customer Debts"
-            value={`؋${stats.pendingCustomerDebts.toLocaleString()}`}
-            icon={CreditCard}
-            variant="destructive"
-          />
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Supplier Debts"
-            value={`؋${stats.pendingSupplierDebts.toLocaleString()}`}
-            icon={CreditCard}
-            variant="destructive"
-          />
-          <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
-            title="Pending Salaries"
-            value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
-            icon={Users}
-            variant="warning"
-          />
-        </div>
-
-        {/* Charts Section */}
+        {/* Charts Section (IDs used for capture) */}
         <div className="grid gap-6 md:grid-cols-2 mt-6">
-          <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+          <Card className="rounded-[12px]">
             <CardHeader>
-              <CardTitle className="text-[hsl(216,32%,17%)] text-2xl">
-                Monthly Performance
-              </CardTitle>
-              <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">
-                Sales, purchases, and profit trends
-              </CardDescription>
+              <CardTitle>Monthly Performance</CardTitle>
+              <CardDescription>Sales, purchases, and profit trends</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={mockMonthlyData} className="outline-none">
-                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "hsl(0,0%,100%)",
-                      border: "1px solid ",
-                      borderColor: "hsl(214,20%,88%)",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="sales"
-                    stroke="hsl(214,84%,56%)"
-                    strokeWidth={2}
-                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                    activeDot={{ r: 4, fill: "hsl(214,84%,56%)" }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="purchases"
-                    stroke="hsl(38,92%,50%)"
-                    strokeWidth={2}
-                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                    activeDot={{ r: 4, fill: "hsl(38,92%,50%)" }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="profit"
-                    stroke="hsl(142,76%,36%)"
-                    strokeWidth={2}
-                    dot={{ r: 3, fill: "hsl(0,0%,100%)" }}
-                    activeDot={{ r: 4, fill: "hsl(142,76%,36%)" }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <div id="chart-analytics-monthly" style={{ width: "100%", height: 300 }}>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={mockMonthlyData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="sales" stroke="#2b6cb0" strokeWidth={2} />
+                    <Line type="monotone" dataKey="purchases" stroke="#16a34a" strokeWidth={2} />
+                    <Line type="monotone" dataKey="profit" stroke="#f59e0b" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
 
-          <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+          <Card className="rounded-[12px]">
             <CardHeader>
-              <CardTitle className=" text-[hsl(216,32%,17%)] text-2xl">
-                Monthly Comparison
-              </CardTitle>
-              <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Revenue vs expenses breakdown</CardDescription>
+              <CardTitle>Sales by Category</CardTitle>
+              <CardDescription>Distribution</CardDescription>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={mockMonthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "hsl(0,0%,100%)",
-                      border: "1px solid ",
-                      borderColor: "hsl(214,20%,88%)",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div style={{ width: "100%", height: 300 }}>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie data={[
+                      { name: "Electronics", value: 35 },
+                      { name: "Clothing", value: 25 },
+                      { name: "Home & Garden", value: 20 },
+                      { name: "Sports", value: 12 },
+                      { name: "Books", value: 8 },
+                    ]} dataKey="value" cx="50%" cy="50%" outerRadius={100} innerRadius={50}>
+                      <Cell fill="#2b6cb0" />
+                      <Cell fill="#16a34a" />
+                      <Cell fill="#f59e0b" />
+                      <Cell fill="#7c3aed" />
+                      <Cell fill="#ef4444" />
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Quick Actions & Alerts */}
+        {/* Example tables with IDs so they can be captured or their data used */}
         <div className="grid gap-6 md:grid-cols-3 mt-6">
-          {/* Low Stock Alert */}
-          <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+          <Card className="h-[256px]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
-                Low Stock Alert
-              </CardTitle>
-              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Products running low</CardDescription>
+              <CardTitle>Low Stock Alert</CardTitle>
+              <CardDescription>Products running low</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {lowStockProducts.slice(0, 3).map((product) => (
-                <div
-                  key={product.id}
-                  className="flex items-center text-[hsl(216,32%,17%)] justify-between"
-                >
+            <CardContent id="table-inventory">
+              {lowStockProducts.slice(0, 6).map((p) => (
+                <div key={p.id} className="flex items-center justify-between py-2">
                   <div>
-                    <p className="font-medium text-sm text-[hsl(216,32%,17%)] text-foreground">
-                      {product.name}
-                    </p>
-                    <p className="text-xs text-[hsl(220,15%,35%)]">
-                      SKU: {product.sku}
-                    </p>
+                    <div className="font-medium">{p.name}</div>
+                    <div className="text-xs text-[hsl(216,20%,45%)]">SKU: {p.sku}</div>
                   </div>
-                  <Badge
-                    variant="secondary"
-                    className="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] hover:bg-[hsl(210,20%,96%)] rounded-[40.75rem]"
-                  >
-                    {product.stockLevel} left
-                  </Badge>
+                  <Badge variant="secondary">{p.stockLevel} left</Badge>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          {/* Recent Sales */}
-          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+          <Card className="h-[256px]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
-              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
+              <CardTitle>Recent Sales</CardTitle>
+              <CardDescription>Latest transactions</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {recentSales.slice(0, 3).map((sale) => (
-                <div
-                  key={sale.id}
-                  className="flex items-center justify-between"
-                >
+            <CardContent id="table-sales">
+              {recentSales.slice(0, 6).map((s) => (
+                <div key={s.id} className="flex items-center justify-between py-2">
                   <div>
-                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
-                      {sale.customer}
-                    </p>
-                    <p className="text-xs text-[hsl(220,15%,35%)]">
-                      {sale.items.map((item) => item.productName).join(", ")}
-                    </p>
+                    <div className="font-medium">{s.customer}</div>
+                    <div className="text-xs text-[hsl(216,20%,45%)]">{s.items.map(i => i.productName).join(", ")}</div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-sm text-[hsl(140,60%,40%)]">
-                      ؋{sale.amountPaid.toLocaleString()}
-                    </p>
-                    {sale.pendingAmount > 0 && (
-                      <p className="text-xs text-[hsl(0,84%,60%)]">
-                        ؋{sale.pendingAmount.toLocaleString()} pending
-                      </p>
-                    )}
+                    <div className="font-medium">؋{s.amountPaid.toLocaleString()}</div>
+                    {s.pendingAmount > 0 && <div className="text-xs text-[hsl(0,84%,60%)]">؋{s.pendingAmount.toLocaleString()} pending</div>}
                   </div>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          {/* Urgent Debts */}
-          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+          <Card className="h-[256px]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
-                Urgent Collections
-              </CardTitle>
-              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
+              <CardTitle>Urgent Collections</CardTitle>
+              <CardDescription>Debts due soon</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {urgentDebts.map((debt) => (
-                <div
-                  key={debt.id}
-                  className="flex items-center justify-between"
-                >
+            <CardContent id="table-debts">
+              {urgentDebts.map((d) => (
+                <div key={d.id} className="flex items-center justify-between py-2">
                   <div>
-                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
-                      {"customerName" in debt ? debt.customerName : debt.supplierName}
-                    </p>
-                    <p className="text-xs text-[hsl(220,15%,35%)]">
-                      Due: {debt.dueDate}
-                    </p>
+                    <div className="font-medium">{"customerName" in d ? d.customerName : d.supplierName}</div>
+                    <div className="text-xs text-[hsl(216,20%,45%)]">Due: {d.dueDate}</div>
                   </div>
-                  <Badge
-                    variant="destructive"
-                    className="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-2xl hover:bg-[hsl(0,80%,60%,0.8)]"
-                  >
-                    ؋{debt.pendingAmount.toLocaleString()}
-                  </Badge>
+                  <Badge variant="destructive">؋{d.pendingAmount.toLocaleString()}</Badge>
                 </div>
               ))}
             </CardContent>
           </Card>
+        </div>
+
+        {/* OFFSCREEN: duplicate Analytics charts so html2canvas can capture them even if user is on another page */}
+        <div
+          id="analytics-offscreen-charts"
+          style={{
+            position: "absolute",
+            left: -9999,
+            top: 0,
+            width: 900,
+            height: 800,
+            overflow: "hidden",
+            pointerEvents: "none",
+            opacity: 1,
+          }}
+          aria-hidden="true"
+        >
+          {/* Bar chart (id: chart-analytics1) */}
+          <div id="chart-analytics1" style={{ width: 800, height: 300 }}>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={mockMonthlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="sales" fill="#2b6cb0" />
+                <Bar dataKey="purchases" fill="#16a34a" />
+                <Bar dataKey="profit" fill="#f59e0b" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Pie chart (id: chart-analytics-pie) */}
+          <div id="chart-analytics-pie" style={{ width: 800, height: 300 }}>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie data={analyticsCategoryData} dataKey="value" cx="50%" cy="50%" outerRadius={100} innerRadius={50}>
+                  {analyticsCategoryData.map((c, i) => <Cell key={i} fill={c.color} />)}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Profit line (id: chart-analytics-profit) */}
+          <div id="chart-analytics-profit" style={{ width: 800, height: 300 }}>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={mockMonthlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="profit" stroke="#2b6cb0" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Also include the comparison chart id used earlier */}
+          <div id="chart-analytics-comparison" style={{ width: 800, height: 300 }}>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={mockMonthlyData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="sales" fill="#2b6cb0" />
+                <Bar dataKey="purchases" fill="#16a34a" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 

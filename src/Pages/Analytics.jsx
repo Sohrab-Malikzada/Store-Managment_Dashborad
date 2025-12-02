@@ -164,7 +164,7 @@ export default function Analytics() {
             </CardTitle>
             <CardDescription className="-mt-[4px]">Sales, purchases, and profit comparison</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent id="chart-analytics1">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={currentData.monthly}>
                 <defs>
