@@ -4,6 +4,7 @@
 
 
 @theme inline {
+  
     --shadow-soft: 0 4px 6px -1px hsl(214 20% 20% / 0.1), 0 2px 4px -1px hsl(214 20% 20% / 0.06);
     --shadow-medium: 0 10px 15px -3px hsl(214 20% 20% / 0.1), 0 4px 6px -2px hsl(214 20% 20% / 0.05);
     
@@ -309,4 +310,5 @@
   .transition-smooth {
     transition: var(--transition-smooth);
   }
-}
+};
+

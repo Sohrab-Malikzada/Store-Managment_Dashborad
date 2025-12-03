@@ -10,6 +10,7 @@ import {
   Users,
   CreditCard,
   TrendingUp,
+  BoxIcon,
 } from "lucide-react";
 import { StatsCard } from "@/components/StatsCard";
 import {
@@ -80,6 +81,7 @@ function DashboardWithReportBuilder() {
     { id: "employees", title: "Employees", type: "table", tableId: "table-employees" },
     { id: "payroll", title: "Payroll", type: "table", tableId: "table-payroll" },
     { id: "user_management", title: "User Management", type: "table", tableId: "table-users" },
+    { id: "analytics2003", title: "analytics2003", type: "chart", chartId: "SalesbyCategory" },
   ];
 
   // close menu on outside click
@@ -102,15 +104,16 @@ function DashboardWithReportBuilder() {
     switch (pageId) {
       case "dashboard_overview":
         return {
-          title: "Overview",
-          type: "cards",
+          title: "Dashboard",
+          type: "table",
+          columns: ["Metric", "Value"],
           rows: [
             ["Total Products", stats.totalProducts],
-            ["Low Stock Items", stats.lowStockProducts],
+            ["Low Stock Alert", stats.lowStockProducts],
             ["Total Sales", `؋${stats.totalSales.toLocaleString()}`],
             ["Monthly Profit", `؋${stats.monthlyProfit.toLocaleString()}`],
-            ["Pending Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
-            ["Pending Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
+            ["Customer Debts", `؋${stats.pendingCustomerDebts.toLocaleString()}`],
+            ["Supplier Debts", `؋${stats.pendingSupplierDebts.toLocaleString()}`],
             ["Pending Salaries", `؋${stats.totalEmployeeSalaries.toLocaleString()}`],
           ],
         };
@@ -131,7 +134,7 @@ function DashboardWithReportBuilder() {
 
       case "inventory":
         return {
-          title: "Inventory - Products",
+          title: "Inventory",
           type: "table",
           columns: ["Product", "SKU", "Category", "Stock", "Min Stock", "Sale Price"],
           rows: mockProducts.map((p) => [
@@ -146,7 +149,7 @@ function DashboardWithReportBuilder() {
 
       case "sales":
         return {
-          title: "Sales - Recent Transactions",
+          title: "Sales",
           type: "table",
           columns: ["Sale ID", "Customer", "Items", "Total", "Paid", "Pending", "Date"],
           rows: mockSales.map((s) => [
@@ -162,7 +165,7 @@ function DashboardWithReportBuilder() {
 
       case "purchases":
         return {
-          title: "Purchases - Recent",
+          title: "Purchases",
           type: "table",
           columns: ["Purchase ID", "Supplier", "Product", "Qty", "Unit Price", "Total", "Pending", "Date"],
           rows: mockPurchases.map((p) => [
@@ -190,7 +193,7 @@ function DashboardWithReportBuilder() {
 
       case "debts":
         return {
-          title: "Debts - Customers & Suppliers",
+          title: "Debts",
           type: "table",
           columns: ["Name", "Type", "Total Debt", "Paid", "Pending", "Due Date"],
           rows: [
@@ -217,7 +220,7 @@ function DashboardWithReportBuilder() {
 
       case "payroll":
         return {
-          title: "Payroll Records",
+          title: "Payroll",
           type: "table",
           columns: ["Payroll ID", "Employee", "Base", "Bonus", "Deductions", "Net Pay", "Date", "Status"],
           rows: (function () {
@@ -229,9 +232,17 @@ function DashboardWithReportBuilder() {
           })(),
         };
 
+
+      case "analytics2003":
+        return {
+          title: "Analytics",
+          type: "chart",
+          chartId: "SalesbyCategory",
+        };
+
       case "user_management":
         return {
-          title: "System Users",
+          title: "User Management",
           type: "table",
           columns: ["Name", "Email", "Role", "Status", "Created"],
           rows: (function () {
@@ -257,7 +268,7 @@ function DashboardWithReportBuilder() {
   const generatePdfFromSelection = async () => {
     const selectedIds = Object.keys(selectedPages).filter((k) => selectedPages[k]);
     if (selectedIds.length === 0) {
-      toast.error("لطفاً حداقل یک صفحه انتخاب کنید");
+      toast.error("لطفاً حداقل یک صفحه را انتخاب کنید");
       return;
     }
 
@@ -304,7 +315,7 @@ function DashboardWithReportBuilder() {
             margin: { left: margin, right: margin },
             styles: { fontSize: 10 },
             theme: "grid",
-            headStyles: { fillColor: [230, 230, 230] },
+            headStyles: { fillColor: [0, 136, 204] },
           });
           doc.addPage();
         }
@@ -419,19 +430,36 @@ function DashboardWithReportBuilder() {
 
   const SelectorModal = () => (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-lg w-[760px] max-w-full p-6">
-        <h3 className="text-xl font-semibold mb-4">Select pages to include in report</h3>
-        <div className="grid grid-cols-2 gap-3 max-h-[360px] overflow-auto mb-4">
+      <div className="bg-white rounded-[12px] w-[760px] max-w-full p-6">
+        <h3 className="text-xl font-semibold text-[hsl(216,32%,17%)] mb-4">Select pages to include in report</h3>
+        <div className="grid grid-cols-2 gap-3 overflow-auto mb-4">
           {availablePages.map((p) => (
-            <label key={p.id} className="flex items-center gap-3 p-2 border rounded hover:bg-[hsl(214,20%,96%)] cursor-pointer">
+            <label key={p.id} className="bg-[hsl(248,250%,99%)] shadow-[0_2px_3px_-1px_hsl(0,0%,80%,0.5)] flex items-center gap-3 p-2 border border-[hsl(214,20%,88%)]  rounded hover:bg-[hsl(214,20%,97%)] cursor-pointer">
+              {/* hidden native checkbox for accessibility */}
+              {/* native checkbox with accent-color + simulated border via box-shadow */}
               <input
                 type="checkbox"
                 checked={!!selectedPages[p.id]}
                 onChange={() => togglePageSelection(p.id)}
-                className="w-4 h-4"
+                className="w-5 h-5 cursor-pointer rounded-full focus:outline-none"
+                style={{
+                  // color of the check mark / filled background in modern browsers
+                  accentColor: "hsl(200,100%,40%)",
+
+                  // simulate a colored border that is visible across browsers
+                  // when unchecked: light border; when checked: stronger colored ring
+                  boxShadow: selectedPages[p.id]
+                    ? "0 0 0 3px rgba(31,111,235,0.12), inset 0 0 0 2px hsl(200,100%,40%)"
+                    : "inset 0 0 0 2px hsl(214,20%,88%)",
+
+                  // keep background white so native check is visible
+                  background: "white",
+                  WebkitAppearance: "checkbox", // hint for webkit to keep native look
+                  appearance: "checkbox",
+                }}
               />
               <div>
-                <div className="font-medium">{p.title}</div>
+                <div className="font-medium text-[hsl(216,32%,17%)]">{p.title}</div>
                 <div className="text-xs text-[hsl(216,20%,45%)]">{p.type}</div>
               </div>
             </label>
@@ -439,8 +467,10 @@ function DashboardWithReportBuilder() {
         </div>
 
         <div className="flex justify-end gap-3">
-          <Button onClick={() => setSelectorOpen(false)} className="bg-[hsl(214,20%,88%)] text-black">Cancel</Button>
-          <Button onClick={generatePdfFromSelection} disabled={isGenerating} className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white">
+          <Button onClick={() => setSelectorOpen(false)}
+            className="border  shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
+          >Cancel</Button>
+          <Button onClick={generatePdfFromSelection} disabled={isGenerating} className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] text-white rounded-[10px] cursor-pointer">
             {isGenerating ? "Generating..." : "Download PDF"}
           </Button>
         </div>
@@ -464,28 +494,28 @@ function DashboardWithReportBuilder() {
         <div className="relative" ref={menuRef}>
           <Button
             onClick={() => setReportMenuOpen((s) => !s)}
-            className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white rounded-[10px]"
+            className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] text-white rounded-[10px] cursor-pointer"
           >
             Generate Report
           </Button>
 
           {reportMenuOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-white border rounded shadow-md z-50">
+            <div className="absolute right-0 mt-2 w-56 p-1 border-[hsl(214,20%,88%)] text-[hsl(216,32%,17%)] bg-white border rounded-[12px] shadow-md z-50">
               <button
                 onClick={() => { setSelectorOpen(true); setReportMenuOpen(false); }}
-                className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
+                className="w-full text-left px-4 py-2 rounded-[10px] hover:bg-[hsl(214,20%,96%)]"
               >
-                Build Report (Select Pages)
+                Build Report
               </button>
               <button
                 onClick={downloadReportAsPng}
-                className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
+                className="w-full text-left px-4 py-2 rounded-[10px] hover:bg-[hsl(214,20%,96%)]"
               >
-                Download PNG (full view)
+                Download PNG
               </button>
               <button
                 onClick={printReport}
-                className="w-full text-left px-4 py-2 hover:bg-[hsl(214,20%,96%)]"
+                className="w-full text-left px-4 py-2 rounded-[10px] hover:bg-[hsl(214,20%,96%)]"
               >
                 Print
               </button>
@@ -613,7 +643,7 @@ function DashboardWithReportBuilder() {
               </div>
             </CardContent>
           </Card>
-              
+
 
           <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
             <CardHeader>
@@ -624,82 +654,129 @@ function DashboardWithReportBuilder() {
             </CardHeader>
             <CardContent>
               <div id="chart-analytics-comparison" style={{ width: "100%", height: 300 }}>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={mockMonthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "hsl(0,0%,100%)",
-                      border: "1px solid ",
-                      borderColor: "hsl(214,20%,88%)",
-                      borderRadius: "8px",
-                    }}
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={mockMonthlyData}>
+                    <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "hsl(0,0%,100%)",
+                        border: "1px solid ",
+                        borderColor: "hsl(214,20%,88%)",
+                        borderRadius: "8px",
+                      }}
                     />
-                  <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
-                  <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-                    </div>
+                    <Bar dataKey="sales" fill="hsl(214,84%,56%)" radius={[0, 0, 0, 0]} />
+                    <Bar dataKey="purchases" fill="hsl(38,92%,50%)" radius={[0, 0, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Example tables with IDs so they can be captured or their data used */}
         <div className="grid gap-6 md:grid-cols-3 mt-6">
-          <Card className="h-[256px]">
+          {/* Low Stock Alert */}
+          <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle>Low Stock Alert</CardTitle>
-              <CardDescription>Products running low</CardDescription>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
+                Low Stock Alert
+              </CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Products running low</CardDescription>
             </CardHeader>
-            <CardContent id="table-inventory">
-              {lowStockProducts.slice(0, 6).map((p) => (
-                <div key={p.id} className="flex items-center justify-between py-2">
+            <CardContent id="table-inventory" className="space-y-3">
+              {lowStockProducts.slice(0, 3).map((product) => (
+                <div
+                  key={product.id}
+                  className="flex items-center text-[hsl(216,32%,17%)] justify-between"
+                >
                   <div>
-                    <div className="font-medium">{p.name}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">SKU: {p.sku}</div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)] text-foreground">
+                      {product.name}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      SKU: {product.sku}
+                    </p>
                   </div>
-                  <Badge variant="secondary">{p.stockLevel} left</Badge>
+                  <Badge
+                    variant="secondary"
+                    className="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] hover:bg-[hsl(210,20%,96%)] rounded-[40.75rem]"
+                  >
+                    {product.stockLevel} left
+                  </Badge>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          <Card className="h-[256px]">
+
+          {/* Recent Sales */}
+          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
-              <CardDescription>Latest transactions</CardDescription>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
             </CardHeader>
-            <CardContent id="table-sales">
-              {recentSales.slice(0, 6).map((s) => (
-                <div key={s.id} className="flex items-center justify-between py-2">
+            <CardContent id="table-sales" className="space-y-3">
+              {recentSales.slice(0, 3).map((sale) => (
+                <div
+                  key={sale.id}
+                  className="flex items-center justify-between"
+                >
                   <div>
-                    <div className="font-medium">{s.customer}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">{s.items.map(i => i.productName).join(", ")}</div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                      {sale.customer}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      {sale.items.map((item) => item.productName).join(", ")}
+                    </p>
                   </div>
                   <div className="text-right">
-                    <div className="font-medium">؋{s.amountPaid.toLocaleString()}</div>
-                    {s.pendingAmount > 0 && <div className="text-xs text-[hsl(0,84%,60%)]">؋{s.pendingAmount.toLocaleString()} pending</div>}
+                    <p className="font-medium text-sm text-[hsl(140,60%,40%)]">
+                      ؋{sale.amountPaid.toLocaleString()}
+                    </p>
+                    {sale.pendingAmount > 0 && (
+                      <p className="text-xs text-[hsl(0,84%,60%)]">
+                        ؋{sale.pendingAmount.toLocaleString()} pending
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          <Card className="h-[256px]">
+          {/* Urgent Debts */}
+          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle>Urgent Collections</CardTitle>
-              <CardDescription>Debts due soon</CardDescription>
+              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+                <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+                Urgent Collections
+              </CardTitle>
+              <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
             </CardHeader>
-            <CardContent id="table-debts">
-              {urgentDebts.map((d) => (
-                <div key={d.id} className="flex items-center justify-between py-2">
+            <CardContent id="table-debts" className="space-y-3">
+              {urgentDebts.map((debt) => (
+                <div
+                  key={debt.id}
+                  className="flex items-center justify-between"
+                >
                   <div>
-                    <div className="font-medium">{"customerName" in d ? d.customerName : d.supplierName}</div>
-                    <div className="text-xs text-[hsl(216,20%,45%)]">Due: {d.dueDate}</div>
+                    <p className="font-medium text-sm text-[hsl(216,32%,17%)]">
+                      {"customerName" in debt ? debt.customerName : debt.supplierName}
+                    </p>
+                    <p className="text-xs text-[hsl(220,15%,35%)]">
+                      Due: {debt.dueDate}
+                    </p>
                   </div>
-                  <Badge variant="destructive">؋{d.pendingAmount.toLocaleString()}</Badge>
+                  <Badge
+                    variant="destructive"
+                    className="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-2xl hover:bg-[hsl(0,80%,60%,0.8)]"
+                  >
+                    ؋{debt.pendingAmount.toLocaleString()}
+                  </Badge>
                 </div>
               ))}
             </CardContent>

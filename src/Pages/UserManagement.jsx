@@ -51,25 +51,25 @@ import {
 const roleConfigs = {
   admin: {
     name: "Administrator",
-    color: "bg-destructive",
+    color: "bg-[hsl(0,84%,60%)]",
     icon: Crown,
     description: "Full system access",
   },
   cashier: {
     name: "Cashier",
-    color: "bg-primary",
+    color: "bg-[hsl(214,84%,56%)]",
     icon: UserCheck,
     description: "Sales and customer management",
   },
   pos: {
     name: "Point of Sale",
-    color: "bg-success",
+    color: "bg-[hsl(142,76%,36%)]",
     icon: Shield,
     description: "Sales and inventory access",
   },
   data_entry: {
     name: "Data Entry",
-    color: "bg-warning",
+    color: "bg-[hsl(38,92%,50%)]",
     icon: UserX,
     description: "Inventory and purchase data entry",
   },
@@ -440,7 +440,7 @@ export default function UserManagement() {
                 <TableHead>User</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead>Permissions</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="pl-6">Status</TableHead>
                 <TableHead>Last Login</TableHead>
                 <TableHead>Created</TableHead>
                 <TableHead>Actions</TableHead>
@@ -463,7 +463,7 @@ export default function UserManagement() {
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
-                        <Badge className={`${roleConfig.color}  text-white`}>
+                        <Badge className={`${roleConfig.color} text-white`}>
                           <roleConfig.icon className="h-3  w-3 mr-1" />
                           {roleConfig.name}
                         </Badge>
@@ -476,8 +476,8 @@ export default function UserManagement() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex p-4 items-center gap-2">
-                        <Switch className="" checked={user.status === "active"} onCheckedChange={() => toggleUserStatus(user.id)} />
+                      <div className="flex p-4 py-4 items-center gap-2">
+                        <Switch className="my-[6px]" checked={user.status === "active"} onCheckedChange={() => toggleUserStatus(user.id)} />
                         <Badge variant={user.status === "active" ? "default" : "secondary"} className={user.status === "active" ? "bg-[hsl(142,76%,36%)] hover:bg-[hsl(142,76%,36%)]/80" : "rounded-full text-[hsl(216,32%,17%)] bg-[hsl(214,20%,93%)] hover:bg-[hsl(214,20%,93%)]/80"}>
                           {user.status}
                         </Badge>

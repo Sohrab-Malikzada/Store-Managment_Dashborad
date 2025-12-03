@@ -25,7 +25,7 @@ const yearlyData = {
     stats: {
       totalRevenue: "$762,000",
       netProfit: "$243,000",
-      productsSold: "3,847", 
+      productsSold: "3,847",
       activeCustomers: "1,534",
       avgOrderValue: "$198"
     }
@@ -49,7 +49,7 @@ const yearlyData = {
       totalRevenue: "$647,000",
       netProfit: "$194,000",
       productsSold: "3,241",
-      activeCustomers: "1,289", 
+      activeCustomers: "1,289",
       avgOrderValue: "$179"
     }
   }
@@ -77,7 +77,7 @@ export default function Analytics() {
           <Calendar className="h-5 w-5 text-[hsl(216,20%,45%)]" />
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-32 bg-[hsl(216,20%,98%)]">
-              <SelectValue/>
+              <SelectValue />
             </SelectTrigger>
             <SelectContent className={"bg-white"}>
               <SelectItem value="2024">2024</SelectItem>
@@ -89,6 +89,7 @@ export default function Analytics() {
 
       <div className="grid gap-4 md:grid-cols-5">
         <StatsCard
+          id="table-analytics2003"
           title="Total Revenue"
           value={currentData.stats.totalRevenue}
           icon={DollarSign}
@@ -100,7 +101,7 @@ export default function Analytics() {
           titlechange="mt-[-7px]"
           icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"
-          />
+        />
         <StatsCard
           title="Net Profit"
           value={currentData.stats.netProfit}
@@ -164,36 +165,38 @@ export default function Analytics() {
             </CardTitle>
             <CardDescription className="-mt-[4px]">Sales, purchases, and profit comparison</CardDescription>
           </CardHeader>
-          <CardContent id="chart-analytics1">
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={currentData.monthly}>
-                <defs>
-                  <linearGradient id="bar-gradient-sales">
-                    <stop stopColor="hsl(214.15deg 83.93% 56.08%)" />
-                  </linearGradient>
-                  <linearGradient id="bar-gradient-purchases">
-                    <stop stopColor="hsl(141.86deg 76.09% 36.08%)" />
-                  </linearGradient>
-                  <linearGradient id="bar-gradient-profit">
-                    <stop stopColor="hsl(38.04deg 92.16% 50%)" />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
-                <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
-                <YAxis className="text-[hsl(216,20%,45%)]" />
-                <Tooltip 
-                  contentStyle={{ 
-                    background: "hsl(0deg 0% 99.22%)", 
-                    border: "1px solid hsl(214,20%,88%)",
-                    borderRadius: "10px",
-                  }}
-                  itemStyle={{ fontWeight: 600 }}
-                />
-                <Bar dataKey="sales" fill="hsl(214.15deg 83.93% 56.08%)" name="Sales" radius={[0,0,0,0]} />
-                <Bar dataKey="purchases" fill="hsl(141.86deg 76.09% 36.08%)" name="Purchases" radius={[0,0,0,0]} />
-                <Bar dataKey="profit" fill="hsl(38.04deg 92.16% 50%)" name="Profit" radius={[0,0,0,0]} />
-              </BarChart>
-            </ResponsiveContainer>
+          <CardContent>
+            <div id="chart-analytics1">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={currentData.monthly}>
+                  <defs>
+                    <linearGradient id="bar-gradient-sales">
+                      <stop stopColor="hsl(214.15deg 83.93% 56.08%)" />
+                    </linearGradient>
+                    <linearGradient id="bar-gradient-purchases">
+                      <stop stopColor="hsl(141.86deg 76.09% 36.08%)" />
+                    </linearGradient>
+                    <linearGradient id="bar-gradient-profit">
+                      <stop stopColor="hsl(38.04deg 92.16% 50%)" />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
+                  <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
+                  <YAxis className="text-[hsl(216,20%,45%)]" />
+                  <Tooltip
+                    contentStyle={{
+                      background: "hsl(0deg 0% 99.22%)",
+                      border: "1px solid hsl(214,20%,88%)",
+                      borderRadius: "10px",
+                    }}
+                    itemStyle={{ fontWeight: 600 }}
+                  />
+                  <Bar dataKey="sales" fill="hsl(214.15deg 83.93% 56.08%)" name="Sales" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="purchases" fill="hsl(141.86deg 76.09% 36.08%)" name="Purchases" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="profit" fill="hsl(38.04deg 92.16% 50%)" name="Profit" radius={[0, 0, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
 
@@ -206,61 +209,63 @@ export default function Analytics() {
             <CardDescription className="-mt-[4px]">Product category distribution</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <defs>
-                  <radialGradient id="pie-gradient-1">
-                    <stop stopColor="hsl(214.15deg 83.93% 56.08%)"/>
-                  </radialGradient>
-                  <radialGradient id="pie-gradient-2">
-                    <stop stopColor="hsl(141.86deg 76.09% 36.08%)"/>
-                  </radialGradient>
-                  <radialGradient id="pie-gradient-3">
-                    <stop stopColor="hsl(38.04deg 92.16% 50%)"/>
-                  </radialGradient>
-                  <radialGradient id="pie-gradient-4">
-                    <stop stopColor="hsl(261.91deg 83.18% 58.04%)"/>
-                  </radialGradient>
-                  <radialGradient id="pie-gradient-5">
-                    <stop stopColor="hsl(345.94deg 76.8% 49.02%)"/>
-                  </radialGradient>
-                </defs>
-                <Pie
-                  data={categoryData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={120}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  contentStyle={{ 
-                    background: "hsl(0deg 0% 99.22%)", 
-                    border: "1px solid hsl(214,20%,88%)",
-                    borderRadius: "10px",
-                  }}
-                  itemStyle={{ fontWeight: 600 }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-4 space-y-2">
-              {categoryData.map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <div 
-                      className="w-3 h-3 rounded-full mr-2" 
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-sm text-[hsl(216,20%,45%)]">{item.name}</span>
+            <div id="SalesbyCategory">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <defs>
+                    <radialGradient id="pie-gradient-1">
+                      <stop stopColor="hsl(214.15deg 83.93% 56.08%)" />
+                    </radialGradient>
+                    <radialGradient id="pie-gradient-2">
+                      <stop stopColor="hsl(141.86deg 76.09% 36.08%)" />
+                    </radialGradient>
+                    <radialGradient id="pie-gradient-3">
+                      <stop stopColor="hsl(38.04deg 92.16% 50%)" />
+                    </radialGradient>
+                    <radialGradient id="pie-gradient-4">
+                      <stop stopColor="hsl(261.91deg 83.18% 58.04%)" />
+                    </radialGradient>
+                    <radialGradient id="pie-gradient-5">
+                      <stop stopColor="hsl(345.94deg 76.8% 49.02%)" />
+                    </radialGradient>
+                  </defs>
+                  <Pie
+                    data={categoryData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={120}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {categoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      background: "hsl(0deg 0% 99.22%)",
+                      border: "1px solid hsl(214,20%,88%)",
+                      borderRadius: "10px",
+                    }}
+                    itemStyle={{ fontWeight: 600 }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="mt-4 space-y-2">
+                {categoryData.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div
+                        className="w-3 h-3 rounded-full mr-2"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="text-sm text-[hsl(216,20%,45%)]">{item.name}</span>
+                    </div>
+                    <span className="text-sm text-[hsl(216,32%,17%)] font-medium">{item.value}%</span>
                   </div>
-                  <span className="text-sm text-[hsl(216,32%,17%)] font-medium">{item.value}%</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -284,20 +289,20 @@ export default function Analytics() {
                 <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
                 <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
                 <YAxis className="text-[hsl(216,20%,45%)]" />
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     background: "hsl(0deg 0% 99.22%)",
                     border: "1px solid hsl(214,20%,88%)",
                     borderRadius: "10px",
                   }}
                   itemStyle={{ fontWeight: 600 }}
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="profit" 
+                <Line
+                  type="monotone"
+                  dataKey="profit"
                   stroke="hsl(214,84%,56%)"
                   strokeWidth={3}
-                  dot={{ fill: "hsl(214,84%,56%)", stroke: "hsl(214,84%,56%)", strokeWidth: 2, r: 6,}}
+                  dot={{ fill: "hsl(214,84%,56%)", stroke: "hsl(214,84%,56%)", strokeWidth: 2, r: 6, }}
                 />
               </LineChart>
             </ResponsiveContainer>
