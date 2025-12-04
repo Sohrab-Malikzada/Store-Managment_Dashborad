@@ -19,7 +19,7 @@ import axios from "axios";
 
 export default function Inventory() {
 
-  const [products, setProducts] = useState([]); 
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [stockFilter, setStockFilter] = useState("all");
@@ -34,9 +34,8 @@ export default function Inventory() {
     async function load() {
       try {
         const res = await axios.get("http://localhost:3000/products");
-       
+
         const mapped = res.data.map((p) => ({
-         
           id: p.id || (p._id ? String(p._id) : undefined),
           _id: p._id,
           name: p.name || p.title || "",
@@ -50,19 +49,82 @@ export default function Inventory() {
           status: p.status || "In Stock",
           lastRestocked: p.lastRestocked || null,
           createdAt: p.createdAt || null,
-     
           ...p
         }));
         if (mounted) setProducts(mapped);
       } catch (err) {
         console.error("Failed to load products", err);
-       
         if (mounted) setProducts([]);
       }
     }
     load();
     return () => { mounted = false; };
   }, []);
+
+  // تابع خروجی گرفتن از محصولات (CSV)
+  const exportProducts = (useFiltered = true) => {
+    try {
+      // filteredProducts تعریف نشده هنوز در کد بالا، اما در زمان اجرا این تابع بعد از تعریف filteredProducts فراخوانی می‌شود.
+      const rows = (useFiltered ? filteredProducts : products) || [];
+
+      if (!rows.length) {
+        toast.error("هیچ محصولی برای خروجی وجود ندارد");
+        return;
+      }
+
+      const headers = [
+        "id",
+        "name",
+        "sku",
+        "supplier",
+        "category",
+        "stockLevel",
+        "minStock",
+        "purchasePrice",
+        "salePrice",
+        "status",
+        "lastRestocked",
+        "createdAt"
+      ];
+
+      const escapeCell = (val) => {
+        if (val === null || val === undefined) return "";
+        const s = String(val);
+        if (s.includes('"') || s.includes(",") || s.includes("\n") || s.includes("\r")) {
+          return `"${s.replace(/"/g, '""')}"`;
+        }
+        return s;
+      };
+
+      const csvRows = [];
+      csvRows.push(headers.join(","));
+
+      for (const p of rows) {
+        const line = headers.map((h) => {
+          const v = p[h] ?? (p._raw && p._raw[h]) ?? "";
+          return escapeCell(v);
+        }).join(",");
+        csvRows.push(line);
+      }
+
+      const csvString = csvRows.join("\r\n");
+      const blob = new Blob(["\uFEFF", csvString], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      const date = new Date().toISOString().split("T")[0];
+      a.download = `products-export-${date}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success(`خروجی آماده شد (${rows.length} ردیف)`);
+    } catch (err) {
+      console.error("Export error:", err);
+      toast.error("خطا در خروجی گرفتن از محصولات");
+    }
+  };
 
   const filteredProducts = products.filter(product => {
     const supplier = (product.supplier || "").toLowerCase();
@@ -136,6 +198,7 @@ export default function Inventory() {
 
   return (
     <div className="space-y-6 m-6">
+      <Toaster />
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
@@ -147,16 +210,17 @@ export default function Inventory() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <CSVImport  onImport={(importedProducts) => {
+          <CSVImport onImport={(importedProducts) => {
             const newProducts = importedProducts.map((product, index) => ({
               id: `PRD-${Date.now()}-${index}`,
-              ...product 
+              ...product
             }));
             setProducts(prev => [...prev, ...newProducts]);
           }} />
           <Button
             variant="outline"
             className="gap-2 w-[108px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            onClick={() => exportProducts(true)} // صادر کردن محصولات فیلترشده
           >
             <Download className="mr-2 h-4 w-4" />
             Export
@@ -183,11 +247,11 @@ export default function Inventory() {
           box="rounded-[12px] h-[122px] shadow-none"
           titlechange="mt-[-7px]"
           icanchange="items-center relative -m-66 -mt-6 -mr-66  h-4 w-4"
-          iconColor="bg-[hsl(211,100%,50%))]/10   text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8"/>
+          iconColor="bg-[hsl(211,100%,50%))]/10   text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8" />
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
-          icon={AlertTriangle}  
+          icon={AlertTriangle}
           icanchange="items-center absolute -m-66 -mt-6 -mr-[265px]  h-4 w-4 flex justify-end"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
