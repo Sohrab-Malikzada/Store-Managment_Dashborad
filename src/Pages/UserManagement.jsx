@@ -423,7 +423,7 @@ export default function UserManagement() {
         />
       </div>
 
-      <Card className="gradient-card rounded-[12px] shadow-medium">
+      <Card className="gradient-card h-auto rounded-[12px] shadow-medium">
         <CardHeader className="mt-[-1px]">
           <CardTitle className="flex mt-[-3px] items-center gap-2">
             <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />

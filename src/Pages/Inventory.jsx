@@ -271,7 +271,7 @@ export default function Inventory() {
       </div>
 
       {/* Filters and Search */}
-      <Card className="gradient-card rounded-[12px] shadow-medium border-[hsl(214,20%,88%)]">
+      <Card className="gradient-card h-auto rounded-[12px] shadow-medium border-[hsl(214,20%,88%)]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, Download } from "lucide-react";
+import { Upload, Download, Car } from "lucide-react";
 import { FileText } from "lucide-react";
 import {
   Dialog,
@@ -203,15 +203,16 @@ export function CSVImport({ onImport }) {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-4xl bg-[rgb(252,252,253)]">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
             <FileText className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Import Products from CSV</DialogTitle>
             <DialogDescription>Upload a CSV file to bulk import products into your inventory</DialogDescription>
           </DialogHeader>
 
           <div className="mt-4">
+            <label className="text-[14px] font-semibold text-[hsl(216,32%,17%)]" htmlFor="">Select CSV File</label>
             <input
               ref={fileRef}
               type="file"
@@ -220,56 +221,55 @@ export function CSVImport({ onImport }) {
               onChange={handleFileChange}
             />
 
-            <div className="flex items-center gap-3">
+            <div className="flex  items-center gap-3">
               <Button
                 variant="outline"
-                className="flex  items-center gap-2 rounded-[10px] border-[hsl(214,20%,88%)]"
+                className="focus:shadow-glow cursor-pointer w-159 text-sm  h-10 items-center   bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]   gap-2 rounded-[10px] border-[hsl(214,20%,88%)]"
                 onClick={handleChooseFile}
               >
                 <Upload className="h-4 w-4" />
                 Choose File
+                <div className=" font-stretch-semi text-[hsl(216,32%,30%)]">
+                {fileName ? (
+                  <div>
+                    <div className="flex font-sans">{fileName}</div>
+                  </div>
+                ) : (
+                      <div className="flex font-sans">No file chosen</div>
+                )}
+              </div>
               </Button>
 
               <Button
                 variant="outline"
-                className="flex items-center gap-2 rounded-[10px] border-[hsl(214,20%,88%)]"
+                className="hover:bg-[hsl(248,250%,96%)]  hover:shadow-medium  cursor-pointer flex ml-1 w-48 text-sm  h-10 pr-110 bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]  items-center gap-4 rounded-[10px] border-[hsl(214,20%,88%)]"
                 onClick={handleDownloadTemplate}
               >
                 <Download className="h-4 w-4" />
                 Download Template
               </Button>
 
-              <div className="ml-3 text-sm text-[hsl(216,20%,45%)]">
-                {fileName ? (
-                  <div>
-                    <div className="font-medium">{fileName}</div>
-                    <div className="text-xs">{rowCount} rows</div>
-                  </div>
-                ) : (
-                  <div className="text-xs">No file chosen</div>
-                )}
-              </div>
             </div>
 
             {loading && <div className="mt-3 text-sm text-[hsl(216,20%,45%)]">در حال خواندن فایل...</div>}
 
             {!loading && previewRows && previewRows.length > 0 && (
-              <div className="mt-4 border max-w-100 rounded p-3 bg-white shadow-sm">
-                <div className="text-sm text-[hsl(216,32%,17%)] mb-2">Preview (first {previewRows.length} rows)</div>
+              <div className="mt-4 border   max-w-[845px] border-[hsl(214,20%,88%)] rounded p-6 bg-[rgb(252,253,253)] shadow-sm">
+                <div className="text-lg font-semibold text-[hsl(216,32%,17%)] mb-2">Preview Data</div>
                 <div className="overflow-auto max-h-48">
                   <table className="w-full text-sm border-collapse">
                     <thead>
                       <tr>
                         {headers.map((h, idx) => (
-                          <th key={idx} className="text-left pr-4 pb-1 text-xs text-[hsl(216,20%,45%)]">{h}</th>
+                          <th key={idx} className="text-left pr-4 pb-4 pt-4  text-[16px] font-semibold  border-b-1  border-b-[hsl(214,20%,85%)] text-[hsl(216,20%,45%)]">{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
                       {previewRows.map((r, i) => (
-                        <tr key={i} className="odd:bg-[hsl(214,20%,98%)]">
+                        <tr key={i} className="bg-[rgb(252,253,253)]  text-[hsl(216,32%,17%)]">
                           {headers.map((h, j) => (
-                            <td key={j} className="py-1 pr-4">{r[h] ?? r[Object.keys(r)[j]] ?? ""}</td>
+                            <td key={j} className="py-1 pb-4 pt-4 pr-4">{r[h] ?? r[Object.keys(r)[j]] ?? ""}</td>
                           ))}
                         </tr>
                       ))}
@@ -281,18 +281,18 @@ export function CSVImport({ onImport }) {
           </div>
 
           <DialogFooter className="mt-4 flex items-center justify-between">
-            <div className="text-sm text-[hsl(216,20%,45%)]">
-              {fileName ? `${fileName} • ${rowCount} rows` : "Select a CSV file to import"}
-            </div>
+           
 
             <div className="flex gap-2">
-              <Button variant="ghost" onClick={() => { setOpen(false); }}>
+              <Button 
+                className="border cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
+               variant="ghost" onClick={() => { setOpen(false); }}>
                 Cancel
               </Button>
               <Button
                 onClick={handleImport}
                 disabled={!rawObjects || rawObjects.length === 0}
-                className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white rounded-[10px] disabled:opacity-50"
+                className="shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-[0_10px_13px_-10px_hsl(214,80%,60%)]  bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white rounded-[10px] disabled:opacity-50"
               >
                 Import Products ({rowCount})
               </Button>

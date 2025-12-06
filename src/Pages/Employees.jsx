@@ -316,7 +316,7 @@ export default function Employees() {
         />
       </div>
 
-      <Card className="bg-white">
+      <Card className="bg-white h-auto">
         <CardHeader>
           <CardTitle>Employee Records</CardTitle>
           <CardDescription className="-mt-1">
@@ -389,17 +389,17 @@ export default function Employees() {
                         variant="ghost"
                         size="sm"
                         onClick={() => viewEmployeeDetails(employee)}
-                        className="hover:bg-[hsl(214,84%,56%)]/10 cursor-pointer rounded-[12px]"
+                        className="hover:bg-[hsl(214,84%,56%)]/10 text-[hsl(216,32%,17%)] hover:text-[hsl(214,84%,56%)] cursor-pointer rounded-[12px]"
                       >
-                        <Eye className="h-4 w-4 text-[hsl(216,32%,17%)]" />
+                        <Eye className="h-4 w-4 " />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleEdit(employee)}
-                        className="hover:bg-[hsl(38,92%,50%)]/10 cursor-pointer rounded-[12px]"
+                        className="hover:bg-[hsl(38,92%,50%)]/10 hover:text-[hsl(38,92%,50%)] text-[hsl(216,32%,17%)]  cursor-pointer rounded-[12px]"
                       >
-                        <Edit className="h-4 w-4 text-[hsl(216,32%,17%)]" />
+                        <Edit className="h-4 w-4" />
                       </Button>
                     </div>
                   </TableCell>
@@ -480,7 +480,7 @@ export default function Employees() {
         <DialogContent className="gradient-card">
           <DialogHeader>
             <DialogTitle className="flex text-[hsl(216,32%,17%)]   items-center gap-2">
-              <Edit className="h-5 w-5 text-[hsl(214,84%,56%)]" />
+              <Edit className="h-5 w-5 text-[hsl(38,92%,50%)]" />
               Edit Employee
             </DialogTitle>
             <DialogDescription className="text-[hsl(216,20%,45%)]">

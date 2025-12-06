@@ -159,7 +159,7 @@ export default function Payroll() {
         selectedPeriod={selectedPeriod}
       />
 
-      <Card className="gradient-card shadow-medium">
+      <Card className="gradient-card h-auto shadow-medium">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>

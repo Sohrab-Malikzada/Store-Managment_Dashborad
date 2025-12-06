@@ -380,23 +380,23 @@ function Sales() {
 
                   {/* Shopping Cart */}
                   {cartItems.length > 0 && (
-                    <div className="space-y-4 pt-4 border-t border-border">
+                    <div className="space-y-4 pt-4 border-t border-[hsl(214,20%,88%)]">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-semibold text-foreground flex items-center">
+                        <h4 className="text-sm font-semibold text-[hsl(216,32%,17%)] flex items-center">
                           <ShoppingCart className="mr-2 h-4 w-4" />
                           Shopping Cart ({cartItems.length} items)
                         </h4>
-                        <span className="text-lg font-bold text-foreground">
+                        <span className="text-lg font-bold text-[hsl(216,32%,17%)]">
                           ؋{cartTotal.toLocaleString()}
                         </span>
                       </div>
                       
                       <div className="space-y-3">
                         {cartItems.map((item) => (
-                          <div key={item.productId} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border">
+                          <div key={item.productId} className="flex items-center justify-between border-[hsl(214,20%,88%)] p-3 bg-[#ffffff] rounded-[12px] border border-border">
                             <div className="flex-1">
-                              <span className="font-medium text-foreground">{item.productName}</span>
-                              <p className="text-sm text-muted-foreground">
+                              <span className="font-medium text-[hsl(216,32%,17%)]">{item.productName}</span>
+                              <p className="text-sm text-[hsl(216,20%,45%)]">
                                 ؋{item.unitPrice.toLocaleString()} × {item.quantity} = ؋{item.totalAmount.toLocaleString()}
                               </p>
                             </div>
@@ -406,14 +406,14 @@ function Sales() {
                                 value={item.quantity}
                                 onChange={(e) => updateCartItemQuantity(item.productId, parseInt(e.target.value) || 1)}
                                 min="1"
-                                className="w-20 h-8"
+                                className="w-20 h-8 shadow-none bg-[rgb(248,246,255)] text-[hsl(216,32%,17%)]"
                               />
                               <Button
                                 type="button"
                                 variant="destructive"
                                 size="sm"
                                 onClick={() => removeFromCart(item.productId)}
-                                className="h-8 w-8 p-0"
+                                className="cursor-pointer h-8 w-8 p-0 rounded-[10px]  bg-[hsl(0,84%,60%)] hover:bg-[hsl(0,84%,60%)]/90"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -422,10 +422,10 @@ function Sales() {
                         ))}
                       </div>
                       
-                      <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                      <div className="p-4 bg-[hsl(214,84%,56%)]/5 rounded-[12px] border border-[hsl(214,84%,56%)]/20">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium text-foreground">Cart Total:</span>
-                          <span className="text-xl font-bold text-primary">
+                          <span className="text-sm font-medium text-[hsl(216,32%,17%)]">Cart Total:</span>
+                          <span className="text-xl font-bold text-[hsl(214,84%,56%)]">
                             ؋{cartTotal.toLocaleString()}
                           </span>
                         </div>
@@ -632,7 +632,7 @@ function Sales() {
       </div>
 
       {/* Sales Table */}
-      <Card className="gradient-card w-[1047px] rounded-[12px] border-[hsl(214,20%,88%)]">
+      <Card className="gradient-card h-auto w-[1047px] rounded-[12px] border-[hsl(214,20%,88%)]">
         <CardHeader>
           <CardTitle className="text-[hsl(216,32%,17%)]">Sales Records</CardTitle>
           <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Complete history of all sales transactions</CardDescription>

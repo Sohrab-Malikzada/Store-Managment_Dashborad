@@ -71,7 +71,7 @@ export function PayrollTable({ payrollRecords, onViewDetails, onEditRecord }) {
                 </span>
               </TableCell>
               <TableCell>
-                  <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${isPaid ? 'bg-[hsl(214.15deg,83.93%,56.08%)]  text-white' : 'border border-[hsl(214,20%,88%)]  text-[hsl(216,32%,17%)]'}`}>
+                  <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full font-semibold text-sm ${isPaid ? 'bg-[hsl(214.15deg,83.93%,56.08%)] hover:bg-[hsl(214.15deg,83.93%,56.08%)]/80 text-white' : 'border border-[hsl(214,20%,88%)] hover:bg-[hsl(214,20%,95%)]/95 text-[hsl(216,32%,17%)]'}`}>
                     {isPaid ? <CheckCircle className="w-4 h-4 flex-shrink-0 text-white" /> : <XCircle className="w-4 h-4 flex-shrink-0 text-red-600" />}
                     {isPaid ? 'Paid' : 'Pending'}
                   </span>

@@ -125,7 +125,7 @@ export default function Debts() {
 
         {/* Customer Debts */}
         <TabsContent value="customers">
-          <Card className="mt-[-5px] gradient-card shadow-none">
+          <Card className="mt-[-5px] h-auto gradient-card shadow-none">
             <CardHeader>
               <CardTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
                 <Users className="h-5 w-5 text-[hsl(38,92%,50%)]" />

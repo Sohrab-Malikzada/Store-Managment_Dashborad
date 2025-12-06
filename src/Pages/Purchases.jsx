@@ -208,7 +208,7 @@ export default function Purchases() {
         />
       </div>
 
-      <Card className="bg-white -mt-5 h-80 border-[hsl(214,20%,88%)] ">
+      <Card className="bg-[#ffffff]  -mt-5 h-auto border-[hsl(214,20%,88%)] ">
         <CardHeader>
           <CardTitle className=" text-[hsl(216,32%,17%)]">Recent Purchases</CardTitle>
           <CardDescription className="text-[hsl(216,20%,45%)]">Manage your supplier purchases and payments</CardDescription>
