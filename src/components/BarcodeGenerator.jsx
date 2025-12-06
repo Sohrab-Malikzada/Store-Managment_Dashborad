@@ -148,7 +148,7 @@ export function BarcodeGenerator({ isOpen, onClose, productSku, productName }) {
           <div className="flex justify-center p-4 bg-[hsl(0deg,0%,100%)] border-[hsl(214,20%,88%)] rounded-[10px] border">
             <svg
               ref={svgRef}
-              className="max-w-full bg-amber-500 text-red-600"
+              className="max-w-full h-auto"
               // ابعاد پیشنهادی برای وضوح مناسب چاپ
               width={320}
               height={140}  

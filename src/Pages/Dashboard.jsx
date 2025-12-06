@@ -71,8 +71,8 @@ function DashboardWithReportBuilder() {
   // NOTE: include both analytics charts (monthly performance + monthly comparison)
   const availablePages = [
     { id: "dashboard_overview", title: "Dashboard Overview", type: "cards" },
-    { id: "analytics", title: "Analytics - Monthly Performance", type: "chart", chartId: "chart-analytics-monthly" },
-    { id: "analytics_comparison", title: "Analytics - Monthly Comparison", type: "chart", chartId: "chart-analytics-comparison" },
+    { id: "analytics", title: "Dashboard - Monthly Performance", type: "chart", chartId: "chart-analytics-monthly" },
+    { id: "analytics_comparison", title: "Dashboard - Monthly Comparison", type: "chart", chartId: "chart-analytics-comparison" },
     { id: "inventory", title: "Inventory", type: "table", tableId: "table-inventory" },
     { id: "sales", title: "Sales", type: "table", tableId: "table-sales" },
     { id: "purchases", title: "Purchases", type: "table", tableId: "table-purchases" },
@@ -81,7 +81,7 @@ function DashboardWithReportBuilder() {
     { id: "employees", title: "Employees", type: "table", tableId: "table-employees" },
     { id: "payroll", title: "Payroll", type: "table", tableId: "table-payroll" },
     { id: "user_management", title: "User Management", type: "table", tableId: "table-users" },
-    { id: "analytics2003", title: "analytics2003", type: "chart", chartId: "SalesbyCategory" },
+    { id: "analytics2003", title: "Analytics", type: "chart", chartId: "SalesbyCategory" },
   ];
 
   // close menu on outside click
@@ -120,14 +120,14 @@ function DashboardWithReportBuilder() {
 
       case "analytics":
         return {
-          title: "Analytics - Monthly Performance",
+          title: "Dashboard - Monthly Performance",
           type: "chart",
           chartId: "chart-analytics-monthly",
         };
 
       case "analytics_comparison":
         return {
-          title: "Analytics - Monthly Comparison",
+          title: "Dashboard - Monthly Comparison",
           type: "chart",
           chartId: "chart-analytics-comparison",
         };
@@ -264,95 +264,105 @@ function DashboardWithReportBuilder() {
     }
   };
 
+
   // generate PDF from selected pages
-  const generatePdfFromSelection = async () => {
-    const selectedIds = Object.keys(selectedPages).filter((k) => selectedPages[k]);
-    if (selectedIds.length === 0) {
-      toast.error("لطفاً حداقل یک صفحه را انتخاب کنید");
-      return;
-    }
+ // generate PDF from selected pages
+const generatePdfFromSelection = async () => {
+  const selectedIds = Object.keys(selectedPages).filter((k) => selectedPages[k]);
+  if (selectedIds.length === 0) {
+    toast.error("لطفاً حداقل یک صفحه را انتخاب کنید");
+    return;
+  }
 
-    setIsGenerating(true);
-    try {
-      const doc = new jsPDF("p", "pt", "a4");
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const margin = 40;
+  setIsGenerating(true);
+  try {
+    const doc = new jsPDF("p", "pt", "a4");
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 40;
 
-      // Title page
-      doc.setFontSize(20);
-      doc.text("Business Report", margin, 70);
-      doc.setFontSize(11);
-      doc.text(`Generated: ${new Date().toLocaleString()}`, margin, 90);
-      doc.addPage();
+    // Title page
+    doc.setFontSize(20);
+    doc.text("Business Report", margin, 70);
+    doc.setFontSize(11);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, margin, 90);
+    doc.addPage();
 
-      for (const id of selectedIds) {
-        const data = collectDataForPage(id);
+    for (const id of selectedIds) {
+      const data = collectDataForPage(id);
 
-        // Cards -> render as simple two-column table
-        if (data.type === "cards") {
-          doc.setFontSize(14);
-          doc.text(data.title, margin, 60);
-          const rows = data.rows.map((r) => [String(r[0]), String(r[1])]);
-          await autoTable(doc, {
-            startY: 80,
-            head: [["Metric", "Value"]],
-            body: rows,
-            margin: { left: margin, right: margin },
-            styles: { fontSize: 10 },
-            theme: "plain",
-          });
-          doc.addPage();
-        }
-
-        // Table -> use autotable
-        else if (data.type === "table") {
-          doc.setFontSize(14);
-          doc.text(data.title, margin, 60);
-          await autoTable(doc, {
-            startY: 80,
-            head: data.columns && data.columns.length ? [data.columns] : [],
-            body: data.rows || [],
-            margin: { left: margin, right: margin },
-            styles: { fontSize: 10 },
-            theme: "grid",
-            headStyles: { fillColor: [0, 136, 204] },
-          });
-          doc.addPage();
-        }
-
-        // Chart -> capture DOM element by id and insert image
-        else if (data.type === "chart") {
-          const chartEl = document.getElementById(data.chartId);
-          doc.setFontSize(14);
-          doc.text(data.title, margin, 60);
-
-          if (chartEl) {
-            // ensure the element is visible and has explicit size for html2canvas
-            const canvas = await html2canvas(chartEl, { scale: 2, useCORS: true, backgroundColor: "#ffffff" });
-            const imgData = canvas.toDataURL("image/png");
-            const imgProps = doc.getImageProperties(imgData);
-            const imgWidth = pageWidth - margin * 2;
-            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-            doc.addImage(imgData, "PNG", margin, 80, imgWidth, imgHeight);
-            doc.addPage();
-          } else {
-            doc.text("(Chart not found in DOM)", margin, 80);
-            doc.addPage();
-          }
-        }
+      // Cards -> render as simple two-column table
+      if (data.type === "cards") {
+        doc.setFontSize(14);
+        doc.text(data.title, margin, 60);
+        const rows = data.rows.map((r) => [String(r[0]), String(r[1])]);
+        await autoTable(doc, {
+          startY: 80,
+          head: [["Metric", "Value"]],
+          body: rows,
+          margin: { left: margin, right: margin },
+          styles: { fontSize: 10 },
+          theme: "plain",
+        });
+        doc.addPage();
       }
 
-      doc.save(`business-report-${new Date().toISOString().split("T")[0]}.pdf`);
-      toast.success("PDF generated");
-    } catch (err) {
-      console.error("PDF generation error:", err);
-      toast.error("خطا در تولید PDF");
-    } finally {
-      setIsGenerating(false);
-      setSelectorOpen(false);
-      setReportMenuOpen(false);
+      // Table -> use autotable
+      else if (data.type === "table") {
+        doc.setFontSize(14);
+        doc.text(data.title, margin, 60);
+        await autoTable(doc, {
+          startY: 80,
+          head: data.columns && data.columns.length ? [data.columns] : [],
+          body: data.rows || [],
+          margin: { left: margin, right: margin },
+          styles: { fontSize: 10 },
+          theme: "grid",
+          headStyles: { fillColor: [0, 136, 204] },
+        });
+        doc.addPage();
+      }
+
+      // ✅ Chart -> capture DOM element by id and insert image (اصلاح‌شده)
+      else if (data.type === "chart") {
+        const chartEl = document.getElementById(data.chartId);
+        doc.setFontSize(14);
+        doc.text(data.title, margin, 60);
+
+        if (chartEl) {
+          // چارت رو به دید کاربر بیار و کمی صبر کن تا کامل رندر شود
+          chartEl.scrollIntoView();
+          await new Promise((resolve) => setTimeout(resolve, 500));
+
+          const canvas = await html2canvas(chartEl, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+          });
+          const imgData = canvas.toDataURL("image/png");
+          const imgProps = doc.getImageProperties(imgData);
+          const imgWidth = pageWidth - margin * 2;
+          const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+          doc.addImage(imgData, "PNG", margin, 80, imgWidth, imgHeight);
+          doc.addPage();
+        } else {
+          doc.text("(Chart not found in DOM)", margin, 80);
+          doc.addPage();
+        }
+      }
     }
-  };
+
+    doc.save(`business-report-${new Date().toISOString().split("T")[0]}.pdf`);
+    toast.success("PDF generated");
+  } catch (err) {
+    console.error("PDF generation error:", err);
+    toast.error("خطا در تولید PDF");
+  } finally {
+    setIsGenerating(false);
+    setSelectorOpen(false);
+    setReportMenuOpen(false);
+  }
+};
+
 
   // PNG download for full report (preserve original styles)
   const downloadReportAsPng = async () => {
