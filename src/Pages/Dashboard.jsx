@@ -81,7 +81,7 @@ function DashboardWithReportBuilder() {
     { id: "employees", title: "Employees", type: "table", tableId: "table-employees" },
     { id: "payroll", title: "Payroll", type: "table", tableId: "table-payroll" },
     { id: "user_management", title: "User Management", type: "table", tableId: "table-users" },
-    { id: "analytics2003", title: "Analytics", type: "chart", chartId: "SalesbyCategory" },
+    { id: "analytics2003", title: "Analytics", type: "chart", chartId: "chart-analytics-2003" },
   ];
 
   // close menu on outside click
@@ -237,7 +237,7 @@ function DashboardWithReportBuilder() {
         return {
           title: "Analytics",
           type: "chart",
-          chartId: "SalesbyCategory",
+          chartId: "chart-analytics-2003",
         };
 
       case "user_management":
@@ -438,11 +438,14 @@ const generatePdfFromSelection = async () => {
     }
   };
 
+  // Build Report 
+  // Build UI for selecting pages to include in report
+  // Select pages to include in report
   const SelectorModal = () => (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-[12px] w-[760px] max-w-full p-6">
+      <div className="bg-white rounded-[12px] w-[400px] h-120 sm:w-[400px] sm:h-110 md:w-150 md:h-auto lg:w-auto lg:h-auto overflow-auto no-scrollbar  p-6">
         <h3 className="text-xl font-semibold text-[hsl(216,32%,17%)] mb-4">Select pages to include in report</h3>
-        <div className="grid grid-cols-2 gap-3 overflow-auto mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 overflow-auto no-scrollbar  mb-4">
           {availablePages.map((p) => (
             <label key={p.id} className="bg-[hsl(248,250%,99%)] shadow-[0_2px_3px_-1px_hsl(0,0%,80%,0.5)] flex items-center gap-3 p-2 border border-[hsl(214,20%,88%)]  rounded hover:bg-[hsl(214,20%,97%)] cursor-pointer">
               {/* hidden native checkbox for accessibility */}
@@ -490,14 +493,18 @@ const generatePdfFromSelection = async () => {
 
   // Render: ensure both charts have explicit wrapper divs with IDs used by collectDataForPage
   return (
-    <div className="space-y-6 m-6">
+    
+    <div className="h-200 overflow-y-scroll no-scrollbar space-y-6">
+      <main className="flex-1  p-6 ">
+      {/* Main content (kept similar to your original layout) */}
+      <div ref={reportRef}>
       <Toaster />
 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Dashboard</h1>
-          <p className="text-[hsl(216,20%,45%)] mt-1">Welcome back! Here's your business overview.</p>
+              <h1 className="text-[28px] sm:text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Dashboard</h1>
+          <p className="text-[hsl(216,20%,45%)] mt-1 mb-4 w-45 sm:w-60 md:w-70 lg:w-full">Welcome back! Here's your business overview.</p>
         </div>
 
         {/* Generate Report */}
@@ -534,12 +541,11 @@ const generatePdfFromSelection = async () => {
         </div>
       </div>
 
-      {/* Main content (kept similar to your original layout) */}
-      <div ref={reportRef}>
+     
         {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 ">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 ">
           <StatsCard
-            className="border-[hsl(214,20%,88%)] h-[142px] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)] h-[142px] sm:h-[145px] md:h-[150px] lg:h-[150px] rounded-[12px] hover:shadow-medium p-0.5"
             title="Total Products"
             value={stats.totalProducts}
             icon={Package}
@@ -547,14 +553,14 @@ const generatePdfFromSelection = async () => {
             variant="default"
           />
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)]  h-[142px] sm:h-[145px] md:h-[150px] lg:h-[150px]  rounded-[12px] hover:shadow-medium p-0.5"
             title="Low Stock Alert"
             value={stats.lowStockProducts}
             icon={AlertTriangle}
             variant="warning"
           />
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)]  h-[142px] sm:h-[145px] md:h-[150px] lg:h-[150px]  rounded-[12px] hover:shadow-medium p-0.5"
             title="Total Sales"
             value={`؋${stats.totalSales.toLocaleString()}`}
             icon={DollarSign}
@@ -562,7 +568,7 @@ const generatePdfFromSelection = async () => {
             variant="success"
           />
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)]  h-[142px] sm:h-[145px] md:h-[150px] lg:h-[150px]  rounded-[12px] hover:shadow-medium p-0.5"
             title="Monthly Profit"
             value={`؋${stats.monthlyProfit.toLocaleString()}`}
             icon={TrendingUp}
@@ -572,23 +578,23 @@ const generatePdfFromSelection = async () => {
         </div>
 
         {/* Secondary Stats */}
-        <div className="grid gap-4 h-[122px] md:grid-cols-3 mt-6">
+        <div className="grid h-auto sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)] h-30 sm:h-30 md:h-32 lg:h-33 rounded-[12px] hover:shadow-medium p-0.5"
             title="Customer Debts"
             value={`؋${stats.pendingCustomerDebts.toLocaleString()}`}
             icon={CreditCard}
             variant="destructive"
           />
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)] h-30 sm:h-30 md:h-32 lg:h-33 rounded-[12px] hover:shadow-medium p-0.5"
             title="Supplier Debts"
             value={`؋${stats.pendingSupplierDebts.toLocaleString()}`}
             icon={CreditCard}
             variant="destructive"
           />
           <StatsCard
-            className="border-[hsl(214,20%,88%)] rounded-[12px] hover:shadow-medium p-0.5"
+            className="border-[hsl(214,20%,88%)] h-30 sm:h-30 md:h-32 lg:h-33 rounded-[12px] hover:shadow-medium p-0.5"
             title="Pending Salaries"
             value={`؋${stats.totalEmployeeSalaries.toLocaleString()}`}
             icon={Users}
@@ -598,7 +604,7 @@ const generatePdfFromSelection = async () => {
 
 
         {/* Charts Section */}
-        <div className="grid gap-6 md:grid-cols-2 mt-6">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mt-6">
           <Card className="gradient-card shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
             <CardHeader>
               <CardTitle className="text-[hsl(216,32%,17%)] text-2xl">
@@ -687,11 +693,11 @@ const generatePdfFromSelection = async () => {
         </div>
 
         {/* Example tables with IDs so they can be captured or their data used */}
-        <div className="grid gap-6 md:grid-cols-3 mt-6">
+        <div className="grid gap-6 lg:gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 h-auto mt-6">
           {/* Low Stock Alert */}
-          <Card className="gradient-card h-[256px] shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
+          <Card className="gradient-card h-auto shadow-none rounded-[12px] border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+              <CardTitle className="text-2xl lg:text-[18px]  text-[hsl(216,32%,17%)] flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-[hsl(35,96%,60%)]" />
                 Low Stock Alert
               </CardTitle>
@@ -724,9 +730,9 @@ const generatePdfFromSelection = async () => {
 
 
           {/* Recent Sales */}
-          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+          <Card className="gradient-card h-auto rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
+              <CardTitle className="text-2xl lg:text-[18px] text-[hsl(216,32%,17%)]">Recent Sales</CardTitle>
               <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Latest transactions</CardDescription>
             </CardHeader>
             <CardContent id="table-sales" className="space-y-3">
@@ -759,9 +765,9 @@ const generatePdfFromSelection = async () => {
           </Card>
 
           {/* Urgent Debts */}
-          <Card className="gradient-card h-[256px] rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
+          <Card className="gradient-card h-auto rounded-[12px] shadow-none border-[hsl(214,20%,88%)]">
             <CardHeader>
-              <CardTitle className="text-2xl text-[hsl(216,32%,17%)] flex items-center gap-2">
+              <CardTitle className="text-2xl lg:text-[18px] text-[hsl(216,32%,17%)] flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-[hsl(0,84%,60%)]" />
                 Urgent Collections
               </CardTitle>
@@ -793,6 +799,7 @@ const generatePdfFromSelection = async () => {
           </Card>
         </div>
       </div>
+      </main>
 
       {selectorOpen && <SelectorModal />}
     </div>

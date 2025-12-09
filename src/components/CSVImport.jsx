@@ -195,7 +195,7 @@ export function CSVImport({ onImport }) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="flex items-center w-[139px] text-[hsl(216,32%,17%)] gap-4 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            className="flex items-center w-28 sm:w-[125px] md:w-[130px] text-[hsl(216,32%,17%)] gap-2 sm:gap-4 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
             onClick={() => setOpen(true)}
           >
             <Upload className="h-4 w-4" />
@@ -203,7 +203,7 @@ export function CSVImport({ onImport }) {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-4xl bg-[rgb(252,252,253)]">
+        <DialogContent className="max-w-120 sm:max-w-120 lg:max-w-4xl  rounded-[12px] bg-[rgb(252,252,253)]">
           <DialogHeader>
             <DialogTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
             <FileText className="h-5 w-5 text-[hsl(214,84%,56%)]" />
@@ -221,10 +221,10 @@ export function CSVImport({ onImport }) {
               onChange={handleFileChange}
             />
 
-            <div className="flex  items-center gap-3">
+            <div className="grid grid-cols-1 lg:flex lg:flex-row items-center gap-3">
               <Button
                 variant="outline"
-                className="focus:shadow-glow cursor-pointer w-159 text-sm  h-10 items-center   bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]   gap-2 rounded-[10px] border-[hsl(214,20%,88%)]"
+                className="focus:shadow-glow lg:w-148 cursor-pointer overflow-x-auto no-scrollbar text-sm  h-10 items-center   bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]   gap-2 rounded-[10px] border-[hsl(214,20%,88%)]"
                 onClick={handleChooseFile}
               >
                 <Upload className="h-4 w-4" />
@@ -242,7 +242,7 @@ export function CSVImport({ onImport }) {
 
               <Button
                 variant="outline"
-                className="hover:bg-[hsl(248,250%,96%)]  hover:shadow-medium  cursor-pointer flex ml-1 w-48 text-sm  h-10 pr-110 bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]  items-center gap-4 rounded-[10px] border-[hsl(214,20%,88%)]"
+                className="hover:bg-[hsl(248,250%,96%)]  lg:w-60 hover:shadow-medium  cursor-pointer flex  text-sm  h-10 pr-110 bg-[hsl(248,250%,98%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] text-[hsl(216,32%,17%)]  items-center gap-4 rounded-[10px] border-[hsl(214,20%,88%)]"
                 onClick={handleDownloadTemplate}
               >
                 <Download className="h-4 w-4" />
@@ -254,9 +254,9 @@ export function CSVImport({ onImport }) {
             {loading && <div className="mt-3 text-sm text-[hsl(216,20%,45%)]">در حال خواندن فایل...</div>}
 
             {!loading && previewRows && previewRows.length > 0 && (
-              <div className="mt-4 border   max-w-[845px] border-[hsl(214,20%,88%)] rounded p-6 bg-[rgb(252,253,253)] shadow-sm">
+              <div className="mt-4 border h-auto overflow-y-auto no-scrollbar max-w-107 lg:max-w-211 border-[hsl(214,20%,88%)] rounded p-6 bg-[rgb(252,253,253)] shadow-sm">
                 <div className="text-lg font-semibold text-[hsl(216,32%,17%)] mb-2">Preview Data</div>
-                <div className="overflow-auto max-h-48">
+                <div className="overflow-auto no-scrollbar max-h-48">
                   <table className="w-full text-sm border-collapse">
                     <thead>
                       <tr>
@@ -283,7 +283,7 @@ export function CSVImport({ onImport }) {
           <DialogFooter className="mt-4 flex items-center justify-between">
            
 
-            <div className="flex gap-2">
+            <div className="flex -mr-47 sm:mr-0  gap-2">
               <Button 
                 className="border cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
                variant="ghost" onClick={() => { setOpen(false); }}>

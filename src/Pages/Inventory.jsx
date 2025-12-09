@@ -197,19 +197,19 @@ export default function Inventory() {
   };
 
   return (
-    <div className="space-y-6 m-6">
+    <div className="h-188 overflow-y-scroll no-scrollbar space-y-6 m-6">
       <Toaster />
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[hsl(214,84%,64%)] bg-clip-text ">
+          <h1 className="text-[28px] sm:text-3xl font-bold text-[hsl(214,84%,64%)] bg-clip-text ">
             Inventory Management
           </h1>
-          <p className="text-[hsl(216,20%,45%)] mt-1">
+          <p className="text-[hsl(216,20%,45%)] w-80 md:w-full lg:w-90 mt-1">
             Track and manage your product inventory with advanced controls
           </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-row sm:flex-row lg:flex-nowrap ml-0 sm:ml-2 lg:ml-0 gap-3">
           <CSVImport onImport={(importedProducts) => {
             const newProducts = importedProducts.map((product, index) => ({
               id: `PRD-${Date.now()}-${index}`,
@@ -219,7 +219,7 @@ export default function Inventory() {
           }} />
           <Button
             variant="outline"
-            className="gap-2 w-[108px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            className="-ml-2 sm:-ml-0 gap-0 sm:gap-2 w-20 sm:w-[100px] md:w-[105px] lg:[110px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
             onClick={() => exportProducts(true)} // صادر کردن محصولات فیلترشده
           >
             <Download className="mr-2 h-4 w-4" />
@@ -228,16 +228,16 @@ export default function Inventory() {
 
           <Button
             onClick={() => setAddProductDialog(true)}
-            className="gradient-primary w-[144px] text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
+            className="-ml-2 sm:-ml-0 gradient-primary w-28 sm:w-[140px]  text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
           >
-            <Plus className="mr-2 cursor-pointer h-4 w-4" />
+            <Plus className="mr-0 sm:mr-2 cursor-pointer h-4 w-4" />
             Add Product
           </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 w-80 grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
         <StatsCard
           className="m-5 absolute  text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
           title="Total Products"
@@ -246,13 +246,13 @@ export default function Inventory() {
           variant="warning"
           box="rounded-[12px] h-[122px] shadow-none"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-66  h-4 w-4"
+          icanchange="items-center relative -m-66 -mt-6 -mr-62 sm:-mr-82 md:-mr-102 lg:-mr-44 h-4 w-4"
           iconColor="bg-[hsl(211,100%,50%))]/10   text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8" />
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
           icon={AlertTriangle}
-          icanchange="items-center absolute -m-66 -mt-6 -mr-[265px]  h-4 w-4 flex justify-end"
+          icanchange="items-center relative -m-66 -mt-6 -mr-62 sm:-mr-82 md:-mr-102 lg:-mr-44 h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
           box="rounded-[12px] h-[122px] shadow-none"
@@ -262,7 +262,7 @@ export default function Inventory() {
           title="Inventory Value"
           value={`؋${totalValue.toLocaleString()}`}
           icon={Package}
-          icanchange="items-center position-absolute -m-66 -mt-6 -mr-66  h-4 w-4 flex justify-end"
+          icanchange="items-center relative -m-66 -mt-6 -mr-62 sm:-mr-82 md:-mr-102 lg:-mr-44 h-4 w-4"
           iconColor="bg-[hsl(142,76%,36%)]/10 text-[hsl(144,100%,29%)] rounded-[12px] p-2 h-8 w-8"
           variant="success"
           box="rounded-[12px] h-[122px] shadow-none"
@@ -271,7 +271,7 @@ export default function Inventory() {
       </div>
 
       {/* Filters and Search */}
-      <Card className="gradient-card h-auto rounded-[12px] shadow-medium border-[hsl(214,20%,88%)]">
+      <Card className="gradient-card h-auto w-80 md:w-120 lg:w-full rounded-[12px] shadow-medium border-[hsl(214,20%,88%)]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -298,9 +298,9 @@ export default function Inventory() {
               />
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               <Select value={filterCategory} onValueChange={setFilterCategory}>
-                <SelectTrigger className="text-[hsl(216,32%,17%)] mt-[-9px] rounded-[10px] pl-3 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line focus:ring-2 focus:ring-offset-2 focus:visible:ring-0 transition-all duration-300 focus:ring-blue-500 transition-smooth w-full sm:w-48 focus:shadow-line transition-smooth">
+                <SelectTrigger className="text-[hsl(216,32%,17%)]  mt-[-9px] rounded-[10px] pl-3 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line focus:ring-2 focus:ring-offset-2 focus:visible:ring-0 transition-all duration-300 focus:ring-blue-500 transition-smooth w-full md:w-50 lg:w-[48%] focus:shadow-line transition-smooth">
                   <SelectValue className="text-[hsl(216,32%,17%)]" placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className={"bg-white text-[hsl(216,32%,17%)] rounded-[10px] border-[hsl(214,20%,88%)]"}>
@@ -313,7 +313,7 @@ export default function Inventory() {
               </Select>
 
               <Select className="" value={stockFilter} onValueChange={setStockFilter}>
-                <SelectTrigger className="text-[hsl(216,32%,17%)] mt-[-9px] transition-all duration-300 w-full sm:w-48 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line rounded-[10px]  transition-smooth">
+                <SelectTrigger className="text-[hsl(216,32%,17%)]  mt-[-9px] rounded-[10px] pl-3 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] focus:shadow-line focus:ring-2 focus:ring-offset-2 focus:visible:ring-0 transition-all duration-300 focus:ring-blue-500 transition-smooth w-full md:w-50 lg:w-[48%] focus:shadow-line transition-smooth">
                   <SelectValue placeholder="Stock Status" />
                 </SelectTrigger>
                 <SelectContent className={"bg-white rounded-[10px] border-[hsl(214,20%,88%)] text-[hsl(216,32%,17%)]"}>
@@ -327,8 +327,8 @@ export default function Inventory() {
           </div>
 
           {/* Products Table */}
-          <div className="hover:transition-all mt-[25px] duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
-            <Table>
+          <div className="overflow-x-auto hover:transition-all mt-[25px] duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
+            <Table className="min-w-max">
               <TableHeader>
                 <TableRow>
                   <TableHead className="pl-4 py-[14px]">Product</TableHead>

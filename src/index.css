@@ -310,5 +310,15 @@
   .transition-smooth {
     transition: var(--transition-smooth);
   }
+
+    /* Hide scrollbar for Chrome, Safari, Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  
+    /* Hide scrollbar for Firefox */
+    .no-scrollbar {
+      scrollbar-width: none;
+    }
 };
 

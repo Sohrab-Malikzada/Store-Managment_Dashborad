@@ -122,7 +122,7 @@ function Sidebar() {
     <aside
       className={cn(
         "flex flex-col bg-[hsl(214.29deg,32.56%,16.86%)] border-r border-[hsl(216,28%,25%)] transition-all duration-300 ease-in-out",
-        collapsed ? "w-[64px]" : "w-64"
+        collapsed ? "w-[64px]" : "w-64 h-200 sm:w-55 md:w-60 lg:w-65",
       )}
     >
       {/* Header */}
@@ -197,11 +197,11 @@ function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-[hsl(216,28%,25%)] space-y-2">
+      <div className="p-4 mb-10 border-t border-t-[hsl(216,28%,25%)]  border-b border-b-[hsl(216,28%,25%)] space-y-2">
         <div
           className={cn(
             "flex items-center",
-            collapsed ? "justify-center" : "space-x-3"
+            collapsed ? "mb-50 justify-center" : " space-x-3"
           )}
         >
           <div

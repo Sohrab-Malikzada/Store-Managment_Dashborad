@@ -155,8 +155,8 @@ export default function Analytics() {
           iconColor="text-blue-600 bg-blue-100 rounded-[12px] p-2 h-8 w-8"
         />
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
+     
+      <div id="chart-analytics-2003" className="grid gap-6 md:grid-cols-2">
         <Card className="gradient-card rounded-[12px] shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
