@@ -70,7 +70,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               {mode === 'add' ? 'Add New Product' : 'Edit Product'}
             </DialogTitle>
-            <DialogDescription className="text-[hsl(216,20%,45%)]">
+            <DialogDescription className="text-left text-[hsl(216,20%,45%)]">
               {mode === 'add' 
                 ? 'Enter the details for the new product.' 
                 : 'Update the product information below.'

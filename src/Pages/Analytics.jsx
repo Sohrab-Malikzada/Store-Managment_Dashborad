@@ -87,7 +87,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-5">
+      <div className="grid  gap-4 md:grid-cols-5">
         <StatsCard
           id="table-analytics2003"
           title="Total Revenue"
@@ -97,7 +97,7 @@ export default function Analytics() {
           trendchange="mt-[-6px] text-[hsl(142,76%,36%)] -mr-6 -ml-[16px] text-[hsl(142,76%,36%)] text-left text-[12px]"
           variant="warning"
           valuechange="mt-[18px]"
-          box=" h-[141px]"
+          box="h-[141px]"
           titlechange="mt-[-7px]"
           icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"

@@ -203,12 +203,12 @@ export function CSVImport({ onImport }) {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-120 sm:max-w-120 lg:max-w-4xl  rounded-[12px] bg-[rgb(252,252,253)]">
+        <DialogContent className="max-w-100 sm:max-w-120 lg:max-w-4xl  rounded-[12px] bg-[rgb(252,252,253)]">
           <DialogHeader>
             <DialogTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
             <FileText className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Import Products from CSV</DialogTitle>
-            <DialogDescription>Upload a CSV file to bulk import products into your inventory</DialogDescription>
+            <DialogDescription className="w-75 sm:w-full text-left">Upload a CSV file to bulk import products into your inventory</DialogDescription>
           </DialogHeader>
 
           <div className="mt-4">
@@ -254,7 +254,7 @@ export function CSVImport({ onImport }) {
             {loading && <div className="mt-3 text-sm text-[hsl(216,20%,45%)]">در حال خواندن فایل...</div>}
 
             {!loading && previewRows && previewRows.length > 0 && (
-              <div className="mt-4 border h-auto overflow-y-auto no-scrollbar max-w-107 lg:max-w-211 border-[hsl(214,20%,88%)] rounded p-6 bg-[rgb(252,253,253)] shadow-sm">
+              <div className="mt-4 border h-auto overflow-y-auto no-scrollbar max-w-87 sm:max-w-107 lg:max-w-211 border-[hsl(214,20%,88%)] rounded p-6 bg-[rgb(252,253,253)] shadow-sm">
                 <div className="text-lg font-semibold text-[hsl(216,32%,17%)] mb-2">Preview Data</div>
                 <div className="overflow-auto no-scrollbar max-h-48">
                   <table className="w-full text-sm border-collapse">
@@ -285,14 +285,14 @@ export function CSVImport({ onImport }) {
 
             <div className="flex -mr-47 sm:mr-0  gap-2">
               <Button 
-                className="border cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
+                className="-ml-20 sm:-ml-0 border cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
                variant="ghost" onClick={() => { setOpen(false); }}>
                 Cancel
               </Button>
               <Button
                 onClick={handleImport}
                 disabled={!rawObjects || rawObjects.length === 0}
-                className="shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-[0_10px_13px_-10px_hsl(214,80%,60%)]  bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white rounded-[10px] disabled:opacity-50"
+                className=" shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-[0_10px_13px_-10px_hsl(214,80%,60%)]  bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white rounded-[10px] disabled:opacity-50"
               >
                 Import Products ({rowCount})
               </Button>

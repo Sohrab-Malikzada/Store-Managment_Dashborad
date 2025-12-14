@@ -445,7 +445,7 @@ const generatePdfFromSelection = async () => {
   // Select pages to include in report
   const SelectorModal = () => (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-[12px] w-[400px] h-120 sm:w-[500px] sm:h-110 md:w-150 md:h-auto lg:w-auto lg:h-100 overflow-auto no-scrollbar  p-6">
+      <div className="bg-white rounded-[12px] w-[400px] h-120 sm:w-[400px] sm:h-110 md:w-150 md:h-auto lg:w-auto lg:h-auto overflow-auto no-scrollbar  p-6">
         <h3 className="text-xl font-semibold text-[hsl(216,32%,17%)] mb-4">Select pages to include in report</h3>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 overflow-auto no-scrollbar  mb-4">
           {availablePages.map((p) => (
@@ -496,7 +496,7 @@ const generatePdfFromSelection = async () => {
   // Render: ensure both charts have explicit wrapper divs with IDs used by collectDataForPage
   return (
     
-    <div className="h-200 md:h-280 lg:h-280 overflow-y-scroll no-scrollbar space-y-6">
+    <div className="h-200 overflow-y-scroll no-scrollbar space-y-6">
       <main className="flex-1  p-6 ">
       {/* Main content (kept similar to your original layout) */}
       <div ref={reportRef}>
@@ -505,7 +505,16 @@ const generatePdfFromSelection = async () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[28px] sm:text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Dashboard</h1>
+          
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      سلام دنیا!
+    </motion.div>
+ 
+              <h1 className="text-[28px] sm:text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Dashboard</h1>
           <p className="text-[hsl(216,20%,45%)] mt-1 mb-4 w-45 sm:w-60 md:w-70 lg:w-full">Welcome back! Here's your business overview.</p>
         </div>
     
@@ -776,7 +785,7 @@ const generatePdfFromSelection = async () => {
               <CardDescription className="text-[hsl(220,15%,35%)] mt-[-4px]">Debts due soon</CardDescription>
             </CardHeader>
             <CardContent id="table-debts" className="space-y-3">
-              {urgentDebts.map((debt) => ( 
+              {urgentDebts.map((debt) => (
                 <div
                   key={debt.id}
                   className="flex items-center justify-between"
