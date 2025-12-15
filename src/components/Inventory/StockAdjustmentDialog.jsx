@@ -96,7 +96,7 @@ export function StockAdjustmentDialog({ isOpen, onClose, product, onAdjust }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gradient-card h-138 shadow-medium">
+      <DialogContent className="gradient-card h-auto rounded-[12px] w-90 sm:w-full shadow-medium">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
             <Package className="h-5 w-5 text-[hsl(214,84%,56%)]" />

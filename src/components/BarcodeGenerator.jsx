@@ -129,7 +129,7 @@ export function BarcodeGenerator({ isOpen, onClose, productSku, productName }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent aria-describedby="barcode-desc" className="gradient-card max-w-md">
+      <DialogContent aria-describedby="barcode-desc" className="gradient-card max-w-sm sm:max-w-md rounded-[12px]  ">
         <DialogHeader>
           <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
             Barcode Generator

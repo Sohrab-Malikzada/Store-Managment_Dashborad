@@ -122,7 +122,7 @@ function Sidebar() {
     <aside
       className={cn(
         "flex flex-col bg-[hsl(214.29deg,32.56%,16.86%)] border-r border-[hsl(216,28%,25%)] transition-all duration-300 ease-in-out",
-        collapsed ? "w-[64px]" : "w-64 h-auto sm:w-55 md:w-60   lg:w-65",
+        collapsed ? "w-[64px]" : "w-64 h-auto sm:w-55 md:w-55   lg:w-65",
       )}
     >
       {/* Header */}

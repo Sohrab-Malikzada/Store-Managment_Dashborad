@@ -205,7 +205,7 @@ export default function Inventory() {
           <h1 className="text-[28px] sm:text-3xl font-bold text-[hsl(214,84%,64%)] bg-clip-text ">
             Inventory Management
           </h1>
-          <p className="text-[hsl(216,20%,45%)] w-100 md:w-full lg:w-90 mt-1">
+          <p className="text-[hsl(216,20%,45%)] w-full md:w-full lg:w-90 mt-1">
             Track and manage your product inventory with advanced controls
           </p>
         </div>
@@ -237,7 +237,7 @@ export default function Inventory() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 gap-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-2">
         <StatsCard
           className="m-5  text-[hsl(216,20%,45%)] hover:shadow-medium p-0.5"
           title="Total Products"
@@ -246,13 +246,13 @@ export default function Inventory() {
           variant="warning"
           box="rounded-[12px] w-full   h-[122px] shadow-none"
           titlechange="mt-[-7px]"
-          icanchange="items-center absolute -right-5 h-4 w-4"
+          icanchange="items-center absolute -right-5 md:-right-6 lg:-right-5 h-4 w-4"
           iconColor="bg-[hsl(211,100%,50%))]/10   text-[hsl(214,84%,56%)] rounded-[12px] p-2 h-8 w-8" />
         <StatsCard
           title="Low Stock Items"
           value={lowStockCount}
           icon={AlertTriangle}
-          icanchange="items-center absolute -right-5 h-4 w-4"
+          icanchange="items-center absolute -right-5 md:-right-6 lg:-right-5 h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(35,96%,60%)] rounded-[12px] p-2 h-8 w-8"
           variant="warning"
           box="rounded-[12px]  w-full h-[122px] shadow-none"
@@ -262,7 +262,7 @@ export default function Inventory() {
           title="Inventory Value"
           value={`؋${totalValue.toLocaleString()}`}
           icon={Package}
-          icanchange="items-center absolute -right-5 h-4 w-4"
+          icanchange="items-center absolute -right-5 md:-right-6 lg:-right-5 h-4 w-4"
           iconColor="bg-[hsl(142,76%,36%)]/10 text-[hsl(144,100%,29%)] rounded-[12px] p-2 h-8 w-8"
           variant="success"
           box="rounded-[12px] w-full  h-[122px] shadow-none"
@@ -281,7 +281,7 @@ export default function Inventory() {
               </CardTitle>
               <CardDescription className=" text-[hsl(216,20%,45%)] mt-[-4px]">Manage your product stock levels and details</CardDescription>
             </div>
-            <Badge variant="outline" className="w-29 mb-[-70px] -ml-30  border-[hsl(214,20%,88%)]  text-sm rounded-2xl text-[hsl(216,32%,17%)]">
+            <Badge variant="outline" className="w-29 mb-[-70px] sm:mb-[20px] -ml-30  border-[hsl(214,20%,88%)]  text-sm rounded-2xl text-[hsl(216,32%,17%)]">
               {filteredProducts.length} of {products.length} products
             </Badge>
           </div>

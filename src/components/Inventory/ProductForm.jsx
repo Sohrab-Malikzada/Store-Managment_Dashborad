@@ -65,7 +65,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
       <Toaster position="top-right" />
 
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-100 h-110 sm:max-w-110 sm:h-120 md:max-w-140 md:h-128 lg:max-w-200 lg:h-135 overflow-y-auto no-scrollbar outline-none rounded-[12px] gradient-card">
+        <DialogContent className="max-w-100 h-110 sm:max-w-110 sm:h-120 md:max-w-160 md:h-auto lg:max-w-200 lg:h-104 overflow-y-auto no-scrollbar outline-none rounded-[12px] gradient-card">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               {mode === 'add' ? 'Add New Product' : 'Edit Product'}
