@@ -205,19 +205,19 @@ function Sales() {
   };
 
   return (
-    <div className="space-y-6 space-x-[-17px] m-6  w-[1030px]">
+    <div className="space-y-6 space-x-[-17px] m-6 mx-10 ml-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="w-full flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[hsl(216,32%,17%)]">Sales Management</h1>
+          <h1 className="text-[26px] font-bold tracking-tight text-[hsl(216,32%,17%)]">Sales Management</h1>
           <p className="text-[hsl(216,20%,45%)] mt-1">
             Track your sales and payment records
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-31  bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
-              <Plus className="mr-2  h-4 w-4" />
+            <Button className="-mr-4  w-21 text-[11px] bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
+              <Plus className="h-4 w-4" />
               New Sale
             </Button>
           </DialogTrigger>
@@ -592,9 +592,9 @@ function Sales() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4  md:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <StatsCard
-          className="h-[122px] rounded-[12px]"
+          className="h-[122px] w-full rounded-[12px]"
           headerClassName="mt-[-22px] ml-[2px]"
           valueClassName="ml-[2px]"
           title="Total Sales"
@@ -603,7 +603,7 @@ function Sales() {
           variant="success"
         />
         <StatsCard
-          className="h-[122px] rounded-[12px]"
+          className="h-[122px] w-full rounded-[12px]"
           headerClassName="mt-[-22px] ml-[2px]"
           valueClassName="ml-[2px]"
           title="Amount Received"
@@ -612,7 +612,7 @@ function Sales() {
           variant="success"
         />
         <StatsCard
-          className="h-[122px] rounded-[12px]"
+          className="h-[122px] w-full rounded-[12px]"
           headerClassName="mt-[-22px] ml-[2px]"
           valueClassName="ml-[2px]"
           title="Pending Payments"
@@ -621,7 +621,7 @@ function Sales() {
           variant="warning"
         />
         <StatsCard
-          className="h-[122px] rounded-[12px]"
+          className="h-[122px] w-full rounded-[12px]"
           headerClassName="mt-[-22px] ml-[2px]"
           valueClassName="ml-[2px]"
           title="Installment Sales"
@@ -632,7 +632,7 @@ function Sales() {
       </div>
 
       {/* Sales Table */}
-      <Card className="gradient-card h-auto w-[1047px] rounded-[12px] border-[hsl(214,20%,88%)]">
+      <Card className="grid grid-cols-1 gradient-card h-auto w-full rounded-[12px] border-[hsl(214,20%,88%)]">
         <CardHeader>
           <CardTitle className="text-[hsl(216,32%,17%)]">Sales Records</CardTitle>
           <CardDescription className="text-[hsl(216,20%,45%)] mt-[-4px]">Complete history of all sales transactions</CardDescription>
@@ -640,12 +640,12 @@ function Sales() {
         <CardContent> 
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[hsl(216,20%,45%)]" />
+              <Search className="  absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[hsl(216,20%,45%)]" />
               <Input
                 placeholder="Search sales..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-10 py-5 bg-[hsl(248,250%,98%)] shadow-none"
+                className="pl-10 h-10 py-5 w-full bg-[hsl(248,250%,98%)] shadow-none"
               />
             </div>
             <Select className="w-full  sm:w-48" value={filterPaymentType} onValueChange={setFilterPaymentType}>
@@ -660,7 +660,7 @@ function Sales() {
             </Select>
           </div>
 
-          <div className="border  border-[hsl(214,20%,88%)] rounded-[10px]">
+          <div className="overflow-x-auto w-full hover:transition-all mt-[25px] duration-300 border border-[hsl(214,20%,88%)] rounded-[10px] text-[hsl(216,20%,45%)]">
             <Table>
               <TableHeader>
                 <TableRow>
