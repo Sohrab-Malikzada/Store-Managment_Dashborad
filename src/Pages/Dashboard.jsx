@@ -500,7 +500,7 @@ const generatePdfFromSelection = async () => {
       <main className="flex-1  p-6 ">
       {/* Main content (kept similar to your original layout) */}
       <div ref={reportRef}>
-      <Toaster />
+      <Toaster /> {/* Toast notifications */}
 
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -513,7 +513,7 @@ const generatePdfFromSelection = async () => {
         <div className="relative" ref={menuRef}>
           <Button
             onClick={() => setReportMenuOpen((s) => !s)}
-            className="bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] text-white rounded-[10px] cursor-pointer"
+                className="w-26 h-8 text-[11px] sm:w-32 sm:h-10 sm:text-sm bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] text-white rounded-[10px] cursor-pointer"
           >
             Generate Report
           </Button>

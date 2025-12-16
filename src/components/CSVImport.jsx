@@ -195,7 +195,7 @@ export function CSVImport({ onImport }) {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="h-0 p-[12px] sm:py-4 text-[11px] sm:text-sm flex items-center w-[28%] sm:w-[125px] md:w-[130px] text-[hsl(216,32%,17%)] gap-1 sm:gap-4 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            className="h-8 p-[12px] sm:py-4 text-[11px] sm:text-sm flex items-center w-[30%] sm:w-[125px] md:w-[130px] text-[hsl(216,32%,17%)] gap-1 sm:gap-4 shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
             onClick={() => setOpen(true)}
           >
             <Upload className="h-4 w-4" />

@@ -209,7 +209,7 @@ export default function Inventory() {
             Track and manage your product inventory with advanced controls
           </p>
         </div>
-        <div className="flex flex-row sm:flex-row lg:flex-nowrap ml-0 sm:ml-2 lg:ml-0 gap-3">
+        <div className="justify-between flex flex-row sm:flex-row lg:flex-nowrap ml-0 sm:ml-2 lg:ml-0 gap-3">
           <CSVImport onImport={(importedProducts) => {
             const newProducts = importedProducts.map((product, index) => ({
               id: `PRD-${Date.now()}-${index}`,
@@ -219,16 +219,16 @@ export default function Inventory() {
           }} />
           <Button
             variant="outline"
-            className="h-0 p-[12px] sm:py-4 text-[11px] sm:text-sm sm:-ml-0 gap-1 w-[20%] sm:gap-2  sm:w-[100px] md:w-[105px] lg:[110px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            className="h-8 p-[12px] sm:py-4 text-[11px] sm:text-sm sm:-ml-0 gap-1 w-[22%] sm:gap-2  sm:w-[100px] md:w-[105px] lg:[110px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
             onClick={() => exportProducts(true)} // صادر کردن محصولات فیلترشده
           >
-            <Download className=" h-4 w-4" />
+            <Download className="h-4 w-4" />
             Export
           </Button>
 
           <Button
             onClick={() => setAddProductDialog(true)}
-            className="h-0 p-[12px] sm:py-4 text-[11px] sm:text-sm gap-1 sm:gap-4 sm:-ml-0 gradient-primary w-[28%] sm:w-[140px]  text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
+            className="h-8 p-[12px] sm:py-4 text-[11px] sm:text-sm gap-1 sm:gap-4 sm:-ml-0 gradient-primary w-[31%] sm:w-[140px]  text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
           >
             <Plus className="sm:mr-2 cursor-pointer h-4 w-4" />
             Add Product
