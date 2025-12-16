@@ -123,6 +123,7 @@ function Sidebar() {
       className={cn(
         "flex flex-col bg-[hsl(214.29deg,32.56%,16.86%)] border-r border-[hsl(216,28%,25%)] transition-all duration-300 ease-in-out",
         collapsed ? "w-[64px]" : "w-64 h-auto sm:w-55 md:w-55   lg:w-65",
+        !collapsed ? "w-[64px]" : "w-[64px]",
       )}
     >
       {/* Header */}
@@ -130,9 +131,9 @@ function Sidebar() {
         {!collapsed && (
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 gradient-primary rounded-[12px] flex items-center justify-center">
-              <Package className="h-5 w-5 text-white" />
+              <Package className="h-5 w-5  text-white" />
             </div>
-            <span className="text-lg font-semibold text-[hsl(214,20%,90%)]">
+            <span className="text-lg hidden sm:block font-semibold text-[hsl(214,20%,90%)]">
               TradeLedger
             </span>
           </div>
@@ -141,12 +142,12 @@ function Sidebar() {
           variant="ghost"
           size="sm"
           onClick={() => setCollapsed(!collapsed)}
-          className="text-[hsl(214,20%,90%)] rounded-[10px] hover:text-[hsl(214.29deg,32.56%,12.86%)]  hover:bg-[hsl(216,28%,20%)] p-2"
+          className="hidden sm:block  text-[hsl(214,20%,90%)] rounded-[10px] hover:text-[hsl(214.29deg,32.56%,12.86%)]  hover:bg-[hsl(216,28%,20%)] p-2 items-center"
         >
           {collapsed ? (
-            <Menu className="h-4 w-4 ml-[-2px]" />
+            <Menu className="h-4 w-4" />
           ) : (
-              <ChevronLeft className="h-4 w-4 mr-[-2px]" />
+              <ChevronLeft className="h-4 w-4" />
           )}
         </Button>
       </div>
@@ -159,7 +160,7 @@ function Sidebar() {
             className={cn("space-y-2", groupIndex > 0 && "mt-6")}
           >
             {!collapsed && (
-              <h3 className="px-3 text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <h3 className="hidden sm:block px-3 text-xs font-semibold text-white/50 uppercase tracking-wider">
                 {group.title}
               </h3>
             )}
@@ -173,7 +174,7 @@ function Sidebar() {
                     key={item.href}
                     to={item.href}
                     className={cn(
-                      "flex items-center space-x-3 rounded-[12px] px-3 py-2.5 text-sm font-medium transition-smooth hover:bg-[hsl(215.63deg,28.57%,21.96%)]",
+                      "flex items-center space-x-3 rounded-[12px] px-2 py-2 text-sm font-medium transition-smooth hover:bg-[hsl(215.63deg,28.57%,21.96%)]",
                       active
                         ? "bg-[hsl(215.63deg,28.57%,21.96%)]  text-[hsl(214,84%,56%)] shadow-soft"
                         : "text-[hsl(214,20%,90%)] hover:text-[hsl(214,84%,56%)]"
@@ -197,7 +198,7 @@ function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 mb-60 md:mb-90 border-t border-t-[hsl(216,28%,25%)]  border-b border-b-[hsl(216,28%,25%)] space-y-2">
+      <div className="p-4 mb-110 sm:mb-60 md:mb-90 border-t border-t-[hsl(216,28%,25%)]  border-b border-b-[hsl(216,28%,25%)] space-y-2">
         <div
           className={cn(
             "flex items-center",
@@ -210,12 +211,12 @@ function Sidebar() {
               roleInfo.color
             )}
           >
-            <span className="text-xs font-medium text-white">
+            <span className="text-xs p-4 font-medium text-white">
               {user?.name?.[0] || "U"}
             </span>
           </div>
           {!collapsed && (
-            <div className="flex-1 min-w-0">
+            <div className="flex-1  min-w-0">
               <p className="text-sm font-medium text-[hsl(214,20%,90%)] truncate">
                 {user?.name || roleInfo.name}
               </p>
@@ -230,7 +231,7 @@ function Sidebar() {
             variant="ghost"
             size="sm"
             onClick={logout}
-            className=" w-full justify-start rounded-[10px] hover:text-[hsl(214.29deg,32.56%,12.86%)]  text-[hsl(214,20%,90%)] hover:bg-[hsl(215.63deg,28.57%,21.96%)]"
+            className="hidden sm:block w-full justify-start rounded-[10px] hover:text-[hsl(214.29deg,32.56%,12.86%)]  text-[hsl(214,20%,90%)] hover:bg-[hsl(215.63deg,28.57%,21.96%)]"
           >
             <LogOut className="ml-[2px] mr-[10px] h-4 w-4" />
             Sign Out

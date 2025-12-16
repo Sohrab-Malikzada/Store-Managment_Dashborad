@@ -219,18 +219,18 @@ export default function Inventory() {
           }} />
           <Button
             variant="outline"
-            className="-ml-2 sm:-ml-0 gap-0 sm:gap-2 w-20 sm:w-[100px] md:w-[105px] lg:[110px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
+            className="h-0 p-[12px] sm:py-4 text-[11px] sm:text-sm sm:-ml-0 gap-1 w-[20%] sm:gap-2  sm:w-[100px] md:w-[105px] lg:[110px] text-[hsl(216,32%,17%)] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] hover:shadow-medium hover:bg-[hsl(214,20%,95%)] transition-smooth border-[hsl(214,20%,88%)] rounded-[10px] cursor-pointer"
             onClick={() => exportProducts(true)} // صادر کردن محصولات فیلترشده
           >
-            <Download className="mr-2 h-4 w-4" />
+            <Download className=" h-4 w-4" />
             Export
           </Button>
 
           <Button
             onClick={() => setAddProductDialog(true)}
-            className="-ml-2 sm:-ml-0 gradient-primary w-28 sm:w-[140px]  text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
+            className="h-0 p-[12px] sm:py-4 text-[11px] sm:text-sm gap-1 sm:gap-4 sm:-ml-0 gradient-primary w-[28%] sm:w-[140px]  text-white shadow-[0_10px_7px_-10px_hsl(214,80%,70%)] hover:shadow-medium transition-smooth rounded-[10px] cursor-pointer"
           >
-            <Plus className="mr-0 sm:mr-2 cursor-pointer h-4 w-4" />
+            <Plus className="sm:mr-2 cursor-pointer h-4 w-4" />
             Add Product
           </Button>
         </div>
