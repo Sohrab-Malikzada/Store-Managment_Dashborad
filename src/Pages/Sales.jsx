@@ -216,7 +216,7 @@ function Sales() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="-mr-4  w-21 text-[11px] bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] text-white shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] rounded-[10px] cursor-pointer">
+            <Button className="w-20 h-8  mr-[-10px] text-[11px] sm:w-26 sm:h-10 md:w-28 md:h-10 lg:w-30 lg:h-10 sm:text-sm bg-[linear-gradient(to_right,hsl(200,100%,40%),hsl(210,100%,65%))] shadow-[0_10px_20px_-10px_hsl(214,100%,70%)] text-white rounded-[10px] cursor-pointer">
               <Plus className="h-4 w-4" />
               New Sale
             </Button>
