@@ -44,10 +44,10 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
-      <DialogContent className="border-[hsl(214,20%,88%)] max-w-2xl bg-[hsl(248,250%,98%)] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border-[hsl(214,20%,88%)] outline-none rounded-[12px] max-w-90 sm:max-w-130 md:max-w-160 md:max-h-200 lg:h-110 overflow-y-auto no-scrollbar bg-[hsl(248,250%,98%)] h-[90vh] ">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-[hsl(216,32%,17%)]">Sale Details</DialogTitle>
-          <DialogDescription className="text-[hsl(216,20%,45%)] -mt-1"> 
+          <DialogTitle className="text-xl text-left font-bold text-[hsl(216,32%,17%)]">Sale Details</DialogTitle>
+          <DialogDescription className="text-left text-[hsl(216,20%,45%)] -mt-1"> 
             Complete sale information and payment details
           </DialogDescription>
         </DialogHeader>
@@ -92,7 +92,7 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
           <div className="space-y-3">
             <h3 className="font-semibold text-[hsl(216,32%,17%)]">Items Purchased</h3>
             <div className="border p-2 pb-2  border-[hsl(214,20%,88%)] rounded-[10px]">
-              <Table className="h-20 text-[hsl(216,32%,17%)] min-w-full">
+              <Table className="overflow-y-scroll no-scrollbar  h-20 text-[hsl(216,32%,17%)]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Product</TableHead>
@@ -186,7 +186,7 @@ export function SaleDetailsDialog({ sale, isOpen, onClose, onPaymentUpdate }) {
                     <Button 
                       variant="outline" 
                       onClick={() => setShowPaymentForm(false)}
-                      className="flex-1"
+                        className=" border flex-1  cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
                     >
                       Cancel
                     </Button>
