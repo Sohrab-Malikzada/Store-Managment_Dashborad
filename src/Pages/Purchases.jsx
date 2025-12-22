@@ -78,23 +78,23 @@ export default function Purchases() {
 
   return (
     <div className="space-y-6 m-6">
-      <div className="flex items-center justify-between ">
+      <div className="flex flex-col sm:flex-row items-left justify-between ">
         <div>
-          <h1 className="text-[26px] text-left font-bold text-[hsl(216,32%,17%)]">Purchase Management</h1>
+          <h1 className="text-[24px] text-left font-bold text-[hsl(216,32%,17%)]">Purchase Management</h1>
           <p className="text-[hsl(216,20%,45%)] text-left">Track supplier purchases and payments</p>
         </div>
-        <div className="flex  justify-end">
+        <div className=" flex justify-end">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-30   gradient-primary text-white  rounded-[10px] cursor-pointer">
+              <Button className="w-26 h-6 sm:w-32 sm:h-9 sm:text-sm text-[11px]  mt-2 gradient-primary text-white  rounded-[10px] cursor-pointer">
               <Plus className="h-4 w-4"/>
               Add Purchase
             </Button> 
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-90 sm:w-full rounded-[12px]">
             <DialogHeader>
-              <DialogTitle className="text-[hsl(216,32%,17%)]">Record New Purchase</DialogTitle>
-              <DialogDescription className="text-[hsl(216,20%,45%)]">
+              <DialogTitle className="text-left text-[hsl(216,32%,17%)]">Record New Purchase</DialogTitle>
+              <DialogDescription className="text-left text-[hsl(216,20%,45%)]">
                 Enter the details for the new purchase from supplier.
               </DialogDescription>
             </DialogHeader>
@@ -169,16 +169,16 @@ export default function Purchases() {
         </div>
       </div>
 
-      <div className="grid gap-4  md:grid-cols-4 ">
-        <div className="h-40">
+      <div className="grid gap-4 md:grid-cols-2 ">
+        <div>
           <StatsCard
             title="Total Purchases"
             value={`؋${totalPurchases.toLocaleString()}`}
             icon={Package}
             trend={{ value: 8.2, label: "from last month" }}
             trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px]"
-            box={`rounded-[10px]  w-full h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-            icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+            box={`rounded-[10px]   w-full  h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
+            icanchange="h-8 w-8 mb-2 p-2 -right-5 rounded-[12px] "
           />
         </div>
         <StatsCard
@@ -188,7 +188,7 @@ export default function Purchases() {
           trend={{ value: -2.4, label: "from last month" }}
           trendchange="text-[hsl(0,84%,60%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px]  w-full h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2 -right-5 rounded-[12px] "
         />
         <StatsCard
           title="Active Suppliers"
@@ -197,7 +197,7 @@ export default function Purchases() {
           trend={{ value: 12.5, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px] w-full h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2 -right-5 rounded-[12px] "
         />
         <StatsCard
           title="Purchase Orders"
@@ -206,7 +206,7 @@ export default function Purchases() {
           trend={{ value: 5.1, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)] -ml-4 mt-[-5px]"
           box={`rounded-[10px] w-full h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2 -right-5 rounded-[12px] "
         />
       </div>
 
@@ -216,7 +216,7 @@ export default function Purchases() {
           <CardDescription className="text-[hsl(216,20%,45%)]">Manage your supplier purchases and payments</CardDescription>
           <div className="flex items-center space-x-2">
             <div className="relative flex-1 max-w-sm">
-              <Search className=" absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className=" absolute  left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search purchases..."
                 value={searchTerm}
@@ -226,7 +226,7 @@ export default function Purchases() {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="w-73 overflow-auto no-scrollbar">
+        <CardContent className="w-73 sm:w-108 md:w-137 lg:w-full overflow-auto no-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>
