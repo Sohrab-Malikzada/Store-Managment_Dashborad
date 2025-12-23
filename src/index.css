@@ -320,5 +320,27 @@
     .no-scrollbar {
       scrollbar-width: none;
     }
+        .table-fixed {
+          table-layout: fixed;
+          width: 100%;
+        }
+                             .card-content {
+                               scrollbar-gutter: stable;
+                               overflow-y: auto;
+                             }
+              
+                             /* WebKit: فضای اسکرول‌بار را نگه می‌دارد اما ظاهر را شفاف می‌کند */
+                             .card-content::-webkit-scrollbar {
+                               width: 12px;
+                               /* فضای رزرو شده */
+                             }
+                                                         .card-content::-webkit-scrollbar {
+                                                           width: 12px;
+                                                         }
+              
+                             .card-content::-webkit-scrollbar-thumb {
+                               background: transparent;
+                               /* مخفی کردن ظاهری */
+                             }
 };
 
