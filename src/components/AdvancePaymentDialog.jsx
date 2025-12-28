@@ -37,13 +37,13 @@ export function AdvancePaymentDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gradient-card  max-w-2xl">
+      <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
         <DialogHeader>
           <DialogTitle className="tracking-tight flex items-center text-[hsl(216,32%,17%)] gap-2">
             <CreditCard className="h-5 w-5 text-[hsl(214,84%,56%)]" />
             Advance Payment
           </DialogTitle>
-          <DialogDescription className="mt-[-2px]">
+          <DialogDescription className="text-left mt-[-2px]">
             Provide advance salary payments to employees
           </DialogDescription>
         </DialogHeader>
@@ -148,13 +148,13 @@ export function AdvancePaymentDialog({
              type="button"
              variant="outline"
              onClick={onClose} 
-             className="-mt-[9px] mr-[1px] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
+             className="mr-[1px] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
              >
               Cancel
             </Button>
             <Button 
               type="submit"
-              className="-mt-[9px] mr-[-1px] w-44  gradient-primary cursor-pointer text-[#ffffff] shadow-soft hover:shadow-medium"
+              className=" mr-[-1px] w-44  gradient-primary cursor-pointer text-[#ffffff] shadow-soft hover:shadow-medium"
               disabled={!selectedEmployeeId || !amount || !reason}
             >
               <DollarSign className="h-4 w-4 mr-2" />

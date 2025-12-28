@@ -8,7 +8,7 @@ export function PayrollTable({ payrollRecords, onViewDetails, onEditRecord }) {
   const getStatusLabel = (status) => status === 'paid' ? 'Paid' : 'Unpaid';
 
   return (
-    <div className="border border-[hsl(214,20%,90%)] rounded-lg overflow-hidden shadow-soft bg-white dark:bg-background">
+    <div className="border w-60 sm:w-90 md:w-128 lg:w-200 overflow-auto no-scrollbar border-[hsl(214,20%,90%)] rounded-lg shadow-soft bg-white dark:bg-background">
       <Table>
         <TableHeader>
           <TableRow className="bg-[hsl(214,20%,95%)]/30 m-40">

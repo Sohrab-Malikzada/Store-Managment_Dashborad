@@ -159,7 +159,7 @@ export default function Payroll() {
         selectedPeriod={selectedPeriod}
       />
 
-      <Card className="gradient-card h-auto shadow-medium">
+      <Card className="gradient-card h-auto w-full shadow-medium">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -188,13 +188,13 @@ export default function Payroll() {
 
       {/* Dialogs */}
       <Dialog open={deductionDialog} onOpenChange={setDeductionDialog}>
-        <DialogContent className="gradient-card h-107  shadow-medium">
+        <DialogContent className="gradient-card w-90  sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
           <DialogHeader >
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               <Minus className="h-5 w-5 text-[hsl(38,92%,55%)]" />
               Add Employee Deduction
             </DialogTitle>
-            <DialogDescription className="mt-[-2px]">
+            <DialogDescription className="text-left mt-[-2px]">
               Apply deductions for taxes, advances, or other adjustments
             </DialogDescription>
           </DialogHeader>
@@ -249,14 +249,14 @@ export default function Payroll() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setDeductionDialog(false)}
-                className="mt-[-10px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
+                className=" shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
                 variant="outline" 
-                className="mt-[-10px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer hover:text-[hsl(216,32%,17%))]  hover:bg-[hsl(38,92%,50%)]/10   rounded-[10px] text-[hsl(38,92%,50%)] bg-[hsl(248,250%,98%)] border-[hsl(38,92%,50%)] hover:shadow-medium transition-smooth"
+                className=" shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer hover:text-[hsl(216,32%,17%))]  hover:bg-[hsl(38,92%,50%)]/10   rounded-[10px] text-[hsl(38,92%,50%)] bg-[hsl(248,250%,98%)] border-[hsl(38,92%,50%)] hover:shadow-medium transition-smooth"
               >
                 Add Deduction
               </Button>
@@ -266,13 +266,13 @@ export default function Payroll() {
       </Dialog>
 
       <Dialog open={bonusDialog} onOpenChange={setBonusDialog}>
-        <DialogContent className="gradient-card h-144 shadow-medium">
+        <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               <Gift className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Allocate Employee Bonus
             </DialogTitle>
-            <DialogDescription className="-mt-[2px]">
+            <DialogDescription className="text-left -mt-[2px]">
               Distribute bonuses to employees for special occasions or performance rewards
             </DialogDescription>
           </DialogHeader>
@@ -335,13 +335,13 @@ export default function Payroll() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setBonusDialog(false)}
-                className="-mt-[16px] shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
+                className=" shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="-mt-[16px] gradient-primary text-[#ffffff] shadow-soft hover:shadow-medium transition-smooth"
+                className="gradient-primary text-[#ffffff] shadow-soft hover:shadow-medium transition-smooth"
               >
                 Allocate Bonus
               </Button>
@@ -351,13 +351,13 @@ export default function Payroll() {
       </Dialog>
 
       <Dialog open={processingDialog} onOpenChange={setProcessingDialog}>
-        <DialogContent className="gradient-card h-137 shadow-medium max-w-2xl">
+        <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
           <DialogHeader>
             <DialogTitle className="flex tracking-tight text-[18px] mt-[-3px] items-center gap-2 text-[hsl(216,32%,17%)]">
               <Calendar className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Process Monthly Payroll
             </DialogTitle>
-            <DialogDescription className="mt-[-6px]">
+            <DialogDescription className="text-left mt-[-6px]">
               Select employees to process payroll payments for the current period
             </DialogDescription>
           </DialogHeader>

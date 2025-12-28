@@ -15,7 +15,7 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
   const employeesPaid = payrollRecords.filter(r => r.status === "paid").length;
 
   return (
-    <div className="grid gap-4 md:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2">
       <StatsCard
         title="Total Paid This Month"
         value={`؋${totalPaidThisMonth.toLocaleString()}`}
@@ -23,7 +23,7 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
         trend={{ value: 8.2, label: "from last month" }}
         trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
         box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+        icanchange="h-8 w-8 mb-2 p-2  -right-5 rounded-[12px] "
       />
       <StatsCard
         title="Employees Paid"
@@ -32,7 +32,7 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
         trend={{ value: 100, label: "completion rate" }}
         trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
         box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+        icanchange="h-8 w-8 mb-2 p-2  -right-5 rounded-[12px] "
       />
       <StatsCard
         title="Total Bonuses"
@@ -41,7 +41,7 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
         trend={{ value: 25.3, label: "this period" }}
         trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
         box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+        icanchange="h-8 w-8 mb-2 p-2  -right-5 rounded-[12px] "
       />
       <StatsCard
         title="Pending Payments"
@@ -50,7 +50,7 @@ export function PayrollStatsCards({ payrollRecords, selectedPeriod }) {
         trend={{ value: -12.5, label: "processing" }}
         trendchange="text-[hsl(0,84%,60%)]  -ml-4 mt-[-5px] "
         box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-        icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+        icanchange="h-8 w-8 mb-2 p-2  -right-5 rounded-[12px] "
       />
     </div>
   );
