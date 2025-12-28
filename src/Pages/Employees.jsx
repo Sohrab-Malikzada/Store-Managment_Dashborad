@@ -161,9 +161,9 @@ export default function Employees() {
 
   return (
     <div className="space-y-6 m-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-left justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[hsl(216,32%,17%)]">
+          <h1 className="text-[28px] sm:text-3xl font-bold text-[hsl(216,32%,17%)]">
             Employee Management
           </h1>
           <p className="text-[hsl(216,20%,45%)]">
@@ -172,13 +172,13 @@ export default function Employees() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="gradient-primary w-39 text-white shadow-elegant">
-              <Plus className="mr-2  h-4 w-4" />
+            <Button className="ml-auto mt-2 text-[11px] sm:text-sm  gradient-primary w-27 sm:w-36 text-white shadow-elegant">
+              <Plus className="h-4 w-4" />
               Add Employee
             </Button>
           </DialogTrigger>
-          <DialogContent className="h-110">
-            <DialogHeader>
+          <DialogContent className="w-90 sm:w-full rounded-[12px]">
+            <DialogHeader className="text-left">
               <DialogTitle className="text-[hsl(216,32%,17%)]">Add New Employee</DialogTitle>
               <DialogDescription className="text-[hsl(216,20%,45%)] -mt-0.5">
                 Enter the details for the new employee.
@@ -273,7 +273,7 @@ export default function Employees() {
         </Dialog>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2">
         <StatsCard
           title="Total Employees"
           value={employees.length.toString()}
@@ -281,7 +281,7 @@ export default function Employees() {
           trend={{ value: 5.2, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35  text-red-600 border bg-red-600 text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -right-4 rounded-[12px] "
 
         />
         <StatsCard
@@ -291,7 +291,7 @@ export default function Employees() {
           trend={{ value: 3.1, label: "from last month" }}
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -right-4 rounded-[12px] "
 
         />
         <StatsCard
@@ -301,7 +301,7 @@ export default function Employees() {
           trend={{ value: -12.5, label: "from last month" }}
           trendchange="text-[hsl(0,84%,60%)]  -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -right-4 rounded-[12px] "
 
         />
         <StatsCard
@@ -311,7 +311,7 @@ export default function Employees() {
           trend={{ value: 0, label: "from last month" }}
           trendchange="text-[hsl(216,20%,45%)]   -ml-4 mt-[-5px] "
           box={`rounded-[10px] h-35 text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2  -mr-44 rounded-[12px] "
+          icanchange="h-8 w-8 mb-2 p-2  -right-4 rounded-[12px] "
 
         />
       </div>
@@ -334,7 +334,7 @@ export default function Employees() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-73 sm:w-108 md:w-137 lg:w-200 overflow-auto no-scrollbar">
           <Table>
             <TableHeader>
               <TableRow>
@@ -412,7 +412,7 @@ export default function Employees() {
 
       {/* Employee Details Dialog */}
       <Dialog open={detailsDialog} onOpenChange={setDetailsDialog}>
-        <DialogContent className="gradient-card max-w-md">
+        <DialogContent className="gradient-card w-90 sm:w-full lg:h-104 overflow-auto no-scrollbar rounded-[12px]">
           <DialogHeader>
             <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
               <Eye className="h-5 w-5 text-[hsl(214,84%,56%)]" />
@@ -477,7 +477,7 @@ export default function Employees() {
 
       {/* Edit Employee Dialog */}
       <Dialog open={editDialog} onOpenChange={setEditDialog}>
-        <DialogContent className="gradient-card">
+        <DialogContent className="gradient-card w-90 sm:w-full rounded-[12px] ">
           <DialogHeader>
             <DialogTitle className="flex text-[hsl(216,32%,17%)]   items-center gap-2">
               <Edit className="h-5 w-5 text-[hsl(38,92%,50%)]" />
