@@ -80,13 +80,13 @@ export default function Debts() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid  gap-4 md:grid-cols-4">
+      <div className="grid  gap-4 md:grid-cols-2">
         <StatsCard
           title="Customer Debts"
           value={`$${totalCustomerDebt.toFixed(2)}`}
           icon={Users}
           variant="warning"
-          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          icanchange="-right-5  h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -94,7 +94,7 @@ export default function Debts() {
           value={`$${totalSupplierDebt.toFixed(2)}`}
           icon={Truck}
           variant="destructive"
-          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          icanchange="-right-5  h-4 w-4"
           iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
 
         />
@@ -103,7 +103,7 @@ export default function Debts() {
           value={overdueCustomerDebts}
           icon={AlertCircle}
           variant="destructive"
-          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          icanchange="-right-5  h-4 w-4"
           iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -111,7 +111,7 @@ export default function Debts() {
           value={overdueSupplierDebts}
           icon={AlertCircle}
           variant="destructive"
-          icanchange="items-center relative -m-66 -mt-6 -mr-44  h-4 w-4"
+          icanchange="-right-5  h-4 w-4"
           iconColor="bg-[hsl(0,84%,60%)]/10 text-[hsl(0,84%,60%)] rounded-[12px] p-2 h-8 w-8"
         />
       </div>
@@ -125,7 +125,7 @@ export default function Debts() {
 
         {/* Customer Debts */}
         <TabsContent value="customers">
-          <Card className="mt-[-5px] h-auto gradient-card shadow-none">
+          <Card className="mt-[-5px] w-full h-auto gradient-card shadow-none">
             <CardHeader>
               <CardTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
                 <Users className="h-5 w-5 text-[hsl(38,92%,50%)]" />
@@ -135,8 +135,7 @@ export default function Debts() {
                 Money owed by customers for installment purchases
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="border border-[hsl(214,20%,88%)]  rounded-[12px]">
+            <CardContent className="w-73 sm:w-108 md:w-137 lg:w-200 overflow-auto no-scrollbar">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -169,7 +168,7 @@ export default function Debts() {
                           <TableCell>
                             <div className="flex space-x-2">
                               <Button
-                                className="-mr-9 ml-11 cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
+                                className="w-20 h-8 text-[11px] sm:w-28 sm:h-9 sm:text-sm -mr-9 ml-11 cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'customer')}
@@ -180,7 +179,7 @@ export default function Debts() {
                                 <Button
                                   variant="default"
                                   size="sm"
-                                  className="ml-11 rounded-[10px] bg-gradient-to-l from-blue-400 to-blue-500 text-white"
+                                  className="w-24 h-8 text-[11px] sm:w-30 sm:h-9 sm:text-sm ml-11 rounded-[10px] bg-gradient-to-l from-blue-400 to-blue-500 text-white"
                                   onClick={() => handleViewDebt(debt, 'customer')}
                                 >
                                   Collect Payment
@@ -193,7 +192,6 @@ export default function Debts() {
                     })}
                   </TableBody>
                 </Table>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -210,8 +208,7 @@ export default function Debts() {
                 Money owed to suppliers for purchases
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="border border-[hsl(214,20%,88%)] rounded-lg">
+            <CardContent className="w-73 sm:w-108 md:w-137 lg:w-200 overflow-auto no-scrollbar">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -244,7 +241,7 @@ export default function Debts() {
                           <TableCell>
                             <div className="flex space-x-2">
                               <Button
-                                className="cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
+                                className="w-20 h-8 text-[11px] sm:w-28 sm:h-9 sm:text-sm  cursor-pointer rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] hover:bg-[hsl(248,250%,96%)] border-[hsl(214,20%,88%)] transition-smooth"
                                 variant="outline"
                                 size="sm"
                                 onClick={() => handleViewDebt(debt, 'supplier')}
@@ -255,7 +252,7 @@ export default function Debts() {
                                 <Button
                                   variant="default"
                                   size="sm"
-                                  className="gradient-primary rounded-[10px] -mr-3 text-white"
+                                  className="w-22 h-8 text-[11px] sm:w-28 sm:h-9 sm:text-sm  gradient-primary rounded-[10px] -mr-3 text-white"
                                   onClick={() => handleViewDebt(debt, 'supplier')}
                                 >
                                   Make Payment
@@ -268,7 +265,6 @@ export default function Debts() {
                     })}
                   </TableBody>
                 </Table>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
