@@ -256,7 +256,7 @@ export default function UserManagement() {
     <div className="space-y-6 m-6">
       <Toaster />
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
             User Management
@@ -267,18 +267,18 @@ export default function UserManagement() {
         </div>
         < Dialog open={addUserDialog} onOpenChange={setAddUserDialog} >
           <DialogTrigger asChild >
-            <Button className="w-[123px] bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth" >
-              <Plus className="h-4 w-4 mr-2 text-white" />
+            <Button className="w-20 h-8 text-[11px] ml-auto sm:text-sm sm:w-[123px] sm:h-9 bg-gradient-to-r text-white from-blue-500 to-blue-400 shadow-glow hover:shadow-medium transition-smooth" >
+              <Plus className="h-4 w-4 text-white" />
               Add User
             </Button>
           </DialogTrigger>
-          < DialogContent className="gradient-card h-129" >
+          < DialogContent className="w-95 sm:w-full lg:h-100 h-auto rounded-[12px] overflow-auto no-scrollbar gradient-card" >
             <DialogHeader>
               <DialogTitle className="flex tracking-tight text-[hsl(216,32%,17%)] items-center gap-2" >
                 <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
                 Add New User
               </DialogTitle>
-              < DialogDescription className="mt-[-2px]" >
+              < DialogDescription className="text-left mt-[-2px]" >
                 Create a new user account with specific role and permissions
               </DialogDescription>
             </DialogHeader>
@@ -345,7 +345,7 @@ export default function UserManagement() {
                       {
                         Object.entries(roleConfigs).map(([role, config]) => (
                           <SelectItem key={role} value={role} >
-                            <div className="flex items-center gap-2" >
+                            <div className="flex  items-center gap-2" >
                               <config.icon className="h-4 w-4" />
                               {config.name} - {config.description}
                             </div>
@@ -372,7 +372,7 @@ export default function UserManagement() {
         </Dialog>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <StatsCard
           title="Total Users"
           value={totalUsers.toString()}
@@ -382,7 +382,7 @@ export default function UserManagement() {
           titlechange="mt-[-7px]"
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-blue-600 bg-blue-100 -mr-44 rounded-[12px] "
+          icanchange="-right-4 h-8 w-8 p-2 text-blue-600 bg-blue-100  rounded-[12px] "
 
         />
         <StatsCard
@@ -394,7 +394,7 @@ export default function UserManagement() {
           titlechange="mt-[-7px]"
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-green-600 bg-green-100 -mr-44 rounded-[12px] "
+          icanchange="-right-4 h-8 w-8 p-2 text-green-600 bg-green-100 rounded-[12px] "
 
         />
         <StatsCard
@@ -406,7 +406,7 @@ export default function UserManagement() {
           titlechange="mt-[-7px]"
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-red-600 bg-red-100 -mr-[175px] rounded-[12px] "
+          icanchange="-right-4 h-8 w-8 p-2 text-red-600 bg-red-100 rounded-[12px] "
 
         />
         <StatsCard
@@ -418,7 +418,7 @@ export default function UserManagement() {
           titlechange="mt-[-7px]"
           trendchange="text-[hsl(142,76%,36%)]  -ml-4 mt-[-5px] "
           box={`rounded-[12px] h-[142px] text-red-600 border bg-card text-card-foreground shadow-sm gradient-card shadow-soft hover:shadow-medium transition-all duration-300`}
-          icanchange="h-8 w-8 mb-2 p-2 text-yellow-600 bg-yellow-100 -mr-44 rounded-[12px] "
+          icanchange="-right-4 h-8 w-8 p-2 text-yellow-600 bg-yellow-100 rounded-[12px] "
 
         />
       </div>
@@ -433,7 +433,7 @@ export default function UserManagement() {
             Manage user accounts, roles, and access permissions
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-73 sm:w-108 md:w-137 lg:w-200 overflow-auto no-scrollbar">
           <Table className="mt-[2px]">
             <TableHeader>
               <TableRow>
@@ -520,13 +520,13 @@ export default function UserManagement() {
 
       {/* Edit User Dialog (permissions quick edit) */}
       <Dialog open={editUserDialog} onOpenChange={setEditUserDialog}>
-        <DialogContent className="gradient-card h-[603px] max-w-2xl">
+        <DialogContent className="w-90 sm:w-full lg:h-100 overflow-auto no-scrollbar rounded-[12px] gradient-card">
           <DialogHeader>
-            <DialogTitle className="text-[hsl(216,32%,17%)] flex tracking-tight items-center gap-2">
+            <DialogTitle className="text-left text-[hsl(216,32%,17%)] flex tracking-tight items-center gap-2">
               <Edit className="h-5 w-5 mt-[1px] text-[hsl(38,92%,55%)]" />
               Edit User Permissions
             </DialogTitle>
-            <DialogDescription className="mt-[-2px]">Modify user role and specific module permissions</DialogDescription>
+            <DialogDescription className="text-left mt-[-2px]">Modify user role and specific module permissions</DialogDescription>
           </DialogHeader>
           {selectedUser && (
             <div className="grid gap-4 py-4">
@@ -568,14 +568,14 @@ export default function UserManagement() {
 
       {/* Settings Dialog (ویرایش کامل: نام، ایمیل، نقش، وضعیت، مجوزها) */}
       <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
-        <DialogContent className="gradient-card max-w-lg">
+        <DialogContent className="w-90 h-164 sm:w-full md:h-auto lg:h-106 overflow-auto no-scrollbar rounded-[12px] gradient-card">
           {/* overflow-y-auto */}
           <DialogHeader>
-            <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
+            <DialogTitle className="flex  text-[hsl(216,32%,17%)] items-center gap-2">
               <Settings className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               User Settings
             </DialogTitle>
-            <DialogDescription>Update user basic settings and module permissions</DialogDescription>
+            <DialogDescription className="text-left">Update user basic settings and module permissions</DialogDescription>
           </DialogHeader>
 
           {settingsUser && (
