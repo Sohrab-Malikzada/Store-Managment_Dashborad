@@ -68,15 +68,15 @@ export default function Analytics() {
   const currentData = yearlyData[selectedYear];
   return (
     <div className="space-y-6 m-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-left justify-between">
         <div>
           <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">Analytics & Reports</h1>
           <p className="text-[hsl(216,20%,45%)]">Comprehensive business insights and performance metrics</p>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center mt-2 ml-auto space-x-3">
           <Calendar className="h-5 w-5 text-[hsl(216,20%,45%)]" />
           <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-32 bg-[hsl(216,20%,98%)]">
+            <SelectTrigger className="w-20 sm:w-32 bg-[hsl(216,20%,98%)]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className={"bg-white"}>
@@ -87,7 +87,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="grid  gap-4 md:grid-cols-5">
+      <div className="grid  gap-4 grid-cols-1 ">
         <StatsCard
           id="table-analytics2003"
           title="Total Revenue"
@@ -99,7 +99,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box="h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          icanchange="-right-4 h-4 w-4"
           iconColor="bg-[hsl(38,92%,55%)]/10 text-[hsl(38,92%,50%)] rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -112,7 +112,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[122px]  h-4 w-4"
+          icanchange="-right-4 h-4 w-4"
           iconColor="text-green-600 bg-green-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -125,7 +125,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          icanchange="-right-4 h-4 w-4"
           iconColor="text-blue-600 bg-blue-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -138,7 +138,7 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[122px]  h-4 w-4"
+          icanchange="-right-4 h-4 w-4"
           iconColor="text-purple-600 bg-purple-100 rounded-[12px] p-2 h-8 w-8"
         />
         <StatsCard
@@ -151,15 +151,15 @@ export default function Analytics() {
           valuechange="mt-[18px]"
           box=" h-[141px]"
           titlechange="mt-[-7px]"
-          icanchange="items-center relative -m-66 -mt-6 -mr-[123px]  h-4 w-4"
+          icanchange="-right-4 h-4 w-4"
           iconColor="text-blue-600 bg-blue-100 rounded-[12px] p-2 h-8 w-8"
         />
       </div>
      
-      <div id="chart-analytics-2003" className="grid gap-6 md:grid-cols-2">
+      <div id="chart-analytics-2003" className="grid gap-6 grid-cols-1">
         <Card className="gradient-card rounded-[12px] shadow-medium">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center  gap-2">
               <TrendingUp className="h-5 w-5 text-[hsl(141.86deg,76.09%,36.08%)]" />
               Monthly Performance - {selectedYear}
             </CardTitle>
@@ -177,12 +177,12 @@ export default function Analytics() {
                       <stop stopColor="hsl(141.86deg 76.09% 36.08%)" />
                     </linearGradient>
                     <linearGradient id="bar-gradient-profit">
-                      <stop stopColor="hsl(38.04deg 92.16% 50%)" />
+                      <stop  stopColor="hsl(38.04deg 92.16% 50%)" />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-[hsl(214,20%,95%)]" />
                   <XAxis dataKey="month" className="text-[hsl(216,20%,45%)]" />
-                  <YAxis className="text-[hsl(216,20%,45%)]" />
+                  <YAxis  className="text-[hsl(216,20%,45%)]" />
                   <Tooltip
                     contentStyle={{
                       background: "hsl(0deg 0% 99.22%)",
@@ -270,7 +270,7 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 h-106 rounded-[12px]  gradient-card shadow-medium">
+        <Card className="col-span-1 h-106 rounded-[12px]  gradient-card shadow-medium">
           <CardHeader>
             <CardTitle className="flex items-center -mb-1 mt-[-4px] gap-2">
               <DollarSign className="h-5 w-5 text-[hsl(214,84%,56%)]" />
