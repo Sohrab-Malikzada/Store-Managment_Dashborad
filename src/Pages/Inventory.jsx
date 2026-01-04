@@ -28,7 +28,7 @@ export default function Inventory() {
   const [stockAdjustmentDialog, setStockAdjustmentDialog] = useState(false);
   const [barcodeDialog, setBarcodeDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  
   useEffect(() => {
     let mounted = true;
     async function load() {
@@ -148,8 +148,39 @@ export default function Inventory() {
 
   const categories = ["all", ...Array.from(new Set(products.map(p => p.category)))];
   const lowStockCount = products.filter(p => p.stockLevel <= p.minStock).length;
-  const totalValue = products.reduce((sum, p) => sum + (Number(p.stockLevel || 0) * Number(p.salePrice || 0)), 0);
-  const totalProducts = products.length;
+  
+  // محاسبه ارزش کل موجودی
+  // تبدیل امن رشته به عدد
+  function toNumberSafe(v) {
+    if (v == null) return 0;
+    const cleaned = String(v).replace(/[^\d.-]/g, "");
+    const n = parseFloat(cleaned);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  // اگر قیمت مضرب 1000 و خیلی بزرگ است، فرض می‌کنیم سه صفر اضافی دارد
+  function displayPriceRaw(priceRaw) {
+    const price = toNumberSafe(priceRaw);
+    return price >= 1000 && price % 1000 === 0 ? price / 1000 : price;
+  }
+
+  // dedupe بر اساس _id یا sku قبل از محاسبه و رندر
+  const uniqueProducts = Array.from(
+    new Map(products.map(p => [p._id ?? p.sku ?? Math.random(), p])).values()
+  );
+
+  // محاسبه امن مقدار کل با استفاده از purchasePrice اصلاح‌شده برای نمایش
+  const totalValue = uniqueProducts.reduce((sum, p) => {
+    const qty = toNumberSafe(p.stockLevel);
+    const price = displayPriceRaw(p.purchasePrice ?? p.cost ?? p.salePrice);
+    return sum + qty * price;
+  }, 0);
+
+  console.log("unique count:", uniqueProducts.length, "display totalValue:", totalValue);
+
+  console.log("totalValue after dedupe:", totalValue);
+  const totalProducts = products.length; 
+
 
   const getStockStatus = (product) => {
     if (product.stockLevel === 0) return { label: "Out of Stock", variant: "destructive" };

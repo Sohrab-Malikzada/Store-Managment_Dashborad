@@ -40,7 +40,8 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
       ...formData,
       lastRestocked: new Date().toISOString().split('T')[0]
     };
-
+    // use axius or fetch to send data to backend API
+    // Call the onSubmit prop with form data.
     onSubmit(productData);
     onClose();
 

@@ -67,7 +67,7 @@ export default function Analytics() {
   const [selectedYear, setSelectedYear] = useState("2024");
   const currentData = yearlyData[selectedYear];
   return (
-    <div className="space-y-6 m-6">
+    <div className="space-y-6 m-6 h- overflow-auto no-scrollbar">
       <div className="flex flex-col md:flex-row items-left justify-between">
         <div>
           <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">Analytics & Reports</h1>
