@@ -445,7 +445,7 @@ const generatePdfFromSelection = async () => {
   // Select pages to include in report
   const SelectorModal = () => (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-[12px] w-[400px] h-120 sm:w-[500px] sm:h-110 md:w-150 md:h-auto lg:w-auto lg:h-100 overflow-auto no-scrollbar  p-6">
+      <div className="bg-white rounded-[12px] w-[400px] h-120 sm:w-[500px] sm:h-110 md:w-150 md:h-auto lg:w-auto lg:h-100 overflow-auto p-6">
         <h3 className="text-xl font-semibold text-[hsl(216,32%,17%)] mb-4">Select pages to include in report</h3>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 overflow-auto no-scrollbar  mb-4">
           {availablePages.map((p) => (

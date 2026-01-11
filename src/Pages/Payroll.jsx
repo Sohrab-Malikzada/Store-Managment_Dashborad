@@ -188,7 +188,7 @@ export default function Payroll() {
 
       {/* Dialogs */}
       <Dialog open={deductionDialog} onOpenChange={setDeductionDialog}>
-        <DialogContent className="gradient-card w-90  sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
+        <DialogContent className="gradient-card w-90  sm:w-full  rounded-[12px] overflow-auto shadow-medium">
           <DialogHeader >
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               <Minus className="h-5 w-5 text-[hsl(38,92%,55%)]" />
@@ -266,7 +266,7 @@ export default function Payroll() {
       </Dialog>
 
       <Dialog open={bonusDialog} onOpenChange={setBonusDialog}>
-        <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
+        <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto shadow-medium">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               <Gift className="h-5 w-5 text-[hsl(214,84%,56%)]" />

@@ -412,7 +412,7 @@ export default function Employees() {
 
       {/* Employee Details Dialog */}
       <Dialog open={detailsDialog} onOpenChange={setDetailsDialog}>
-        <DialogContent className="gradient-card w-90 sm:w-full lg:h-104 overflow-auto no-scrollbar rounded-[12px]">
+        <DialogContent className="gradient-card w-90 sm:w-full lg:h-104 overflow-auto rounded-[12px]">
           <DialogHeader>
             <DialogTitle className="flex text-[hsl(216,32%,17%)] items-center gap-2">
               <Eye className="h-5 w-5 text-[hsl(214,84%,56%)]" />

@@ -221,7 +221,7 @@ function Sales() {
               New Sale
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl w-90 h-150 sm:w-140 md:w-full md:h-auto lg:w-full lg:h-110 rounded-[12px] outline-none border-[hsl(214,20%,88%)] bg-gray-50 overflow-auto no-scrollbar">
+          <DialogContent className="max-w-2xl w-90 h-150 sm:w-140 md:w-full md:h-auto lg:w-full lg:h-110 rounded-[12px] outline-none border-[hsl(214,20%,88%)] bg-gray-50 overflow-auto">
             <DialogHeader className="space-y-3 pb-6 border-b border-[hsl(214,20%,88%)]">
               <DialogTitle className="text-2xl font-bold text-left  text-[hsl(216,32%,17%)]">Record New Sale</DialogTitle>
               <DialogDescription className="-mt-2 text-left text-base text-[hsl(216,20%,45%)]">

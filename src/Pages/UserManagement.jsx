@@ -272,7 +272,7 @@ export default function UserManagement() {
               Add User
             </Button>
           </DialogTrigger>
-          < DialogContent className="w-95 sm:w-full lg:h-100 h-auto rounded-[12px] overflow-auto no-scrollbar gradient-card" >
+          < DialogContent className="w-95 sm:w-full lg:h-100 h-auto rounded-[12px] overflow-auto gradient-card" >
             <DialogHeader>
               <DialogTitle className="flex tracking-tight text-[hsl(216,32%,17%)] items-center gap-2" >
                 <Users className="h-5 w-5 text-[hsl(214,84%,56%)]" />
@@ -520,7 +520,7 @@ export default function UserManagement() {
 
       {/* Edit User Dialog (permissions quick edit) */}
       <Dialog open={editUserDialog} onOpenChange={setEditUserDialog}>
-        <DialogContent className="w-90 sm:w-full lg:h-100 overflow-auto no-scrollbar rounded-[12px] gradient-card">
+        <DialogContent className="w-90 sm:w-full lg:h-100 overflow-auto rounded-[12px] gradient-card">
           <DialogHeader>
             <DialogTitle className="text-left text-[hsl(216,32%,17%)] flex tracking-tight items-center gap-2">
               <Edit className="h-5 w-5 mt-[1px] text-[hsl(38,92%,55%)]" />
@@ -568,7 +568,7 @@ export default function UserManagement() {
 
       {/* Settings Dialog (ویرایش کامل: نام، ایمیل، نقش، وضعیت، مجوزها) */}
       <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
-        <DialogContent className="w-90 h-164 sm:w-full md:h-auto lg:h-106 overflow-auto no-scrollbar rounded-[12px] gradient-card">
+        <DialogContent className="w-90 h-164 sm:w-full md:h-auto lg:h-106 overflow-auto rounded-[12px] gradient-card">
           {/* overflow-y-auto */}
           <DialogHeader>
             <DialogTitle className="flex  text-[hsl(216,32%,17%)] items-center gap-2">

@@ -15,7 +15,7 @@ import { CSVImport } from "@/components/CSVImport";
 import { ProductForm } from "@/components/inventory/ProductForm";
 import { StockAdjustmentDialog } from "@/components/Inventory/StockAdjustmentDialog";
 import { Toaster, toast } from "react-hot-toast";
-import axios from "axios";
+// import axios from "axios";
 
 export default function Inventory() {
 
@@ -33,7 +33,7 @@ export default function Inventory() {
     let mounted = true;
     async function load() {
       try {
-        const res = await axios.get("http://localhost:3000/products");
+        // const res = await axios.get("http://localhost:3000/products");
 
         const mapped = res.data.map((p) => ({
           id: p.id || (p._id ? String(p._id) : undefined),
@@ -228,7 +228,7 @@ export default function Inventory() {
   };
 
   return (
-    <div className=" overflow-scroll space-y-6 m-6">
+    <div className=" overflow-scroll no-scrollbar space-y-6 m-6">
       <Toaster />
       {/* Header */}
       <div className="flex  flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

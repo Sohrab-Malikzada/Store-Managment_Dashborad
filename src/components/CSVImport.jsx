@@ -157,7 +157,7 @@ export function CSVImport({ onImport }) {
       toast.error("هیچ داده‌ای برای واردسازی وجود ندارد");
       return;
     }
-
+    
     const normalized = rawObjects.map((r) => ({
       name: r.name || r.Name || r.productName || "",
       sku: r.sku || r.SKU || "",
@@ -202,10 +202,10 @@ export function CSVImport({ onImport }) {
             Import CSV
           </Button>
         </DialogTrigger>
-
+        
         <DialogContent className="max-w-100 sm:max-w-120 lg:max-w-4xl  rounded-[12px] bg-[rgb(252,252,253)]">
           <DialogHeader>
-            <DialogTitle className="text-[hsl(216,32%,17%)] flex items-center gap-2">
+            <DialogTitle id="import-dialog-title" className="text-[hsl(216,32%,17%)] flex items-center gap-2">
             <FileText className="h-5 w-5 text-[hsl(214,84%,56%)]" />
               Import Products from CSV</DialogTitle>
             <DialogDescription className="w-75 sm:w-full text-left">Upload a CSV file to bulk import products into your inventory</DialogDescription>

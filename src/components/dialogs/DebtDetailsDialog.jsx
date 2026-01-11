@@ -54,7 +54,7 @@ export function DebtDetailsDialog({ debt, isOpen, onClose, onPaymentUpdate, type
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
-      <DialogContent className="w-90 sm:w-full sm:h-140 md:h-auto lg:h-100 overflow-auto no-scrollbar rounded-[12px]">
+      <DialogContent className="w-90 sm:w-full sm:h-140 md:h-auto lg:h-100 overflow-auto rounded-[12px]">
         <DialogHeader>
           <DialogTitle className="text-left tracking-tight text-[hsl(216,32%,17%)] text-xl font-bold">
             {type === 'customer' ? 'Customer' : 'Supplier'} Debt Details

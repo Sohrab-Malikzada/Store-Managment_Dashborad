@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 // ✅ درستش اینه:
 import { Toaster, toast } from "sonner";
+import axios from "axios";
 
 const categories = ["Electronics", "Accessories", "Office", "Clothing", "Books", "Home & Garden"];
 
@@ -28,37 +29,59 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
     description: product?.description || ""
   });
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.sku || !formData.category) {
+
+    // Condation of Fill the Form
+    if (!formData.name || !formData.sku || !formData.category || !formData.supplier || !formData.stockLevel || !formData.minStock || !formData.purchasePrice || !formData.salePrice || !formData.description) {
       toast.error("Please fill in all required fields");
       return;
     }
 
+    // 
     const productData = {
       ...formData,
-      lastRestocked: new Date().toISOString().split('T')[0]
+      lastRestocked: new Date().toISOString().split("T")[0],
     };
-    // use axius or fetch to send data to backend API
-    // Call the onSubmit prop with form data.
-    onSubmit(productData);
-    onClose();
 
-    setFormData({
-      name: "",
-      sku: "",
-      category: "",
-      stockLevel: 0,
-      minStock: 0,
-      purchasePrice: 0,
-      salePrice: 0,
-      supplier: "",
-      description: ""
-    });
+    try {
+      console.log(productData)
+      // Send POST request to backend API to add new product
+      const res = await axios.post(
+        "http://localhost:3000/products",
+        productData
+      );
+      // If successful, the new product is in res.data
+      // Call onSubmit callback with new product data
+      onSubmit?.(res.data);
+      
 
-    toast.success(`Product ${mode === 'add' ? 'added' : 'updated'} successfully`);
+      console.log(res.data);
+
+      toast.success("Product added successfully");
+
+      onClose();
+
+      setFormData({
+        name: "",
+        sku: "",
+        category: "",
+        stockLevel: 0,
+        minStock: 0,
+        purchasePrice: 0,
+        salePrice: 0,
+        supplier: "",
+        description: ""
+      });
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add product");
+    }
   };
+
+  
 
   return (
     <>
@@ -66,7 +89,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
       <Toaster position="top-right" />
 
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-100 h-110 sm:max-w-110 sm:h-120 md:max-w-160 md:h-auto lg:max-w-200 lg:h-104 overflow-y-auto no-scrollbar outline-none rounded-[12px] gradient-card">
+        <DialogContent className="max-w-100 h-110 sm:max-w-110 sm:h-120 md:max-w-160 md:h-auto lg:max-w-200 lg:h-104 overflow-y-auto outline-none rounded-[12px] gradient-card">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-[hsl(216,32%,17%)]">
               {mode === 'add' ? 'Add New Product' : 'Edit Product'}
@@ -120,7 +143,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="supplier" className="text-sm text-[hsl(216,32%,17%)] font-medium">Supplier</Label>
+              <Label htmlFor="supplier" className="text-sm text-[hsl(216,32%,17%)] font-medium">Supplier *</Label>
               <Input 
                 id="supplier" 
                 value={formData.supplier}
@@ -131,7 +154,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="stockLevel" className="text-sm text-[hsl(216,32%,17%)] font-medium">Current Stock</Label>
+              <Label htmlFor="stockLevel" className="text-sm text-[hsl(216,32%,17%)] font-medium">Current Stock *</Label>
               <Input 
                 id="stockLevel" 
                 type="number" 
@@ -144,7 +167,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="minStock" className="text-sm text-[hsl(216,32%,17%)] font-medium">Minimum Stock Alert</Label>
+              <Label htmlFor="minStock" className="text-sm text-[hsl(216,32%,17%)] font-medium">Minimum Stock Alert *</Label>
               <Input 
                 id="minStock" 
                 type="number" 
@@ -157,7 +180,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="purchasePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Purchase Price (؋)</Label>
+              <Label htmlFor="purchasePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Purchase Price (؋) *</Label>
               <Input 
                 id="purchasePrice" 
                 type="number" 
@@ -171,7 +194,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="salePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Sale Price (؋)</Label>
+              <Label htmlFor="salePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Sale Price (؋) *</Label>
               <Input 
                 id="salePrice" 
                 type="number" 
@@ -186,7 +209,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="mt-8 text-sm text-[hsl(216,32%,17%)] font-medium">Description</Label>
+            <Label htmlFor="description" className="mt-8 text-sm text-[hsl(216,32%,17%)] font-medium">Description *</Label>
             <Textarea 
               id="description" 
               value={formData.description}

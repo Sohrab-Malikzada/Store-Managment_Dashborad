@@ -37,10 +37,10 @@ export function AdvancePaymentDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto no-scrollbar shadow-medium">
+      <DialogContent className="gradient-card w-90 lg:h-100 sm:w-full  rounded-[12px] overflow-auto shadow-medium">
         <DialogHeader>
           <DialogTitle className="tracking-tight flex items-center text-[hsl(216,32%,17%)] gap-2">
-            <CreditCard className="h-5 w-5 text-[hsl(214,84%,56%)]" />
+            <CreditCard className="h-5 w-5 text-[hsl(142,76%,36%)]" />
             Advance Payment
           </DialogTitle>
           <DialogDescription className="text-left mt-[-2px]">
