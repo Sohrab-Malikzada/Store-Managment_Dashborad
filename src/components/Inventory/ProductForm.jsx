@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { 
-  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle 
+import { useState  } from "react";
+import {
+  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -33,12 +33,13 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Condation of Fill the Form
     if (!formData.name || !formData.sku || !formData.category || !formData.supplier || !formData.stockLevel || !formData.minStock || !formData.purchasePrice || !formData.salePrice || !formData.description) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
+    // Condation of Fill the Form
+    toast.error("Please fill in all required fields");
+    return;
+  }
 
+  
     // 
     const productData = {
       ...formData,
@@ -55,7 +56,9 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
       // If successful, the new product is in res.data
       // Call onSubmit callback with new product data
       onSubmit?.(res.data);
-      
+      console.log("API RESPONSE:", res.data);
+
+
 
       console.log(res.data);
 
@@ -81,7 +84,7 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
     }
   };
 
-  
+
 
   return (
     <>
@@ -95,149 +98,149 @@ export function ProductForm({ isOpen, onClose, onSubmit, product, mode }) {
               {mode === 'add' ? 'Add New Product' : 'Edit Product'}
             </DialogTitle>
             <DialogDescription className="text-left text-[hsl(216,20%,45%)]">
-              {mode === 'add' 
-                ? 'Enter the details for the new product.' 
+              {mode === 'add'
+                ? 'Enter the details for the new product.'
                 : 'Update the product information below.'
               }
             </DialogDescription>
           </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 -mt-2 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 -mt-2 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <Label htmlFor="name" className="text-sm text-[hsl(216,32%,17%)] font-medium">Product Name *</Label>
-              <Input 
-                id="name" 
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                placeholder="Enter product name"
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Enter product name"
                   className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div className="space-y-2">
+              <div className="space-y-2">
                 <Label htmlFor="sku" className="text-sm text-[hsl(216,32%,17%)] font-medium">SKU *</Label>
-              <Input 
-                id="sku" 
-                value={formData.sku}
-                onChange={(e) => setFormData({...formData, sku: e.target.value})}
-                placeholder="Enter SKU"
+                <Input
+                  id="sku"
+                  value={formData.sku}
+                  onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
+                  placeholder="Enter SKU"
                   className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-                required
-              />
-            </div>
+                  required
+                />
+              </div>
 
-            <div className="space-y-2">
+              <div className="space-y-2">
                 <Label htmlFor="category" className="text-sm text-[hsl(216,32%,17%)] font-medium">Category *</Label>
-                <Select  value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
+                <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
                   <SelectTrigger className="shadow-soft  text-[hsl(216,32%,17%)] focus:shadow-none transition-smooth">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
                   <SelectContent className={"shadow-soft  text-[hsl(216,32%,17%)] bg-white"}>
-                  {categories.map(category => (
-                    <SelectItem key={category} value={category}>{category}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                    {categories.map(category => (
+                      <SelectItem key={category} value={category}>{category}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="supplier" className="text-sm text-[hsl(216,32%,17%)] font-medium">Supplier *</Label>
+                <Input
+                  id="supplier"
+                  value={formData.supplier}
+                  onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
+                  placeholder="Enter supplier name"
+                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="stockLevel" className="text-sm text-[hsl(216,32%,17%)] font-medium">Current Stock *</Label>
+                <Input
+                  id="stockLevel"
+                  type="number"
+                  value={formData.stockLevel}
+                  onChange={(e) => setFormData({ ...formData, stockLevel: parseInt(e.target.value) || 0 })}
+                  placeholder="0"
+                  min="0"
+                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="minStock" className="text-sm text-[hsl(216,32%,17%)] font-medium">Minimum Stock Alert *</Label>
+                <Input
+                  id="minStock"
+                  type="number"
+                  value={formData.minStock}
+                  onChange={(e) => setFormData({ ...formData, minStock: parseInt(e.target.value) || 0 })}
+                  placeholder="0"
+                  min="0"
+                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="purchasePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Purchase Price (؋) *</Label>
+                <Input
+                  id="purchasePrice"
+                  type="number"
+                  value={formData.purchasePrice}
+                  onChange={(e) => setFormData({ ...formData, purchasePrice: parseFloat(e.target.value) || 0 })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="salePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Sale Price (؋) *</Label>
+                <Input
+                  id="salePrice"
+                  type="number"
+                  value={formData.salePrice}
+                  onChange={(e) => setFormData({ ...formData, salePrice: parseFloat(e.target.value) || 0 })}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="supplier" className="text-sm text-[hsl(216,32%,17%)] font-medium">Supplier *</Label>
-              <Input 
-                id="supplier" 
-                value={formData.supplier}
-                onChange={(e) => setFormData({...formData, supplier: e.target.value})}
-                placeholder="Enter supplier name"
-                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="stockLevel" className="text-sm text-[hsl(216,32%,17%)] font-medium">Current Stock *</Label>
-              <Input 
-                id="stockLevel" 
-                type="number" 
-                value={formData.stockLevel}
-                onChange={(e) => setFormData({...formData, stockLevel: parseInt(e.target.value) || 0})}
-                placeholder="0"
-                min="0"
-                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="minStock" className="text-sm text-[hsl(216,32%,17%)] font-medium">Minimum Stock Alert *</Label>
-              <Input 
-                id="minStock" 
-                type="number" 
-                value={formData.minStock}
-                onChange={(e) => setFormData({...formData, minStock: parseInt(e.target.value) || 0})}
-                placeholder="0"
-                min="0"
-                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="purchasePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Purchase Price (؋) *</Label>
-              <Input 
-                id="purchasePrice" 
-                type="number" 
-                value={formData.purchasePrice}
-                onChange={(e) => setFormData({...formData, purchasePrice: parseFloat(e.target.value) || 0})}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="salePrice" className="text-sm text-[hsl(216,32%,17%)] font-medium">Sale Price (؋) *</Label>
-              <Input 
-                id="salePrice" 
-                type="number" 
-                value={formData.salePrice}
-                onChange={(e) => setFormData({...formData, salePrice: parseFloat(e.target.value) || 0})}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                  className="shadow-soft h-10 bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description" className="mt-8 text-sm text-[hsl(216,32%,17%)] font-medium">Description *</Label>
-            <Textarea 
-              id="description" 
-              value={formData.description}
-              onChange={(e) => setFormData({...formData, description: e.target.value})}
-              placeholder="Enter product description (optional)"
+              <Label htmlFor="description" className="mt-8 text-sm text-[hsl(216,32%,17%)] font-medium">Description *</Label>
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Enter product description (optional)"
                 className="shadow-soft  bg-[hsl(214,20%,98%)] focus:shadow-none transition-smooth"
-            />
-          </div>
+              />
+            </div>
 
-          <DialogFooter className="flex gap-3">
-            <Button 
-              type="button" 
-              variant="outline" 
-              onClick={onClose}
+            <DialogFooter className="flex gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
                 className="shadow-[0_4px_6px_-1px_hsl(0,0%,80%,0.5)] cursor-pointer  mr-2  rounded-[10px] text-[hsl(216,32%,17%)] bg-[hsl(248,250%,98%)] border-[hsl(214,20%,88%)] hover:shadow-medium transition-smooth"
-            >
-              Cancel
-            </Button>
-            <Button 
-              type="submit" 
-              className="gradient-primary text-white shadow-soft hover:shadow-medium transition-smooth"
-            >
-              {mode === 'add' ? 'Add Product' : 'Update Product'}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="gradient-primary text-white shadow-soft hover:shadow-medium transition-smooth"
+                >
+                {mode === 'add' ? 'Add Product' : 'Update Product'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

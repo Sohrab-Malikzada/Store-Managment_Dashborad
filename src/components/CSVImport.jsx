@@ -152,7 +152,7 @@ export function CSVImport({ onImport }) {
     toast.success("Template downloaded");
   };
 
-  const handleImport = () => {
+  const handleImport = async () => {
     if (!rawObjects || rawObjects.length === 0) {
       toast.error("هیچ داده‌ای برای واردسازی وجود ندارد");
       return;
@@ -170,8 +170,10 @@ export function CSVImport({ onImport }) {
       status: r.status || "In Stock",
       _raw: r,
     }));
-
+    // loading 
+    setLoading(true);
     try {
+      
       if (onImport) onImport(normalized);
       toast.success(`${normalized.length} محصول آمادهٔ واردسازی شد`);
       // reset modal state
